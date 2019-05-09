@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BizNest.Core.Data.Enum
+namespace BizNest.Core.Domain.Enum
 {
     /// <summary>
     /// Status of a record in the database

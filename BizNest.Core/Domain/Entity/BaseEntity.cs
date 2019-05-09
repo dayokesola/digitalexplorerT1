@@ -1,11 +1,11 @@
 ﻿using BizNest.Core.Common;
-using BizNest.Core.Data.Enum;
+using BizNest.Core.Domain.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace BizNest.Core.Data.Entity
+namespace BizNest.Core.Domain.Entity
 {
     /// <summary>
     /// 

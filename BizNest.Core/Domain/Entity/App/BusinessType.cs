@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BizNest.Core.Data.Entity.App
+namespace BizNest.Core.Domain.Entity.App
 {
 
     /// <summary>
