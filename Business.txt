@@ -1,0 +1,1451 @@
+ENTITY
+
+        /// <summary>
+        /// Business Class
+        /// </summary>
+        public class Business : BaseEntity<long>
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+public string Name { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Code { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public int BusinessTypeId { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressStreet { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressCity { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressPostCode { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public int AddressCountryId { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact1Name { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact1Email { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact1Mobile { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact2Name { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact2Email { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact2Mobile { get; set; }
+
+        }
+
+-------------------------------------------------
+
+MODEL
+
+        /// <summary>
+        /// Business View Model
+        /// </summary>
+        [TableName("bts_businessmodel")]
+        [PrimaryKey("Id")]
+        public class BusinessModel : BaseModel<long>
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+public string Name { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Code { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public int BusinessTypeId { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressStreet { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressCity { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressPostCode { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public int AddressCountryId { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact1Name { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact1Email { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact1Mobile { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact2Name { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact2Email { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact2Mobile { get; set; }
+
+        }
+
+-------------------------------------------------
+
+FORM
+
+        /// <summary>
+        /// Business Form
+        /// </summary>
+        public class BusinessForm : BaseForm<long>
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+public string Name { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Code { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public int BusinessTypeId { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressStreet { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressCity { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressPostCode { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public int AddressCountryId { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact1Name { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact1Email { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact1Mobile { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact2Name { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact2Email { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Contact2Mobile { get; set; }
+
+        }
+
+-------------------------------------------------
+
+AUTOMAPPER CONFIG
+
+            cfg.CreateMap<Business, BusinessModel>().ReverseMap();
+            cfg.CreateMap<Business, BusinessForm>().ReverseMap();
+            cfg.CreateMap<BusinessModel, BusinessForm>().ReverseMap();
+
+-------------------------------------------------
+
+MODEL FACTORY
+
+        /// <summary>
+        /// Business Factory
+        /// </summary>
+        public class BusinessFactory : BaseFactory<Business, BusinessModel, BusinessForm, long>
+        {
+
+        }
+
+-------------------------------------------------
+
+
+FACTORY SERVICE
+
+        BusinessFactory Businesses { get; }
+
+        private BusinessFactory _business;
+
+        /// <summary>
+        /// Business Factory Module
+        /// </summary>
+        public BusinessFactory Businesses { get { if (_business == null) { _business = new BusinessFactory(); } return _business; } }
+
+-------------------------------------------------
+
+DB CONTEXT
+
+        public DbSet<Business> Businesses { get; set; }
+ 
+        For<BusinessModel>().TableName("bts_businessmodel");
+
+var txt = @"create view bts_businessmodel as select x.* from bts_business x where x.RecordStatus != 3 and x.RecordStatus != 4";
+Sql(txt);
+
+
+
+var txt = @"drop view bts_businessmodel";
+Sql(txt);
+
+-------------------------------------------------
+
+ENTITY REPOSITORY
+    /// <summary>
+    /// 
+    /// </summary>
+    public class BusinessRepository : BaseRepository<Business, BusinessModel, long>
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        public BusinessRepository(BootesDbContext context) : base(context)
+        {
+        }
+        /// <summary>
+        /// IQueryable Business Entity Search
+        /// </summary>
+        /// <param name="name"></param>
+/// <param name="code"></param>
+/// <param name="businessTypeId"></param>
+/// <param name="addressStreet"></param>
+/// <param name="addressCity"></param>
+/// <param name="addressPostCode"></param>
+/// <param name="addressCountryId"></param>
+/// <param name="contact1Name"></param>
+/// <param name="contact1Email"></param>
+/// <param name="contact1Mobile"></param>
+/// <param name="contact2Name"></param>
+/// <param name="contact2Email"></param>
+/// <param name="contact2Mobile"></param>
+/// <returns></returns>
+        public IQueryable<Business> Search(string name = "",string code = "",int businessTypeId = 0,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,string contact1Name = "",string contact1Email = "",string contact1Mobile = "",string contact2Name = "",string contact2Email = "",string contact2Mobile = "")
+        {
+            var table = Query();
+            if (!string.IsNullOrEmpty(name))
+            {
+                table = table.Where(x => x.Name == name);
+            }
+if (!string.IsNullOrEmpty(code))
+            {
+                table = table.Where(x => x.Code == code);
+            }
+if (businessTypeId > 0)
+            {
+                table = table.Where(x => x.BusinessTypeId == businessTypeId);
+            }
+if (!string.IsNullOrEmpty(addressStreet))
+            {
+                table = table.Where(x => x.AddressStreet == addressStreet);
+            }
+if (!string.IsNullOrEmpty(addressCity))
+            {
+                table = table.Where(x => x.AddressCity == addressCity);
+            }
+if (!string.IsNullOrEmpty(addressPostCode))
+            {
+                table = table.Where(x => x.AddressPostCode == addressPostCode);
+            }
+if (addressCountryId > 0)
+            {
+                table = table.Where(x => x.AddressCountryId == addressCountryId);
+            }
+if (!string.IsNullOrEmpty(contact1Name))
+            {
+                table = table.Where(x => x.Contact1Name == contact1Name);
+            }
+if (!string.IsNullOrEmpty(contact1Email))
+            {
+                table = table.Where(x => x.Contact1Email == contact1Email);
+            }
+if (!string.IsNullOrEmpty(contact1Mobile))
+            {
+                table = table.Where(x => x.Contact1Mobile == contact1Mobile);
+            }
+if (!string.IsNullOrEmpty(contact2Name))
+            {
+                table = table.Where(x => x.Contact2Name == contact2Name);
+            }
+if (!string.IsNullOrEmpty(contact2Email))
+            {
+                table = table.Where(x => x.Contact2Email == contact2Email);
+            }
+if (!string.IsNullOrEmpty(contact2Mobile))
+            {
+                table = table.Where(x => x.Contact2Mobile == contact2Mobile);
+            }
+  
+            return table;
+        }
+
+        /// <summary>
+        /// Paged Business Model Search
+        /// </summary>
+        /// <param name="name"></param>
+/// <param name="code"></param>
+/// <param name="businessTypeId"></param>
+/// <param name="addressStreet"></param>
+/// <param name="addressCity"></param>
+/// <param name="addressPostCode"></param>
+/// <param name="addressCountryId"></param>
+/// <param name="contact1Name"></param>
+/// <param name="contact1Email"></param>
+/// <param name="contact1Mobile"></param>
+/// <param name="contact2Name"></param>
+/// <param name="contact2Email"></param>
+/// <param name="contact2Mobile"></param>
+/// <param name="page"></param>
+        ///<param name="pageSize"></param>
+        ///<param name="sort"></param>
+        /// <returns></returns>
+        public Page<BusinessModel> SearchView(string name = "",string code = "",int businessTypeId = 0,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,string contact1Name = "",string contact1Email = "",string contact1Mobile = "",string contact2Name = "",string contact2Email = "",string contact2Mobile = "",
+            long page = 1, long pageSize = 10, string sort = "Id")
+        {
+            var sql = "select * from " + Constants.DBPrefix + "businessmodel where Id > 0 ";
+            var c = 0;
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                sql += $" and Name = @{c} ";
+                AddParam("name", name);
+                c++;
+            }
+if (!string.IsNullOrEmpty(code))
+            {
+                sql += $" and Code = @{c} ";
+                AddParam("code", code);
+                c++;
+            }
+if (businessTypeId > 0)
+            {
+                sql += $" and BusinessTypeId = @{c} ";
+                AddParam("businessTypeId", businessTypeId);
+                c++;
+            }
+if (!string.IsNullOrEmpty(addressStreet))
+            {
+                sql += $" and AddressStreet = @{c} ";
+                AddParam("addressStreet", addressStreet);
+                c++;
+            }
+if (!string.IsNullOrEmpty(addressCity))
+            {
+                sql += $" and AddressCity = @{c} ";
+                AddParam("addressCity", addressCity);
+                c++;
+            }
+if (!string.IsNullOrEmpty(addressPostCode))
+            {
+                sql += $" and AddressPostCode = @{c} ";
+                AddParam("addressPostCode", addressPostCode);
+                c++;
+            }
+if (addressCountryId > 0)
+            {
+                sql += $" and AddressCountryId = @{c} ";
+                AddParam("addressCountryId", addressCountryId);
+                c++;
+            }
+if (!string.IsNullOrEmpty(contact1Name))
+            {
+                sql += $" and Contact1Name = @{c} ";
+                AddParam("contact1Name", contact1Name);
+                c++;
+            }
+if (!string.IsNullOrEmpty(contact1Email))
+            {
+                sql += $" and Contact1Email = @{c} ";
+                AddParam("contact1Email", contact1Email);
+                c++;
+            }
+if (!string.IsNullOrEmpty(contact1Mobile))
+            {
+                sql += $" and Contact1Mobile = @{c} ";
+                AddParam("contact1Mobile", contact1Mobile);
+                c++;
+            }
+if (!string.IsNullOrEmpty(contact2Name))
+            {
+                sql += $" and Contact2Name = @{c} ";
+                AddParam("contact2Name", contact2Name);
+                c++;
+            }
+if (!string.IsNullOrEmpty(contact2Email))
+            {
+                sql += $" and Contact2Email = @{c} ";
+                AddParam("contact2Email", contact2Email);
+                c++;
+            }
+if (!string.IsNullOrEmpty(contact2Mobile))
+            {
+                sql += $" and Contact2Mobile = @{c} ";
+                AddParam("contact2Mobile", contact2Mobile);
+                c++;
+            }
+
+
+            if(page <= 0)
+            {
+                var l = GetList(sql);
+                return new Page<BusinessModel>()
+                {
+                    CurrentPage = 0,
+                    Items = l,
+                    ItemsPerPage = 0,
+                    TotalItems = 0,
+                    TotalPages = 0
+                };
+            }
+
+           
+            sql += ApplySort(sort); 
+            var k = SearchView(sql, page, pageSize);
+            return new Page<BusinessModel>()
+            {
+                CurrentPage = k.CurrentPage,
+                Items = k.Items,
+                ItemsPerPage = k.ItemsPerPage,
+                TotalItems = k.TotalItems,
+                TotalPages = k.TotalPages
+            };
+        }
+
+        /// <summary>
+        /// Get Business Entity
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public BusinessModel GetModel(long Id)
+        {
+            var sql = "select * from " + Constants.DBPrefix + "businessmodel where Id = @0"; 
+            AddParam("Id", Id);
+            return GetRecord(sql);
+        }
+
+        /// <summary>
+        /// Check exists
+        /// </summary>
+        /// <param name="name"></param>
+/// <param name="code"></param>
+/// <param name="businessTypeId"></param>
+/// <param name="addressStreet"></param>
+/// <param name="addressCity"></param>
+/// <param name="addressPostCode"></param>
+/// <param name="addressCountryId"></param>
+/// <param name="contact1Name"></param>
+/// <param name="contact1Email"></param>
+/// <param name="contact1Mobile"></param>
+/// <param name="contact2Name"></param>
+/// <param name="contact2Email"></param>
+/// <param name="contact2Mobile"></param>
+/// 
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool ItemExists(string name = "",string code = "",int businessTypeId = 0,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,string contact1Name = "",string contact1Email = "",string contact1Mobile = "",string contact2Name = "",string contact2Email = "",string contact2Mobile = "", long Id = 0)
+        {
+            var check = Search(name,code,businessTypeId,addressStreet,addressCity,addressPostCode,addressCountryId,contact1Name,contact1Email,contact1Mobile,contact2Name,contact2Email,contact2Mobile);
+            if (Id > 0)
+            {
+                check = check.Where(x => x.Id != Id);
+            }
+            return check.Any();
+        }
+
+        /// <summary>
+        /// check exists
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool ItemExists(BusinessModel model, long Id = 0)
+        {
+            var check = Search(model.Name,model.Code,model.BusinessTypeId,model.AddressStreet,model.AddressCity,model.AddressPostCode,model.AddressCountryId,model.Contact1Name,model.Contact1Email,model.Contact1Mobile,model.Contact2Name,model.Contact2Email,model.Contact2Mobile);
+            if (Id > 0)
+            {
+                check = check.Where(x => x.Id != Id);
+            }
+            return check.Any();
+        }
+    }
+
+-------------------------------------------------
+
+REPOSITORY SERVICE
+
+        BusinessRepository Businesses { get; }
+
+        private BusinessRepository _businesses;
+        public BusinessRepository Businesses { get { if (_businesses == null) { _businesses = new BusinessRepository(_context); } return _businesses; } }
+
+
+-------------------------------------------------
+
+SERVICE
+
+
+        /// <summary>
+        /// Business Service
+        /// </summary>
+        public partial class BusinessService : BaseService<Business, BusinessModel, BusinessForm, long>
+        {
+
+        }
+
+
+        /// <summary>
+        /// Business Service
+        /// </summary>
+        public partial class BusinessService : BaseService<Business, BusinessModel, BusinessForm, long>
+        {
+            /// <summary>
+            /// IQueryable Business Entity Search
+            /// </summary>
+            /// <param name="name"></param>
+/// <param name="code"></param>
+/// <param name="businessTypeId"></param>
+/// <param name="addressStreet"></param>
+/// <param name="addressCity"></param>
+/// <param name="addressPostCode"></param>
+/// <param name="addressCountryId"></param>
+/// <param name="contact1Name"></param>
+/// <param name="contact1Email"></param>
+/// <param name="contact1Mobile"></param>
+/// <param name="contact2Name"></param>
+/// <param name="contact2Email"></param>
+/// <param name="contact2Mobile"></param>
+/// <returns></returns>
+            public IQueryable<Business> Search(string name = "",string code = "",int businessTypeId = 0,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,string contact1Name = "",string contact1Email = "",string contact1Mobile = "",string contact2Name = "",string contact2Email = "",string contact2Mobile = "")
+            {
+                return DataModule.Businesses.Search(name,code,businessTypeId,addressStreet,addressCity,addressPostCode,addressCountryId,contact1Name,contact1Email,contact1Mobile,contact2Name,contact2Email,contact2Mobile);
+            }
+            
+
+            /// <summary>
+            /// IEnumerable Business Model Search
+            /// </summary>
+            /// <param name="name"></param>
+/// <param name="code"></param>
+/// <param name="businessTypeId"></param>
+/// <param name="addressStreet"></param>
+/// <param name="addressCity"></param>
+/// <param name="addressPostCode"></param>
+/// <param name="addressCountryId"></param>
+/// <param name="contact1Name"></param>
+/// <param name="contact1Email"></param>
+/// <param name="contact1Mobile"></param>
+/// <param name="contact2Name"></param>
+/// <param name="contact2Email"></param>
+/// <param name="contact2Mobile"></param>
+/// <returns></returns>
+            public IEnumerable<BusinessModel> SearchModel(string name = "",string code = "",int businessTypeId = 0,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,string contact1Name = "",string contact1Email = "",string contact1Mobile = "",string contact2Name = "",string contact2Email = "",string contact2Mobile = "")
+            {
+                return DataModule.Businesses.Search(name,code,businessTypeId,addressStreet,addressCity,addressPostCode,addressCountryId,contact1Name,contact1Email,contact1Mobile,contact2Name,contact2Email,contact2Mobile)
+                    .Select(FactoryModule.Businesses.CreateModel);
+            }
+
+            
+            /// <summary>
+            /// Paged Business Model Search
+            /// </summary>
+            /// <param name="name"></param>
+/// <param name="code"></param>
+/// <param name="businessTypeId"></param>
+/// <param name="addressStreet"></param>
+/// <param name="addressCity"></param>
+/// <param name="addressPostCode"></param>
+/// <param name="addressCountryId"></param>
+/// <param name="contact1Name"></param>
+/// <param name="contact1Email"></param>
+/// <param name="contact1Mobile"></param>
+/// <param name="contact2Name"></param>
+/// <param name="contact2Email"></param>
+/// <param name="contact2Mobile"></param>
+/// <param name="page"></param>
+            ///<param name="pageSize"></param>
+            ///<param name="sort"></param>
+            /// <returns></returns>
+            public Page<BusinessModel> SearchView(string name = "",string code = "",int businessTypeId = 0,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,string contact1Name = "",string contact1Email = "",string contact1Mobile = "",string contact2Name = "",string contact2Email = "",string contact2Mobile = "",
+                long page = 1,long pageSize = 10, string sort = "")
+            {
+                return DataModule.Businesses.SearchView(name,code,businessTypeId,addressStreet,addressCity,addressPostCode,addressCountryId,contact1Name,contact1Email,contact1Mobile,contact2Name,contact2Email,contact2Mobile, page, pageSize, sort);
+            }
+
+            /// <summary>
+            /// Create Business Model from Business Entity
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <returns></returns>
+            public BusinessModel Create(Business entity)
+            {
+                return FactoryModule.Businesses.CreateModel(entity);
+            }
+
+	        /// <summary>
+            /// Create Business Model from Business Form
+            /// </summary>
+            /// <param name="form"></param>
+            /// <returns></returns>
+            public BusinessModel Create(BusinessForm form)
+            {
+                return FactoryModule.Businesses.CreateModel(form);
+            }
+
+            /// <summary>
+            /// Create Business Entity from Business Model
+            /// </summary>
+            /// <param name="model"></param>
+            /// <returns></returns>
+            public Business Create(BusinessModel model)
+            {
+                return FactoryModule.Businesses.CreateEntity(model);
+            }
+
+            /// <summary>
+            /// Check Uniqueness of Business before creation
+            /// </summary>
+            /// <param name="model"></param>
+            /// <returns></returns>
+            public bool CreateExists(BusinessModel model)
+            {
+                return DataModule.Businesses.ItemExists(model);
+            }
+
+            /// <summary>
+            /// Delete Business
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <returns></returns>
+            public int Delete(Business entity)
+            {
+                return DataModule.Businesses.Delete(entity);
+            }
+
+            /// <summary>
+            /// Get Business Entity
+            /// </summary>
+            /// <param name="id"></param>
+            /// <returns></returns>
+            public Business Get(long id)
+            {
+                return DataModule.Businesses.Get(id);
+            }
+
+
+
+            /// <summary>
+            /// Get Business Model
+            /// </summary>
+            /// <param name="id"></param>
+            /// <returns></returns>
+            public BusinessModel GetModel(long id)
+            { 
+                return DataModule.Businesses.GetModel(id);
+            }
+
+            /// <summary>
+            /// Insert new Business to DB
+            /// </summary>
+            /// <param name="model"></param>
+            /// <param name="check"></param>
+            /// <returns></returns>
+            public BusinessModel Insert(BusinessModel model, bool check = true)
+            {
+                if (check)
+                {
+                    var routeSearch = DataModule.Businesses.ItemExists(model);
+                    if (routeSearch)
+                    {
+                        throw new Exception("Business Name already exists");
+                    }
+                }
+                var entity = FactoryModule.Businesses.CreateEntity(model);
+                entity.RecordStatus = Core.Domain.Enum.RecordStatus.Active;
+                DataModule.Businesses.Insert(entity);
+                return FactoryModule.Businesses.CreateModel(entity);
+            }
+
+            /// <summary>
+            /// Update a Business Entity with a Business Model with selected fields
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <param name="model"></param>
+            /// <param name="fields"></param>
+            /// <returns></returns>
+            public Business Patch(Business entity, BusinessModel model, string fields)
+            {
+                return FactoryModule.Businesses.Patch(entity, model, fields);
+            }
+
+            /// <summary>
+            /// Update Business, with Patch Options Optional
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <param name="model"></param>
+            /// <param name="fields"></param>
+            /// <returns></returns>
+            public BusinessModel Update(Business entity, BusinessModel model = null, string fields = "")
+            {
+                if (model != null)
+                {
+                    entity = Patch(entity, model, fields);
+                }
+                return FactoryModule.Businesses.CreateModel(DataModule.Businesses.Update(entity));
+            }
+
+            /// <summary>
+            /// Check Uniqueness of Business before update
+            /// </summary>
+            /// <param name="model"></param>
+            /// <returns></returns>
+            public bool UpdateExists(BusinessModel model)
+            {
+                return DataModule.Businesses.ItemExists(model, model.Id);
+            }
+
+    }
+
+-------------------------------------------------
+
+SERVICE MODULE
+
+        BusinessService BusinessService { get; }
+
+        private BusinessService _business;
+
+        /// <summary>
+        /// Business Service Module
+        /// </summary>
+        public BusinessService BusinessService { get { if (_business == null) { _business = new BusinessService(); } return _business; } }
+ 
+
+-------------------------------------------------
+
+API CONTROLLER
+
+
+    /// <summary>
+    /// Businesses CRUD
+    /// </summary>
+    [RoutePrefix("api/Businesses")]
+    public class BusinessesController : BaseApiController
+    {
+        /// <summary>
+        /// Search, Page, filter and Shaped Businesses
+        /// </summary>
+        /// <param name="sort"></param>
+        /// <param name="name"></param>
+/// <param name="code"></param>
+/// <param name="businessTypeId"></param>
+/// <param name="addressStreet"></param>
+/// <param name="addressCity"></param>
+/// <param name="addressPostCode"></param>
+/// <param name="addressCountryId"></param>
+/// <param name="contact1Name"></param>
+/// <param name="contact1Email"></param>
+/// <param name="contact1Mobile"></param>
+/// <param name="contact2Name"></param>
+/// <param name="contact2Email"></param>
+/// <param name="contact2Mobile"></param>
+/// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="fields"></param>
+        /// <param name="draw"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(IEnumerable<BusinessModel>))]
+        [Route("Search", Name = "BusinessApi")]
+        [HttpGet]
+        public IHttpActionResult Get(string sort = "id", string name = "",string code = "",int businessTypeId = 0,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,string contact1Name = "",string contact1Email = "",string contact1Mobile = "",string contact2Name = "",string contact2Email = "",string contact2Mobile = "", long page = 1, long pageSize = 10, string fields= "", int draw = 1)
+        {  
+            try
+            {
+                var items = Logic.BusinessService.SearchView(name,code,businessTypeId,addressStreet,addressCity,addressPostCode,addressCountryId,contact1Name,contact1Email,contact1Mobile,contact2Name,contact2Email,contact2Mobile,page, pageSize, sort);
+                
+                if (page > items.TotalPages) page = items.TotalPages;
+                var jo = new JObjectHelper(); 
+                jo.Add("name", name);
+jo.Add("code", code);
+jo.Add("businessTypeId", businessTypeId);
+jo.Add("addressStreet", addressStreet);
+jo.Add("addressCity", addressCity);
+jo.Add("addressPostCode", addressPostCode);
+jo.Add("addressCountryId", addressCountryId);
+jo.Add("contact1Name", contact1Name);
+jo.Add("contact1Email", contact1Email);
+jo.Add("contact1Mobile", contact1Mobile);
+jo.Add("contact2Name", contact2Name);
+jo.Add("contact2Email", contact2Email);
+jo.Add("contact2Mobile", contact2Mobile);
+
+                jo.Add("fields", fields); 
+                jo.Add("sort", sort);
+                var urlHelper = new UrlHelper(Request);
+                var linkBuilder = new PageLinkBuilder(urlHelper, "BusinessApi", jo, page, pageSize, items.TotalItems, draw); 
+                AddHeader("X-Pagination", linkBuilder.PaginationHeader);
+                var dto = new List<BusinessModel>();
+                if (items.TotalItems <= 0) return Ok(dto); 
+                var dtos = items.Items.ShapeList(fields);
+                return Ok(dtos);
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        /// <summary>
+        /// Get Business by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("Detail")]
+        [ResponseType(typeof(BusinessModel))]
+        public IHttpActionResult Get(long id)
+        {
+            try
+            {
+                var item = Logic.BusinessService.GetModel(id);
+                if (item == null)
+                {
+                    return NotFound();
+                }
+                return Ok(item);
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+
+         /// <summary>
+        /// Add Business
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        [Route("Create")]
+        [HttpPost]
+        [ResponseType(typeof(BusinessModel))]
+        public IHttpActionResult Create(BusinessForm form)
+        {
+            try
+            {
+                var model = Logic.BusinessService.Create(form);
+                var check = Logic.BusinessService.CreateExists(model);
+                if (check)
+                {
+                    return BadRequest("Business already exists");
+                }
+                var dto = Logic.BusinessService.Insert(model);
+                return Ok(dto);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+
+                /// <summary>
+        /// Update Business
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        [Route("Update")]
+        [HttpPost]
+        [ResponseType(typeof(BusinessModel))]
+        public IHttpActionResult Update(long id, BusinessForm form)
+        {
+            try
+            {
+                var model = Logic.BusinessService.Create(form);
+                if (id != model.Id)
+                    return BadRequest("Route Parameter does mot match model ID"); 
+                var found = Logic.BusinessService.Get(id);
+                if (found == null)
+                    return NotFound(); 
+                var check = Logic.BusinessService.UpdateExists(model); 
+                if (Logic.BusinessService.UpdateExists(model))
+                    return BadRequest("Business configuration already exists");
+                var dto = Logic.BusinessService.Update(found, model,
+                    "Name,Code,BusinessTypeId,AddressStreet,AddressCity,AddressPostCode,AddressCountryId,Contact1Name,Contact1Email,Contact1Mobile,Contact2Name,Contact2Email,Contact2Mobile,RecordStatus");
+                return Ok(dto);
+            } 
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Delete Business
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("Delete")]
+        [HttpPost]
+        [ResponseType(typeof(BusinessModel))]
+        public IHttpActionResult Delete(long id)
+        {
+            try
+            {
+                var found = Logic.BusinessService.Get(id);
+                if (found == null)
+                    return NotFound();
+                Logic.BusinessService.Delete(found); 
+                return Content(HttpStatusCode.NoContent,found);
+            } 
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        } 
+    }
+
+
+-------------------------------------------------
+
+API Library Service
+public class BusinessAPI : BaseServiceAPI<BusinessModel, long>
+    { 
+        public BusinessAPI()
+        {
+            _api = "/api/Businesses";
+        }
+ 
+        public async Task<ApiResponse<IEnumerable<BusinessModel>>> Search(string name = "",string code = "",int businessTypeId = 0,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,string contact1Name = "",string contact1Email = "",string contact1Mobile = "",string contact2Name = "",string contact2Email = "",string contact2Mobile = "",
+            string sort = "id",int page = 1, int pageSize = 10, string fields = "", bool extended = false)
+        {
+            var jo = new JObjectHelper(sort, page, pageSize, fields, extended);
+            jo.Add("name", name);
+jo.Add("code", code);
+jo.Add("businessTypeId", businessTypeId);
+jo.Add("addressStreet", addressStreet);
+jo.Add("addressCity", addressCity);
+jo.Add("addressPostCode", addressPostCode);
+jo.Add("addressCountryId", addressCountryId);
+jo.Add("contact1Name", contact1Name);
+jo.Add("contact1Email", contact1Email);
+jo.Add("contact1Mobile", contact1Mobile);
+jo.Add("contact2Name", contact2Name);
+jo.Add("contact2Email", contact2Email);
+jo.Add("contact2Mobile", contact2Mobile);
+             
+            Route("Search");
+            return await Search<BusinessModel>(jo); 
+        }        
+    }
+
+-------------------------------------------------
+
+API Library MODULE
+private BusinessAPI _business;
+
+        /// <summary>
+        /// Business API Module
+        /// </summary>
+        public BusinessAPI BusinessAPI { get { if (_business == null) { _business = new BusinessAPI(); } return _business; } }
+
+
+-------------------------------------------------
+
+MVC CONTROLLER
+     
+    public class BusinessesController : BaseController
+    {
+        
+        //[CustomAuth(Permissions = "BusinessesSearch")]
+        public ActionResult Index(string name = "",string code = "",int businessTypeId = 0,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,string contact1Name = "",string contact1Email = "",string contact1Mobile = "",string contact2Name = "",string contact2Email = "",string contact2Mobile = "", string act="")
+        {
+            if (act.ToLower() == "export")
+            {
+                var data = Logic.BusinessService.SearchView(name,code,businessTypeId,addressStreet,addressCity,addressPostCode,addressCountryId,contact1Name,contact1Email,contact1Mobile,contact2Name,contact2Email,contact2Mobile,page: 0);
+                Download(data); 
+            }
+            return View();
+        }
+
+    }
+
+
+-------------------------------------------------
+
+SAVE VIEW
+
+            
+
+-------------------------------------------------
+
+INDEX VIEW
+@{
+    ViewBag.Title = "Businesses";
+    ViewBag.Header = "Businesses";
+    string sim = Bootes.Core.Common.Constants.API_URL;
+    
+}
+@section styles{
+
+
+}
+
+<div class="spp" data-perm="BusinessesSearch"></div>
+ 
+   
+ 
+
+  <div class="row" id="filterView"> 
+            <div class="col-md-12">
+                <div class="collapse" id="collapseExample">
+
+                    <form action="" class="form p-3 mb-0 bg-light" method="get">
+                        <div class="row">
+
+                            <div class="form-group col-sm-12 col-md-3">
+    <small>Name</small>
+    <input type="text" name="name" id="name" value="" placeholder="Name" class="form-control form-control-sm" v-model="formsearch.Name" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>Code</small>
+    <input type="text" name="code" id="code" value="" placeholder="Code" class="form-control form-control-sm" v-model="formsearch.Code" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>BusinessTypeId</small>
+    <input type="text" name="businessTypeId" id="businessTypeId" value="" placeholder="BusinessTypeId" class="form-control form-control-sm" v-model="formsearch.BusinessTypeId" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>AddressStreet</small>
+    <input type="text" name="addressStreet" id="addressStreet" value="" placeholder="AddressStreet" class="form-control form-control-sm" v-model="formsearch.AddressStreet" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>AddressCity</small>
+    <input type="text" name="addressCity" id="addressCity" value="" placeholder="AddressCity" class="form-control form-control-sm" v-model="formsearch.AddressCity" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>AddressPostCode</small>
+    <input type="text" name="addressPostCode" id="addressPostCode" value="" placeholder="AddressPostCode" class="form-control form-control-sm" v-model="formsearch.AddressPostCode" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>AddressCountryId</small>
+    <input type="text" name="addressCountryId" id="addressCountryId" value="" placeholder="AddressCountryId" class="form-control form-control-sm" v-model="formsearch.AddressCountryId" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>Contact1Name</small>
+    <input type="text" name="contact1Name" id="contact1Name" value="" placeholder="Contact1Name" class="form-control form-control-sm" v-model="formsearch.Contact1Name" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>Contact1Email</small>
+    <input type="text" name="contact1Email" id="contact1Email" value="" placeholder="Contact1Email" class="form-control form-control-sm" v-model="formsearch.Contact1Email" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>Contact1Mobile</small>
+    <input type="text" name="contact1Mobile" id="contact1Mobile" value="" placeholder="Contact1Mobile" class="form-control form-control-sm" v-model="formsearch.Contact1Mobile" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>Contact2Name</small>
+    <input type="text" name="contact2Name" id="contact2Name" value="" placeholder="Contact2Name" class="form-control form-control-sm" v-model="formsearch.Contact2Name" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>Contact2Email</small>
+    <input type="text" name="contact2Email" id="contact2Email" value="" placeholder="Contact2Email" class="form-control form-control-sm" v-model="formsearch.Contact2Email" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>Contact2Mobile</small>
+    <input type="text" name="contact2Mobile" id="contact2Mobile" value="" placeholder="Contact2Mobile" class="form-control form-control-sm" v-model="formsearch.Contact2Mobile" >
+</div>
+ 
+                            
+                            <div class="form-group col-sm-12 text-right mb-0">
+                                <button class="btn btn-sm btn-warning" type="reset" value="Cancel">
+                                    Cancel
+                                </button>
+                                <button class="btn btn-sm btn-primary" type="submit" name="act">
+                                    Search
+                                </button>
+                                <button class="btn btn-sm btn-dark" type="submit" name="act" value="export">
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-right">
+                    <a class="btn btn-light btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Filter/Export
+                        <i class="fa fa-search"></i>
+                    </a>
+                    <a href="javascript:;" onclick="FormUtil.FormCreate()" role="button" class="btn btn-light btn-sm">
+                        New
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+                <table id="grid" class="table" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a href="javascript:;" onclick="FormUtil.FormCreate()">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </th>
+                             <th>Name</th> 
+ <th>Code</th> 
+ <th>BusinessTypeId</th> 
+ <th>AddressStreet</th> 
+ <th>AddressCity</th> 
+ <th>AddressPostCode</th> 
+ <th>AddressCountryId</th> 
+ <th>Contact1Name</th> 
+ <th>Contact1Email</th> 
+ <th>Contact1Mobile</th> 
+ <th>Contact2Name</th> 
+ <th>Contact2Email</th> 
+ <th>Contact2Mobile</th> 
+ <th>Status</th> 
+ <th>Created</th> 
+ <th>Updated</th> 
+
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+        <div id="appView">
+        <!-- Modal -->
+            <div class="modal fade" id="crudModal" tabindex="-1" role="dialog" aria-labelledby="crudModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="crudModallLabel">{{ frmTitle }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form method="post" @@submit.prevent="submit">
+
+                                        <input data-val="true" data-val-number="The field Id must be a number." data-val-required="The Id field is required." id="Id"
+                                            name="Id" type="hidden" value="0" v-model="form.Id" />
+                                        <div class="white-box">
+                                            <div class="row">
+                                            <div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="Name">Name</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The Name field is required." id="Name"
+        name="Name" type="text" value="" v-model="form.Name" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="Code">Code</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The Code field is required." id="Code"
+        name="Code" type="text" value="" v-model="form.Code" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="BusinessTypeId">BusinessTypeId</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The BusinessTypeId field is required." id="BusinessTypeId"
+        name="BusinessTypeId" type="text" value="" v-model="form.BusinessTypeId" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="AddressStreet">AddressStreet</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The AddressStreet field is required." id="AddressStreet"
+        name="AddressStreet" type="text" value="" v-model="form.AddressStreet" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="AddressCity">AddressCity</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The AddressCity field is required." id="AddressCity"
+        name="AddressCity" type="text" value="" v-model="form.AddressCity" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="AddressPostCode">AddressPostCode</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The AddressPostCode field is required." id="AddressPostCode"
+        name="AddressPostCode" type="text" value="" v-model="form.AddressPostCode" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="AddressCountryId">AddressCountryId</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The AddressCountryId field is required." id="AddressCountryId"
+        name="AddressCountryId" type="text" value="" v-model="form.AddressCountryId" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="Contact1Name">Contact1Name</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The Contact1Name field is required." id="Contact1Name"
+        name="Contact1Name" type="text" value="" v-model="form.Contact1Name" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="Contact1Email">Contact1Email</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The Contact1Email field is required." id="Contact1Email"
+        name="Contact1Email" type="text" value="" v-model="form.Contact1Email" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="Contact1Mobile">Contact1Mobile</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The Contact1Mobile field is required." id="Contact1Mobile"
+        name="Contact1Mobile" type="text" value="" v-model="form.Contact1Mobile" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="Contact2Name">Contact2Name</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The Contact2Name field is required." id="Contact2Name"
+        name="Contact2Name" type="text" value="" v-model="form.Contact2Name" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="Contact2Email">Contact2Email</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The Contact2Email field is required." id="Contact2Email"
+        name="Contact2Email" type="text" value="" v-model="form.Contact2Email" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="Contact2Mobile">Contact2Mobile</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The Contact2Mobile field is required." id="Contact2Mobile"
+        name="Contact2Mobile" type="text" value="" v-model="form.Contact2Mobile" />
+</div>
+
+                                                  
+                                                <div class="form-group col-sm-6">
+
+                                                    <input checked="checked" data-val="true" data-val-required="The RecordStatus field is required." id="RecordStatus" name="RecordStatus"
+                                                        type="radio" value="0"  v-model="form.RecordStatus" />
+                                                    <label>Pending</label>
+                                                    <input id="RecordStatus" name="RecordStatus" type="radio" value="1" v-model="form.RecordStatus" />
+                                                    <label>Active</label>
+                                                    <input id="RecordStatus" name="RecordStatus" type="radio" value="2" v-model="form.RecordStatus" />
+                                                    <label>Disabled</label>
+                                                </div>
+                                                <div class="form-group col-sm-6 text-right">
+                                                    <button type="reset" class="btn btn-warning btn-sm">Cancel</button>
+                                                    <input type="submit" value="Submit" class="btn btn-primary btn-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailModalLabel">{{ frmTitle }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <dl class="row">
+ 
+                                
+                                <dt class="col-sm-3">Name</dt>
+                                <dd class="col-sm-9">{{ form.Name }}</dd>
+
+                                <dt class="col-sm-3">Code</dt>
+                                <dd class="col-sm-9">{{ form.Code }}</dd>
+
+                                <dt class="col-sm-3">BusinessTypeId</dt>
+                                <dd class="col-sm-9">{{ form.BusinessTypeId }}</dd>
+
+                                <dt class="col-sm-3">AddressStreet</dt>
+                                <dd class="col-sm-9">{{ form.AddressStreet }}</dd>
+
+                                <dt class="col-sm-3">AddressCity</dt>
+                                <dd class="col-sm-9">{{ form.AddressCity }}</dd>
+
+                                <dt class="col-sm-3">AddressPostCode</dt>
+                                <dd class="col-sm-9">{{ form.AddressPostCode }}</dd>
+
+                                <dt class="col-sm-3">AddressCountryId</dt>
+                                <dd class="col-sm-9">{{ form.AddressCountryId }}</dd>
+
+                                <dt class="col-sm-3">Contact1Name</dt>
+                                <dd class="col-sm-9">{{ form.Contact1Name }}</dd>
+
+                                <dt class="col-sm-3">Contact1Email</dt>
+                                <dd class="col-sm-9">{{ form.Contact1Email }}</dd>
+
+                                <dt class="col-sm-3">Contact1Mobile</dt>
+                                <dd class="col-sm-9">{{ form.Contact1Mobile }}</dd>
+
+                                <dt class="col-sm-3">Contact2Name</dt>
+                                <dd class="col-sm-9">{{ form.Contact2Name }}</dd>
+
+                                <dt class="col-sm-3">Contact2Email</dt>
+                                <dd class="col-sm-9">{{ form.Contact2Email }}</dd>
+
+                                <dt class="col-sm-3">Contact2Mobile</dt>
+                                <dd class="col-sm-9">{{ form.Contact2Mobile }}</dd>
+ 
+
+
+                                
+                                <dt class="col-sm-3">Status</dt>
+                                <dd class="col-sm-9">{{ form.RecordStatusText }}</dd>
+                                
+                                <dt class="col-sm-3">Created</dt>
+                                <dd class="col-sm-9">{{ form.CreatedAtText }}</dd>
+                                
+                                <dt class="col-sm-3">Updated</dt>
+                                <dd class="col-sm-9">{{ form.UpdatedAtText }}</dd>
+                            </dl> 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger btn-sm" v-on:click="deleteItem">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+@section scripts
+{
+  <script type="text/javascript">
+
+        $(document).ready(function () {
+            
+            var _form = {
+                Id: 0,
+Name: "",
+Code: "",
+BusinessTypeId: "",
+AddressStreet: "",
+AddressCity: "",
+AddressPostCode: "",
+AddressCountryId: "",
+Contact1Name: "",
+Contact1Email: "",
+Contact1Mobile: "",
+Contact2Name: "",
+Contact2Email: "",
+Contact2Mobile: ""
+            };
+
+            var _formsearch = {
+                Id: 0,
+Name: "",
+Code: "",
+BusinessTypeId: "",
+AddressStreet: "",
+AddressCity: "",
+AddressPostCode: "",
+AddressCountryId: "",
+Contact1Name: "",
+Contact1Email: "",
+Contact1Mobile: "",
+Contact2Name: "",
+Contact2Email: "",
+Contact2Mobile: ""
+            };
+            var _columns = [
+                {
+                    "data": "Id",
+                    "render": function (data, type, row, meta) {
+                        return '<a href="javascript:;" onclick="FormUtil.FormUpdate(' + data + ')"><i class="fa fa-edit"></i></a> <a href="javascript:;" onclick="FormUtil.FormDetail(' + data + ')"><i class="fa fa-external-link-alt"></i></a>';
+                    }
+                },
+                
+{"data": "Name" },
+{"data": "Code" },
+{"data": "BusinessTypeId" },
+{"data": "AddressStreet" },
+{"data": "AddressCity" },
+{"data": "AddressPostCode" },
+{"data": "AddressCountryId" },
+{"data": "Contact1Name" },
+{"data": "Contact1Email" },
+{"data": "Contact1Mobile" },
+{"data": "Contact2Name" },
+{"data": "Contact2Email" },
+{"data": "Contact2Mobile" },
+{"data": "RecordStatusText" },
+{"data": "CreatedAtText" },
+{"data": "UpdatedAtText" }
+            ];
+
+            var _list = {
+                id: 0
+            };
+
+            FormUtil.Init({
+                entity: 'Businesses',
+                url: '@sim',
+                form: _form,
+                formsearch: _formsearch,
+                columns: _columns,
+                table: 'grid',
+                createModal: 'crudModal',
+                updateModal: 'crudModal',
+                detailModal: 'detailModal',
+                list: _list
+            });
+        });
+    </script>
+}
+
+
+-------------------------------------------------
+

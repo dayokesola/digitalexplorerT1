@@ -32,4 +32,5 @@ namespace BizNest.Core.Domain.Entity.App
         public string Info { get; set; }
 
     }
+
 }

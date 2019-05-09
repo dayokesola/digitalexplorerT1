@@ -14,5 +14,7 @@ namespace BizNest.Core.Data.DB
         { }
 
         public DbSet<BusinessType> BusinessTypes { get; set; }
+        public DbSet<StakeHolder> StakeHolders { get; set; }
+        public DbSet<Business> Businesses { get; set; }
     }
 }
