@@ -48,6 +48,8 @@ namespace BizNest.Web
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            
+
 
             app.UseMvc();
         }
