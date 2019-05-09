@@ -7,9 +7,9 @@ using System.Text;
 namespace BizNest.Core.Data.DB
 { 
 
-    public class BloggingContext : DbContext
+    public class AppDbContext : DbContext
     {
-        public BloggingContext(DbContextOptions<BloggingContext> options)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         { }
 
