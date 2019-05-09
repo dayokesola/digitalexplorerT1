@@ -1,0 +1,1075 @@
+ENTITY
+
+        /// <summary>
+        /// BusinessType Class
+        /// </summary>
+        public class BusinessType : BaseEntity<int>
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+public string Name { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public int MinStakeHolder { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public int MaxStakeHolder { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public decimal MinCapital { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Info { get; set; }
+
+        }
+
+-------------------------------------------------
+
+MODEL
+
+        /// <summary>
+        /// BusinessType View Model
+        /// </summary>
+        [TableName("bts_businesstypemodel")]
+        [PrimaryKey("Id")]
+        public class BusinessTypeModel : BaseModel<int>
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+public string Name { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public int MinStakeHolder { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public int MaxStakeHolder { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public decimal MinCapital { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Info { get; set; }
+
+        }
+
+-------------------------------------------------
+
+FORM
+
+        /// <summary>
+        /// BusinessType Form
+        /// </summary>
+        public class BusinessTypeForm : BaseForm<int>
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+public string Name { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public int MinStakeHolder { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public int MaxStakeHolder { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public decimal MinCapital { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Info { get; set; }
+
+        }
+
+-------------------------------------------------
+
+AUTOMAPPER CONFIG
+
+            cfg.CreateMap<BusinessType, BusinessTypeModel>().ReverseMap();
+            cfg.CreateMap<BusinessType, BusinessTypeForm>().ReverseMap();
+            cfg.CreateMap<BusinessTypeModel, BusinessTypeForm>().ReverseMap();
+
+-------------------------------------------------
+
+MODEL FACTORY
+
+        /// <summary>
+        /// BusinessType Factory
+        /// </summary>
+        public class BusinessTypeFactory : BaseFactory<BusinessType, BusinessTypeModel, BusinessTypeForm, int>
+        {
+
+        }
+
+-------------------------------------------------
+
+
+FACTORY SERVICE
+
+        BusinessTypeFactory BusinessTypes { get; }
+
+        private BusinessTypeFactory _businesstype;
+
+        /// <summary>
+        /// BusinessType Factory Module
+        /// </summary>
+        public BusinessTypeFactory BusinessTypes { get { if (_businesstype == null) { _businesstype = new BusinessTypeFactory(); } return _businesstype; } }
+
+-------------------------------------------------
+
+DB CONTEXT
+
+        public DbSet<BusinessType> BusinessTypes { get; set; }
+ 
+        For<BusinessTypeModel>().TableName("bts_businesstypemodel");
+
+var txt = @"create view bts_businesstypemodel as select x.* from bts_businesstype x where x.RecordStatus != 3 and x.RecordStatus != 4";
+Sql(txt);
+
+
+
+var txt = @"drop view bts_businesstypemodel";
+Sql(txt);
+
+-------------------------------------------------
+
+ENTITY REPOSITORY
+    /// <summary>
+    /// 
+    /// </summary>
+    public class BusinessTypeRepository : BaseRepository<BusinessType, BusinessTypeModel, int>
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        public BusinessTypeRepository(BootesDbContext context) : base(context)
+        {
+        }
+        /// <summary>
+        /// IQueryable BusinessType Entity Search
+        /// </summary>
+        /// <param name="name"></param>
+/// <param name="minStakeHolder"></param>
+/// <param name="maxStakeHolder"></param>
+/// <param name="minCapital"></param>
+/// <param name="info"></param>
+/// <returns></returns>
+        public IQueryable<BusinessType> Search(string name = "",int minStakeHolder = 0,int maxStakeHolder = 0,decimal minCapital = 0,string info = "")
+        {
+            var table = Query();
+            if (!string.IsNullOrEmpty(name))
+            {
+                table = table.Where(x => x.Name == name);
+            }
+if (minStakeHolder > 0)
+            {
+                table = table.Where(x => x.MinStakeHolder == minStakeHolder);
+            }
+if (maxStakeHolder > 0)
+            {
+                table = table.Where(x => x.MaxStakeHolder == maxStakeHolder);
+            }
+if (minCapital > 0)
+            {
+                table = table.Where(x => x.MinCapital == minCapital);
+            }
+if (!string.IsNullOrEmpty(info))
+            {
+                table = table.Where(x => x.Info == info);
+            }
+  
+            return table;
+        }
+
+        /// <summary>
+        /// Paged BusinessType Model Search
+        /// </summary>
+        /// <param name="name"></param>
+/// <param name="minStakeHolder"></param>
+/// <param name="maxStakeHolder"></param>
+/// <param name="minCapital"></param>
+/// <param name="info"></param>
+/// <param name="page"></param>
+        ///<param name="pageSize"></param>
+        ///<param name="sort"></param>
+        /// <returns></returns>
+        public Page<BusinessTypeModel> SearchView(string name = "",int minStakeHolder = 0,int maxStakeHolder = 0,decimal minCapital = 0,string info = "",
+            long page = 1, long pageSize = 10, string sort = "Id")
+        {
+            var sql = "select * from " + Constants.DBPrefix + "businesstypemodel where Id > 0 ";
+            var c = 0;
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                sql += $" and Name = @{c} ";
+                AddParam("name", name);
+                c++;
+            }
+if (minStakeHolder > 0)
+            {
+                sql += $" and MinStakeHolder = @{c} ";
+                AddParam("minStakeHolder", minStakeHolder);
+                c++;
+            }
+if (maxStakeHolder > 0)
+            {
+                sql += $" and MaxStakeHolder = @{c} ";
+                AddParam("maxStakeHolder", maxStakeHolder);
+                c++;
+            }
+if (minCapital > 0)
+            {
+                sql += $" and MinCapital = @{c} ";
+                AddParam("minCapital", minCapital);
+                c++;
+            }
+if (!string.IsNullOrEmpty(info))
+            {
+                sql += $" and Info = @{c} ";
+                AddParam("info", info);
+                c++;
+            }
+
+
+            if(page <= 0)
+            {
+                var l = GetList(sql);
+                return new Page<BusinessTypeModel>()
+                {
+                    CurrentPage = 0,
+                    Items = l,
+                    ItemsPerPage = 0,
+                    TotalItems = 0,
+                    TotalPages = 0
+                };
+            }
+
+           
+            sql += ApplySort(sort); 
+            var k = SearchView(sql, page, pageSize);
+            return new Page<BusinessTypeModel>()
+            {
+                CurrentPage = k.CurrentPage,
+                Items = k.Items,
+                ItemsPerPage = k.ItemsPerPage,
+                TotalItems = k.TotalItems,
+                TotalPages = k.TotalPages
+            };
+        }
+
+        /// <summary>
+        /// Get BusinessType Entity
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public BusinessTypeModel GetModel(int Id)
+        {
+            var sql = "select * from " + Constants.DBPrefix + "businesstypemodel where Id = @0"; 
+            AddParam("Id", Id);
+            return GetRecord(sql);
+        }
+
+        /// <summary>
+        /// Check exists
+        /// </summary>
+        /// <param name="name"></param>
+/// <param name="minStakeHolder"></param>
+/// <param name="maxStakeHolder"></param>
+/// <param name="minCapital"></param>
+/// <param name="info"></param>
+/// 
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool ItemExists(string name = "",int minStakeHolder = 0,int maxStakeHolder = 0,decimal minCapital = 0,string info = "", int Id = 0)
+        {
+            var check = Search(name,minStakeHolder,maxStakeHolder,minCapital,info);
+            if (Id > 0)
+            {
+                check = check.Where(x => x.Id != Id);
+            }
+            return check.Any();
+        }
+
+        /// <summary>
+        /// check exists
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool ItemExists(BusinessTypeModel model, int Id = 0)
+        {
+            var check = Search(model.Name,model.MinStakeHolder,model.MaxStakeHolder,model.MinCapital,model.Info);
+            if (Id > 0)
+            {
+                check = check.Where(x => x.Id != Id);
+            }
+            return check.Any();
+        }
+    }
+
+-------------------------------------------------
+
+REPOSITORY SERVICE
+
+        BusinessTypeRepository BusinessTypes { get; }
+
+        private BusinessTypeRepository _businesstypes;
+        public BusinessTypeRepository BusinessTypes { get { if (_businesstypes == null) { _businesstypes = new BusinessTypeRepository(_context); } return _businesstypes; } }
+
+
+-------------------------------------------------
+
+SERVICE
+
+
+        /// <summary>
+        /// BusinessType Service
+        /// </summary>
+        public partial class BusinessTypeService : BaseService<BusinessType, BusinessTypeModel, BusinessTypeForm, int>
+        {
+
+        }
+
+
+        /// <summary>
+        /// BusinessType Service
+        /// </summary>
+        public partial class BusinessTypeService : BaseService<BusinessType, BusinessTypeModel, BusinessTypeForm, int>
+        {
+            /// <summary>
+            /// IQueryable BusinessType Entity Search
+            /// </summary>
+            /// <param name="name"></param>
+/// <param name="minStakeHolder"></param>
+/// <param name="maxStakeHolder"></param>
+/// <param name="minCapital"></param>
+/// <param name="info"></param>
+/// <returns></returns>
+            public IQueryable<BusinessType> Search(string name = "",int minStakeHolder = 0,int maxStakeHolder = 0,decimal minCapital = 0,string info = "")
+            {
+                return DataModule.BusinessTypes.Search(name,minStakeHolder,maxStakeHolder,minCapital,info);
+            }
+            
+
+            /// <summary>
+            /// IEnumerable BusinessType Model Search
+            /// </summary>
+            /// <param name="name"></param>
+/// <param name="minStakeHolder"></param>
+/// <param name="maxStakeHolder"></param>
+/// <param name="minCapital"></param>
+/// <param name="info"></param>
+/// <returns></returns>
+            public IEnumerable<BusinessTypeModel> SearchModel(string name = "",int minStakeHolder = 0,int maxStakeHolder = 0,decimal minCapital = 0,string info = "")
+            {
+                return DataModule.BusinessTypes.Search(name,minStakeHolder,maxStakeHolder,minCapital,info)
+                    .Select(FactoryModule.BusinessTypes.CreateModel);
+            }
+
+            
+            /// <summary>
+            /// Paged BusinessType Model Search
+            /// </summary>
+            /// <param name="name"></param>
+/// <param name="minStakeHolder"></param>
+/// <param name="maxStakeHolder"></param>
+/// <param name="minCapital"></param>
+/// <param name="info"></param>
+/// <param name="page"></param>
+            ///<param name="pageSize"></param>
+            ///<param name="sort"></param>
+            /// <returns></returns>
+            public Page<BusinessTypeModel> SearchView(string name = "",int minStakeHolder = 0,int maxStakeHolder = 0,decimal minCapital = 0,string info = "",
+                long page = 1,long pageSize = 10, string sort = "")
+            {
+                return DataModule.BusinessTypes.SearchView(name,minStakeHolder,maxStakeHolder,minCapital,info, page, pageSize, sort);
+            }
+
+            /// <summary>
+            /// Create BusinessType Model from BusinessType Entity
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <returns></returns>
+            public BusinessTypeModel Create(BusinessType entity)
+            {
+                return FactoryModule.BusinessTypes.CreateModel(entity);
+            }
+
+	        /// <summary>
+            /// Create BusinessType Model from BusinessType Form
+            /// </summary>
+            /// <param name="form"></param>
+            /// <returns></returns>
+            public BusinessTypeModel Create(BusinessTypeForm form)
+            {
+                return FactoryModule.BusinessTypes.CreateModel(form);
+            }
+
+            /// <summary>
+            /// Create BusinessType Entity from BusinessType Model
+            /// </summary>
+            /// <param name="model"></param>
+            /// <returns></returns>
+            public BusinessType Create(BusinessTypeModel model)
+            {
+                return FactoryModule.BusinessTypes.CreateEntity(model);
+            }
+
+            /// <summary>
+            /// Check Uniqueness of BusinessType before creation
+            /// </summary>
+            /// <param name="model"></param>
+            /// <returns></returns>
+            public bool CreateExists(BusinessTypeModel model)
+            {
+                return DataModule.BusinessTypes.ItemExists(model);
+            }
+
+            /// <summary>
+            /// Delete BusinessType
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <returns></returns>
+            public int Delete(BusinessType entity)
+            {
+                return DataModule.BusinessTypes.Delete(entity);
+            }
+
+            /// <summary>
+            /// Get BusinessType Entity
+            /// </summary>
+            /// <param name="id"></param>
+            /// <returns></returns>
+            public BusinessType Get(int id)
+            {
+                return DataModule.BusinessTypes.Get(id);
+            }
+
+
+
+            /// <summary>
+            /// Get BusinessType Model
+            /// </summary>
+            /// <param name="id"></param>
+            /// <returns></returns>
+            public BusinessTypeModel GetModel(int id)
+            { 
+                return DataModule.BusinessTypes.GetModel(id);
+            }
+
+            /// <summary>
+            /// Insert new BusinessType to DB
+            /// </summary>
+            /// <param name="model"></param>
+            /// <param name="check"></param>
+            /// <returns></returns>
+            public BusinessTypeModel Insert(BusinessTypeModel model, bool check = true)
+            {
+                if (check)
+                {
+                    var routeSearch = DataModule.BusinessTypes.ItemExists(model);
+                    if (routeSearch)
+                    {
+                        throw new Exception("BusinessType Name already exists");
+                    }
+                }
+                var entity = FactoryModule.BusinessTypes.CreateEntity(model);
+                entity.RecordStatus = Core.Domain.Enum.RecordStatus.Active;
+                DataModule.BusinessTypes.Insert(entity);
+                return FactoryModule.BusinessTypes.CreateModel(entity);
+            }
+
+            /// <summary>
+            /// Update a BusinessType Entity with a BusinessType Model with selected fields
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <param name="model"></param>
+            /// <param name="fields"></param>
+            /// <returns></returns>
+            public BusinessType Patch(BusinessType entity, BusinessTypeModel model, string fields)
+            {
+                return FactoryModule.BusinessTypes.Patch(entity, model, fields);
+            }
+
+            /// <summary>
+            /// Update BusinessType, with Patch Options Optional
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <param name="model"></param>
+            /// <param name="fields"></param>
+            /// <returns></returns>
+            public BusinessTypeModel Update(BusinessType entity, BusinessTypeModel model = null, string fields = "")
+            {
+                if (model != null)
+                {
+                    entity = Patch(entity, model, fields);
+                }
+                return FactoryModule.BusinessTypes.CreateModel(DataModule.BusinessTypes.Update(entity));
+            }
+
+            /// <summary>
+            /// Check Uniqueness of BusinessType before update
+            /// </summary>
+            /// <param name="model"></param>
+            /// <returns></returns>
+            public bool UpdateExists(BusinessTypeModel model)
+            {
+                return DataModule.BusinessTypes.ItemExists(model, model.Id);
+            }
+
+    }
+
+-------------------------------------------------
+
+SERVICE MODULE
+
+        BusinessTypeService BusinessTypeService { get; }
+
+        private BusinessTypeService _businesstype;
+
+        /// <summary>
+        /// BusinessType Service Module
+        /// </summary>
+        public BusinessTypeService BusinessTypeService { get { if (_businesstype == null) { _businesstype = new BusinessTypeService(); } return _businesstype; } }
+ 
+
+-------------------------------------------------
+
+API CONTROLLER
+
+
+    /// <summary>
+    /// BusinessTypes CRUD
+    /// </summary>
+    [RoutePrefix("api/BusinessTypes")]
+    public class BusinessTypesController : BaseApiController
+    {
+        /// <summary>
+        /// Search, Page, filter and Shaped BusinessTypes
+        /// </summary>
+        /// <param name="sort"></param>
+        /// <param name="name"></param>
+/// <param name="minStakeHolder"></param>
+/// <param name="maxStakeHolder"></param>
+/// <param name="minCapital"></param>
+/// <param name="info"></param>
+/// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="fields"></param>
+        /// <param name="draw"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(IEnumerable<BusinessTypeModel>))]
+        [Route("Search", Name = "BusinessTypeApi")]
+        [HttpGet]
+        public IHttpActionResult Get(string sort = "id", string name = "",int minStakeHolder = 0,int maxStakeHolder = 0,decimal minCapital = 0,string info = "", long page = 1, long pageSize = 10, string fields= "", int draw = 1)
+        {  
+            try
+            {
+                var items = Logic.BusinessTypeService.SearchView(name,minStakeHolder,maxStakeHolder,minCapital,info,page, pageSize, sort);
+                
+                if (page > items.TotalPages) page = items.TotalPages;
+                var jo = new JObjectHelper(); 
+                jo.Add("name", name);
+jo.Add("minStakeHolder", minStakeHolder);
+jo.Add("maxStakeHolder", maxStakeHolder);
+jo.Add("minCapital", minCapital);
+jo.Add("info", info);
+
+                jo.Add("fields", fields); 
+                jo.Add("sort", sort);
+                var urlHelper = new UrlHelper(Request);
+                var linkBuilder = new PageLinkBuilder(urlHelper, "BusinessTypeApi", jo, page, pageSize, items.TotalItems, draw); 
+                AddHeader("X-Pagination", linkBuilder.PaginationHeader);
+                var dto = new List<BusinessTypeModel>();
+                if (items.TotalItems <= 0) return Ok(dto); 
+                var dtos = items.Items.ShapeList(fields);
+                return Ok(dtos);
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        /// <summary>
+        /// Get BusinessType by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("Detail")]
+        [ResponseType(typeof(BusinessTypeModel))]
+        public IHttpActionResult Get(int id)
+        {
+            try
+            {
+                var item = Logic.BusinessTypeService.GetModel(id);
+                if (item == null)
+                {
+                    return NotFound();
+                }
+                return Ok(item);
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+
+         /// <summary>
+        /// Add BusinessType
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        [Route("Create")]
+        [HttpPost]
+        [ResponseType(typeof(BusinessTypeModel))]
+        public IHttpActionResult Create(BusinessTypeForm form)
+        {
+            try
+            {
+                var model = Logic.BusinessTypeService.Create(form);
+                var check = Logic.BusinessTypeService.CreateExists(model);
+                if (check)
+                {
+                    return BadRequest("BusinessType already exists");
+                }
+                var dto = Logic.BusinessTypeService.Insert(model);
+                return Ok(dto);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+
+                /// <summary>
+        /// Update BusinessType
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        [Route("Update")]
+        [HttpPost]
+        [ResponseType(typeof(BusinessTypeModel))]
+        public IHttpActionResult Update(int id, BusinessTypeForm form)
+        {
+            try
+            {
+                var model = Logic.BusinessTypeService.Create(form);
+                if (id != model.Id)
+                    return BadRequest("Route Parameter does mot match model ID"); 
+                var found = Logic.BusinessTypeService.Get(id);
+                if (found == null)
+                    return NotFound(); 
+                var check = Logic.BusinessTypeService.UpdateExists(model); 
+                if (Logic.BusinessTypeService.UpdateExists(model))
+                    return BadRequest("BusinessType configuration already exists");
+                var dto = Logic.BusinessTypeService.Update(found, model,
+                    "Name,MinStakeHolder,MaxStakeHolder,MinCapital,Info,RecordStatus");
+                return Ok(dto);
+            } 
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Delete BusinessType
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("Delete")]
+        [HttpPost]
+        [ResponseType(typeof(BusinessTypeModel))]
+        public IHttpActionResult Delete(int id)
+        {
+            try
+            {
+                var found = Logic.BusinessTypeService.Get(id);
+                if (found == null)
+                    return NotFound();
+                Logic.BusinessTypeService.Delete(found); 
+                return Content(HttpStatusCode.NoContent,found);
+            } 
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        } 
+    }
+
+
+-------------------------------------------------
+
+API Library Service
+public class BusinessTypeAPI : BaseServiceAPI<BusinessTypeModel, int>
+    { 
+        public BusinessTypeAPI()
+        {
+            _api = "/api/BusinessTypes";
+        }
+ 
+        public async Task<ApiResponse<IEnumerable<BusinessTypeModel>>> Search(string name = "",int minStakeHolder = 0,int maxStakeHolder = 0,decimal minCapital = 0,string info = "",
+            string sort = "id",int page = 1, int pageSize = 10, string fields = "", bool extended = false)
+        {
+            var jo = new JObjectHelper(sort, page, pageSize, fields, extended);
+            jo.Add("name", name);
+jo.Add("minStakeHolder", minStakeHolder);
+jo.Add("maxStakeHolder", maxStakeHolder);
+jo.Add("minCapital", minCapital);
+jo.Add("info", info);
+             
+            Route("Search");
+            return await Search<BusinessTypeModel>(jo); 
+        }        
+    }
+
+-------------------------------------------------
+
+API Library MODULE
+private BusinessTypeAPI _businesstype;
+
+        /// <summary>
+        /// BusinessType API Module
+        /// </summary>
+        public BusinessTypeAPI BusinessTypeAPI { get { if (_businesstype == null) { _businesstype = new BusinessTypeAPI(); } return _businesstype; } }
+
+
+-------------------------------------------------
+
+MVC CONTROLLER
+     
+    public class BusinessTypesController : BaseController
+    {
+        
+        //[CustomAuth(Permissions = "BusinessTypesSearch")]
+        public ActionResult Index(string name = "",int minStakeHolder = 0,int maxStakeHolder = 0,decimal minCapital = 0,string info = "", string act="")
+        {
+            if (act.ToLower() == "export")
+            {
+                var data = Logic.BusinessTypeService.SearchView(name,minStakeHolder,maxStakeHolder,minCapital,info,page: 0);
+                Download(data); 
+            }
+            return View();
+        }
+
+    }
+
+
+-------------------------------------------------
+
+SAVE VIEW
+
+            
+
+-------------------------------------------------
+
+INDEX VIEW
+@{
+    ViewBag.Title = "BusinessTypes";
+    ViewBag.Header = "BusinessTypes";
+    string sim = Bootes.Core.Common.Constants.API_URL;
+    
+}
+@section styles{
+
+
+}
+
+<div class="spp" data-perm="BusinessTypesSearch"></div>
+ 
+   
+ 
+
+  <div class="row" id="filterView"> 
+            <div class="col-md-12">
+                <div class="collapse" id="collapseExample">
+
+                    <form action="" class="form p-3 mb-0 bg-light" method="get">
+                        <div class="row">
+
+                            <div class="form-group col-sm-12 col-md-3">
+    <small>Name</small>
+    <input type="text" name="name" id="name" value="" placeholder="Name" class="form-control form-control-sm" v-model="formsearch.Name" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>MinStakeHolder</small>
+    <input type="text" name="minStakeHolder" id="minStakeHolder" value="" placeholder="MinStakeHolder" class="form-control form-control-sm" v-model="formsearch.MinStakeHolder" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>MaxStakeHolder</small>
+    <input type="text" name="maxStakeHolder" id="maxStakeHolder" value="" placeholder="MaxStakeHolder" class="form-control form-control-sm" v-model="formsearch.MaxStakeHolder" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>MinCapital</small>
+    <input type="text" name="minCapital" id="minCapital" value="" placeholder="MinCapital" class="form-control form-control-sm" v-model="formsearch.MinCapital" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>Info</small>
+    <input type="text" name="info" id="info" value="" placeholder="Info" class="form-control form-control-sm" v-model="formsearch.Info" >
+</div>
+ 
+                            
+                            <div class="form-group col-sm-12 text-right mb-0">
+                                <button class="btn btn-sm btn-warning" type="reset" value="Cancel">
+                                    Cancel
+                                </button>
+                                <button class="btn btn-sm btn-primary" type="submit" name="act">
+                                    Search
+                                </button>
+                                <button class="btn btn-sm btn-dark" type="submit" name="act" value="export">
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-right">
+                    <a class="btn btn-light btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Filter/Export
+                        <i class="fa fa-search"></i>
+                    </a>
+                    <a href="javascript:;" onclick="FormUtil.FormCreate()" role="button" class="btn btn-light btn-sm">
+                        New
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+                <table id="grid" class="table" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a href="javascript:;" onclick="FormUtil.FormCreate()">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </th>
+                             <th>Name</th> 
+ <th>MinStakeHolder</th> 
+ <th>MaxStakeHolder</th> 
+ <th>MinCapital</th> 
+ <th>Info</th> 
+ <th>Status</th> 
+ <th>Created</th> 
+ <th>Updated</th> 
+
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+        <div id="appView">
+        <!-- Modal -->
+            <div class="modal fade" id="crudModal" tabindex="-1" role="dialog" aria-labelledby="crudModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="crudModallLabel">{{ frmTitle }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form method="post" @@submit.prevent="submit">
+
+                                        <input data-val="true" data-val-number="The field Id must be a number." data-val-required="The Id field is required." id="Id"
+                                            name="Id" type="hidden" value="0" v-model="form.Id" />
+                                        <div class="white-box">
+                                            <div class="row">
+                                            <div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="Name">Name</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The Name field is required." id="Name"
+        name="Name" type="text" value="" v-model="form.Name" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="MinStakeHolder">MinStakeHolder</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The MinStakeHolder field is required." id="MinStakeHolder"
+        name="MinStakeHolder" type="text" value="" v-model="form.MinStakeHolder" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="MaxStakeHolder">MaxStakeHolder</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The MaxStakeHolder field is required." id="MaxStakeHolder"
+        name="MaxStakeHolder" type="text" value="" v-model="form.MaxStakeHolder" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="MinCapital">MinCapital</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The MinCapital field is required." id="MinCapital"
+        name="MinCapital" type="text" value="" v-model="form.MinCapital" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="Info">Info</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The Info field is required." id="Info"
+        name="Info" type="text" value="" v-model="form.Info" />
+</div>
+
+                                                  
+                                                <div class="form-group col-sm-6">
+
+                                                    <input checked="checked" data-val="true" data-val-required="The RecordStatus field is required." id="RecordStatus" name="RecordStatus"
+                                                        type="radio" value="0"  v-model="form.RecordStatus" />
+                                                    <label>Pending</label>
+                                                    <input id="RecordStatus" name="RecordStatus" type="radio" value="1" v-model="form.RecordStatus" />
+                                                    <label>Active</label>
+                                                    <input id="RecordStatus" name="RecordStatus" type="radio" value="2" v-model="form.RecordStatus" />
+                                                    <label>Disabled</label>
+                                                </div>
+                                                <div class="form-group col-sm-6 text-right">
+                                                    <button type="reset" class="btn btn-warning btn-sm">Cancel</button>
+                                                    <input type="submit" value="Submit" class="btn btn-primary btn-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailModalLabel">{{ frmTitle }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <dl class="row">
+ 
+                                
+                                <dt class="col-sm-3">Name</dt>
+                                <dd class="col-sm-9">{{ form.Name }}</dd>
+
+                                <dt class="col-sm-3">MinStakeHolder</dt>
+                                <dd class="col-sm-9">{{ form.MinStakeHolder }}</dd>
+
+                                <dt class="col-sm-3">MaxStakeHolder</dt>
+                                <dd class="col-sm-9">{{ form.MaxStakeHolder }}</dd>
+
+                                <dt class="col-sm-3">MinCapital</dt>
+                                <dd class="col-sm-9">{{ form.MinCapital }}</dd>
+
+                                <dt class="col-sm-3">Info</dt>
+                                <dd class="col-sm-9">{{ form.Info }}</dd>
+ 
+
+
+                                
+                                <dt class="col-sm-3">Status</dt>
+                                <dd class="col-sm-9">{{ form.RecordStatusText }}</dd>
+                                
+                                <dt class="col-sm-3">Created</dt>
+                                <dd class="col-sm-9">{{ form.CreatedAtText }}</dd>
+                                
+                                <dt class="col-sm-3">Updated</dt>
+                                <dd class="col-sm-9">{{ form.UpdatedAtText }}</dd>
+                            </dl> 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger btn-sm" v-on:click="deleteItem">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+@section scripts
+{
+  <script type="text/javascript">
+
+        $(document).ready(function () {
+            
+            var _form = {
+                Id: 0,
+Name: "",
+MinStakeHolder: "",
+MaxStakeHolder: "",
+MinCapital: "",
+Info: ""
+            };
+
+            var _formsearch = {
+                Id: 0,
+Name: "",
+MinStakeHolder: "",
+MaxStakeHolder: "",
+MinCapital: "",
+Info: ""
+            };
+            var _columns = [
+                {
+                    "data": "Id",
+                    "render": function (data, type, row, meta) {
+                        return '<a href="javascript:;" onclick="FormUtil.FormUpdate(' + data + ')"><i class="fa fa-edit"></i></a> <a href="javascript:;" onclick="FormUtil.FormDetail(' + data + ')"><i class="fa fa-external-link-alt"></i></a>';
+                    }
+                },
+                
+{"data": "Name" },
+{"data": "MinStakeHolder" },
+{"data": "MaxStakeHolder" },
+{"data": "MinCapital" },
+{"data": "Info" },
+{"data": "RecordStatusText" },
+{"data": "CreatedAtText" },
+{"data": "UpdatedAtText" }
+            ];
+
+            var _list = {
+                id: 0
+            };
+
+            FormUtil.Init({
+                entity: 'BusinessTypes',
+                url: '@sim',
+                form: _form,
+                formsearch: _formsearch,
+                columns: _columns,
+                table: 'grid',
+                createModal: 'crudModal',
+                updateModal: 'crudModal',
+                detailModal: 'detailModal',
+                list: _list
+            });
+        });
+    </script>
+}
+
+
+-------------------------------------------------
+
