@@ -1,0 +1,1500 @@
+ENTITY
+
+        /// <summary>
+        /// StakeHolder Class
+        /// </summary>
+        public class StakeHolder : BaseEntity<long>
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+public long BusinessId { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string SSN { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string FirstName { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string LastName { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Email { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Mobile { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public DateTime BirthDate { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressStreet { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressCity { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressPostCode { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public int AddressCountryId { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public decimal SeedCapital { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string BankName { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AccountNumber { get; set; }
+
+        }
+
+-------------------------------------------------
+
+MODEL
+
+        /// <summary>
+        /// StakeHolder View Model
+        /// </summary>
+        [TableName("bts_stakeholdermodel")]
+        [PrimaryKey("Id")]
+        public class StakeHolderModel : BaseModel<long>
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+public long BusinessId { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string SSN { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string FirstName { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string LastName { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Email { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Mobile { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public DateTime BirthDate { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressStreet { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressCity { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressPostCode { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public int AddressCountryId { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public decimal SeedCapital { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string BankName { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AccountNumber { get; set; }
+
+        }
+
+-------------------------------------------------
+
+FORM
+
+        /// <summary>
+        /// StakeHolder Form
+        /// </summary>
+        public class StakeHolderForm : BaseForm<long>
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+public long BusinessId { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string SSN { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string FirstName { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string LastName { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Email { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string Mobile { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public DateTime BirthDate { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressStreet { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressCity { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AddressPostCode { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public int AddressCountryId { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public decimal SeedCapital { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string BankName { get; set; }
+/// <summary>
+            /// 
+            /// </summary>
+public string AccountNumber { get; set; }
+
+        }
+
+-------------------------------------------------
+
+AUTOMAPPER CONFIG
+
+            cfg.CreateMap<StakeHolder, StakeHolderModel>().ReverseMap();
+            cfg.CreateMap<StakeHolder, StakeHolderForm>().ReverseMap();
+            cfg.CreateMap<StakeHolderModel, StakeHolderForm>().ReverseMap();
+
+-------------------------------------------------
+
+MODEL FACTORY
+
+        /// <summary>
+        /// StakeHolder Factory
+        /// </summary>
+        public class StakeHolderFactory : BaseFactory<StakeHolder, StakeHolderModel, StakeHolderForm, long>
+        {
+
+        }
+
+-------------------------------------------------
+
+
+FACTORY SERVICE
+
+        StakeHolderFactory StakeHolders { get; }
+
+        private StakeHolderFactory _stakeholder;
+
+        /// <summary>
+        /// StakeHolder Factory Module
+        /// </summary>
+        public StakeHolderFactory StakeHolders { get { if (_stakeholder == null) { _stakeholder = new StakeHolderFactory(); } return _stakeholder; } }
+
+-------------------------------------------------
+
+DB CONTEXT
+
+        public DbSet<StakeHolder> StakeHolders { get; set; }
+ 
+        For<StakeHolderModel>().TableName("bts_stakeholdermodel");
+
+var txt = @"create view bts_stakeholdermodel as select x.* from bts_stakeholder x where x.RecordStatus != 3 and x.RecordStatus != 4";
+Sql(txt);
+
+
+
+var txt = @"drop view bts_stakeholdermodel";
+Sql(txt);
+
+-------------------------------------------------
+
+ENTITY REPOSITORY
+    /// <summary>
+    /// 
+    /// </summary>
+    public class StakeHolderRepository : BaseRepository<StakeHolder, StakeHolderModel, long>
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        public StakeHolderRepository(BootesDbContext context) : base(context)
+        {
+        }
+        /// <summary>
+        /// IQueryable StakeHolder Entity Search
+        /// </summary>
+        /// <param name="businessId"></param>
+/// <param name="sSN"></param>
+/// <param name="firstName"></param>
+/// <param name="lastName"></param>
+/// <param name="email"></param>
+/// <param name="mobile"></param>
+/// <param name="birthDate"></param>
+/// <param name="addressStreet"></param>
+/// <param name="addressCity"></param>
+/// <param name="addressPostCode"></param>
+/// <param name="addressCountryId"></param>
+/// <param name="seedCapital"></param>
+/// <param name="bankName"></param>
+/// <param name="accountNumber"></param>
+/// <returns></returns>
+        public IQueryable<StakeHolder> Search(long businessId = 0,string sSN = "",string firstName = "",string lastName = "",string email = "",string mobile = "",DateTime? birthDate = null,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,decimal seedCapital = 0,string bankName = "",string accountNumber = "")
+        {
+            var table = Query();
+            if (businessId > 0)
+            {
+                table = table.Where(x => x.BusinessId == businessId);
+            }
+if (!string.IsNullOrEmpty(sSN))
+            {
+                table = table.Where(x => x.SSN == sSN);
+            }
+if (!string.IsNullOrEmpty(firstName))
+            {
+                table = table.Where(x => x.FirstName == firstName);
+            }
+if (!string.IsNullOrEmpty(lastName))
+            {
+                table = table.Where(x => x.LastName == lastName);
+            }
+if (!string.IsNullOrEmpty(email))
+            {
+                table = table.Where(x => x.Email == email);
+            }
+if (!string.IsNullOrEmpty(mobile))
+            {
+                table = table.Where(x => x.Mobile == mobile);
+            }
+if (birthDate.HasValue)
+            {
+                var birthDateVal =  birthDate.GetValueOrDefault();
+                table = table.Where(x => x.BirthDate == birthDateVal);
+            }
+if (!string.IsNullOrEmpty(addressStreet))
+            {
+                table = table.Where(x => x.AddressStreet == addressStreet);
+            }
+if (!string.IsNullOrEmpty(addressCity))
+            {
+                table = table.Where(x => x.AddressCity == addressCity);
+            }
+if (!string.IsNullOrEmpty(addressPostCode))
+            {
+                table = table.Where(x => x.AddressPostCode == addressPostCode);
+            }
+if (addressCountryId > 0)
+            {
+                table = table.Where(x => x.AddressCountryId == addressCountryId);
+            }
+if (seedCapital > 0)
+            {
+                table = table.Where(x => x.SeedCapital == seedCapital);
+            }
+if (!string.IsNullOrEmpty(bankName))
+            {
+                table = table.Where(x => x.BankName == bankName);
+            }
+if (!string.IsNullOrEmpty(accountNumber))
+            {
+                table = table.Where(x => x.AccountNumber == accountNumber);
+            }
+  
+            return table;
+        }
+
+        /// <summary>
+        /// Paged StakeHolder Model Search
+        /// </summary>
+        /// <param name="businessId"></param>
+/// <param name="sSN"></param>
+/// <param name="firstName"></param>
+/// <param name="lastName"></param>
+/// <param name="email"></param>
+/// <param name="mobile"></param>
+/// <param name="birthDate"></param>
+/// <param name="addressStreet"></param>
+/// <param name="addressCity"></param>
+/// <param name="addressPostCode"></param>
+/// <param name="addressCountryId"></param>
+/// <param name="seedCapital"></param>
+/// <param name="bankName"></param>
+/// <param name="accountNumber"></param>
+/// <param name="page"></param>
+        ///<param name="pageSize"></param>
+        ///<param name="sort"></param>
+        /// <returns></returns>
+        public Page<StakeHolderModel> SearchView(long businessId = 0,string sSN = "",string firstName = "",string lastName = "",string email = "",string mobile = "",DateTime? birthDate = null,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,decimal seedCapital = 0,string bankName = "",string accountNumber = "",
+            long page = 1, long pageSize = 10, string sort = "Id")
+        {
+            var sql = "select * from " + Constants.DBPrefix + "stakeholdermodel where Id > 0 ";
+            var c = 0;
+
+            if (businessId > 0)
+            {
+                sql += $" and BusinessId = @{c} ";
+                AddParam("businessId", businessId);
+                c++;
+            }
+if (!string.IsNullOrEmpty(sSN))
+            {
+                sql += $" and SSN = @{c} ";
+                AddParam("sSN", sSN);
+                c++;
+            }
+if (!string.IsNullOrEmpty(firstName))
+            {
+                sql += $" and FirstName = @{c} ";
+                AddParam("firstName", firstName);
+                c++;
+            }
+if (!string.IsNullOrEmpty(lastName))
+            {
+                sql += $" and LastName = @{c} ";
+                AddParam("lastName", lastName);
+                c++;
+            }
+if (!string.IsNullOrEmpty(email))
+            {
+                sql += $" and Email = @{c} ";
+                AddParam("email", email);
+                c++;
+            }
+if (!string.IsNullOrEmpty(mobile))
+            {
+                sql += $" and Mobile = @{c} ";
+                AddParam("mobile", mobile);
+                c++;
+            }
+if (birthDate.HasValue)
+            {
+                var birthDateVal =  birthDate.GetValueOrDefault();
+                sql += $" and BirthDate = @{c} ";
+                AddParam("birthDate", birthDateVal);
+                c++;
+            }
+if (!string.IsNullOrEmpty(addressStreet))
+            {
+                sql += $" and AddressStreet = @{c} ";
+                AddParam("addressStreet", addressStreet);
+                c++;
+            }
+if (!string.IsNullOrEmpty(addressCity))
+            {
+                sql += $" and AddressCity = @{c} ";
+                AddParam("addressCity", addressCity);
+                c++;
+            }
+if (!string.IsNullOrEmpty(addressPostCode))
+            {
+                sql += $" and AddressPostCode = @{c} ";
+                AddParam("addressPostCode", addressPostCode);
+                c++;
+            }
+if (addressCountryId > 0)
+            {
+                sql += $" and AddressCountryId = @{c} ";
+                AddParam("addressCountryId", addressCountryId);
+                c++;
+            }
+if (seedCapital > 0)
+            {
+                sql += $" and SeedCapital = @{c} ";
+                AddParam("seedCapital", seedCapital);
+                c++;
+            }
+if (!string.IsNullOrEmpty(bankName))
+            {
+                sql += $" and BankName = @{c} ";
+                AddParam("bankName", bankName);
+                c++;
+            }
+if (!string.IsNullOrEmpty(accountNumber))
+            {
+                sql += $" and AccountNumber = @{c} ";
+                AddParam("accountNumber", accountNumber);
+                c++;
+            }
+
+
+            if(page <= 0)
+            {
+                var l = GetList(sql);
+                return new Page<StakeHolderModel>()
+                {
+                    CurrentPage = 0,
+                    Items = l,
+                    ItemsPerPage = 0,
+                    TotalItems = 0,
+                    TotalPages = 0
+                };
+            }
+
+           
+            sql += ApplySort(sort); 
+            var k = SearchView(sql, page, pageSize);
+            return new Page<StakeHolderModel>()
+            {
+                CurrentPage = k.CurrentPage,
+                Items = k.Items,
+                ItemsPerPage = k.ItemsPerPage,
+                TotalItems = k.TotalItems,
+                TotalPages = k.TotalPages
+            };
+        }
+
+        /// <summary>
+        /// Get StakeHolder Entity
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public StakeHolderModel GetModel(long Id)
+        {
+            var sql = "select * from " + Constants.DBPrefix + "stakeholdermodel where Id = @0"; 
+            AddParam("Id", Id);
+            return GetRecord(sql);
+        }
+
+        /// <summary>
+        /// Check exists
+        /// </summary>
+        /// <param name="businessId"></param>
+/// <param name="sSN"></param>
+/// <param name="firstName"></param>
+/// <param name="lastName"></param>
+/// <param name="email"></param>
+/// <param name="mobile"></param>
+/// <param name="birthDate"></param>
+/// <param name="addressStreet"></param>
+/// <param name="addressCity"></param>
+/// <param name="addressPostCode"></param>
+/// <param name="addressCountryId"></param>
+/// <param name="seedCapital"></param>
+/// <param name="bankName"></param>
+/// <param name="accountNumber"></param>
+/// 
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool ItemExists(long businessId = 0,string sSN = "",string firstName = "",string lastName = "",string email = "",string mobile = "",DateTime? birthDate = null,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,decimal seedCapital = 0,string bankName = "",string accountNumber = "", long Id = 0)
+        {
+            var check = Search(businessId,sSN,firstName,lastName,email,mobile,birthDate,addressStreet,addressCity,addressPostCode,addressCountryId,seedCapital,bankName,accountNumber);
+            if (Id > 0)
+            {
+                check = check.Where(x => x.Id != Id);
+            }
+            return check.Any();
+        }
+
+        /// <summary>
+        /// check exists
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool ItemExists(StakeHolderModel model, long Id = 0)
+        {
+            var check = Search(model.BusinessId,model.SSN,model.FirstName,model.LastName,model.Email,model.Mobile,model.BirthDate,model.AddressStreet,model.AddressCity,model.AddressPostCode,model.AddressCountryId,model.SeedCapital,model.BankName,model.AccountNumber);
+            if (Id > 0)
+            {
+                check = check.Where(x => x.Id != Id);
+            }
+            return check.Any();
+        }
+    }
+
+-------------------------------------------------
+
+REPOSITORY SERVICE
+
+        StakeHolderRepository StakeHolders { get; }
+
+        private StakeHolderRepository _stakeholders;
+        public StakeHolderRepository StakeHolders { get { if (_stakeholders == null) { _stakeholders = new StakeHolderRepository(_context); } return _stakeholders; } }
+
+
+-------------------------------------------------
+
+SERVICE
+
+
+        /// <summary>
+        /// StakeHolder Service
+        /// </summary>
+        public partial class StakeHolderService : BaseService<StakeHolder, StakeHolderModel, StakeHolderForm, long>
+        {
+
+        }
+
+
+        /// <summary>
+        /// StakeHolder Service
+        /// </summary>
+        public partial class StakeHolderService : BaseService<StakeHolder, StakeHolderModel, StakeHolderForm, long>
+        {
+            /// <summary>
+            /// IQueryable StakeHolder Entity Search
+            /// </summary>
+            /// <param name="businessId"></param>
+/// <param name="sSN"></param>
+/// <param name="firstName"></param>
+/// <param name="lastName"></param>
+/// <param name="email"></param>
+/// <param name="mobile"></param>
+/// <param name="birthDate"></param>
+/// <param name="addressStreet"></param>
+/// <param name="addressCity"></param>
+/// <param name="addressPostCode"></param>
+/// <param name="addressCountryId"></param>
+/// <param name="seedCapital"></param>
+/// <param name="bankName"></param>
+/// <param name="accountNumber"></param>
+/// <returns></returns>
+            public IQueryable<StakeHolder> Search(long businessId = 0,string sSN = "",string firstName = "",string lastName = "",string email = "",string mobile = "",DateTime? birthDate = null,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,decimal seedCapital = 0,string bankName = "",string accountNumber = "")
+            {
+                return DataModule.StakeHolders.Search(businessId,sSN,firstName,lastName,email,mobile,birthDate,addressStreet,addressCity,addressPostCode,addressCountryId,seedCapital,bankName,accountNumber);
+            }
+            
+
+            /// <summary>
+            /// IEnumerable StakeHolder Model Search
+            /// </summary>
+            /// <param name="businessId"></param>
+/// <param name="sSN"></param>
+/// <param name="firstName"></param>
+/// <param name="lastName"></param>
+/// <param name="email"></param>
+/// <param name="mobile"></param>
+/// <param name="birthDate"></param>
+/// <param name="addressStreet"></param>
+/// <param name="addressCity"></param>
+/// <param name="addressPostCode"></param>
+/// <param name="addressCountryId"></param>
+/// <param name="seedCapital"></param>
+/// <param name="bankName"></param>
+/// <param name="accountNumber"></param>
+/// <returns></returns>
+            public IEnumerable<StakeHolderModel> SearchModel(long businessId = 0,string sSN = "",string firstName = "",string lastName = "",string email = "",string mobile = "",DateTime? birthDate = null,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,decimal seedCapital = 0,string bankName = "",string accountNumber = "")
+            {
+                return DataModule.StakeHolders.Search(businessId,sSN,firstName,lastName,email,mobile,birthDate,addressStreet,addressCity,addressPostCode,addressCountryId,seedCapital,bankName,accountNumber)
+                    .Select(FactoryModule.StakeHolders.CreateModel);
+            }
+
+            
+            /// <summary>
+            /// Paged StakeHolder Model Search
+            /// </summary>
+            /// <param name="businessId"></param>
+/// <param name="sSN"></param>
+/// <param name="firstName"></param>
+/// <param name="lastName"></param>
+/// <param name="email"></param>
+/// <param name="mobile"></param>
+/// <param name="birthDate"></param>
+/// <param name="addressStreet"></param>
+/// <param name="addressCity"></param>
+/// <param name="addressPostCode"></param>
+/// <param name="addressCountryId"></param>
+/// <param name="seedCapital"></param>
+/// <param name="bankName"></param>
+/// <param name="accountNumber"></param>
+/// <param name="page"></param>
+            ///<param name="pageSize"></param>
+            ///<param name="sort"></param>
+            /// <returns></returns>
+            public Page<StakeHolderModel> SearchView(long businessId = 0,string sSN = "",string firstName = "",string lastName = "",string email = "",string mobile = "",DateTime? birthDate = null,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,decimal seedCapital = 0,string bankName = "",string accountNumber = "",
+                long page = 1,long pageSize = 10, string sort = "")
+            {
+                return DataModule.StakeHolders.SearchView(businessId,sSN,firstName,lastName,email,mobile,birthDate,addressStreet,addressCity,addressPostCode,addressCountryId,seedCapital,bankName,accountNumber, page, pageSize, sort);
+            }
+
+            /// <summary>
+            /// Create StakeHolder Model from StakeHolder Entity
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <returns></returns>
+            public StakeHolderModel Create(StakeHolder entity)
+            {
+                return FactoryModule.StakeHolders.CreateModel(entity);
+            }
+
+	        /// <summary>
+            /// Create StakeHolder Model from StakeHolder Form
+            /// </summary>
+            /// <param name="form"></param>
+            /// <returns></returns>
+            public StakeHolderModel Create(StakeHolderForm form)
+            {
+                return FactoryModule.StakeHolders.CreateModel(form);
+            }
+
+            /// <summary>
+            /// Create StakeHolder Entity from StakeHolder Model
+            /// </summary>
+            /// <param name="model"></param>
+            /// <returns></returns>
+            public StakeHolder Create(StakeHolderModel model)
+            {
+                return FactoryModule.StakeHolders.CreateEntity(model);
+            }
+
+            /// <summary>
+            /// Check Uniqueness of StakeHolder before creation
+            /// </summary>
+            /// <param name="model"></param>
+            /// <returns></returns>
+            public bool CreateExists(StakeHolderModel model)
+            {
+                return DataModule.StakeHolders.ItemExists(model);
+            }
+
+            /// <summary>
+            /// Delete StakeHolder
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <returns></returns>
+            public int Delete(StakeHolder entity)
+            {
+                return DataModule.StakeHolders.Delete(entity);
+            }
+
+            /// <summary>
+            /// Get StakeHolder Entity
+            /// </summary>
+            /// <param name="id"></param>
+            /// <returns></returns>
+            public StakeHolder Get(long id)
+            {
+                return DataModule.StakeHolders.Get(id);
+            }
+
+
+
+            /// <summary>
+            /// Get StakeHolder Model
+            /// </summary>
+            /// <param name="id"></param>
+            /// <returns></returns>
+            public StakeHolderModel GetModel(long id)
+            { 
+                return DataModule.StakeHolders.GetModel(id);
+            }
+
+            /// <summary>
+            /// Insert new StakeHolder to DB
+            /// </summary>
+            /// <param name="model"></param>
+            /// <param name="check"></param>
+            /// <returns></returns>
+            public StakeHolderModel Insert(StakeHolderModel model, bool check = true)
+            {
+                if (check)
+                {
+                    var routeSearch = DataModule.StakeHolders.ItemExists(model);
+                    if (routeSearch)
+                    {
+                        throw new Exception("StakeHolder Name already exists");
+                    }
+                }
+                var entity = FactoryModule.StakeHolders.CreateEntity(model);
+                entity.RecordStatus = Core.Domain.Enum.RecordStatus.Active;
+                DataModule.StakeHolders.Insert(entity);
+                return FactoryModule.StakeHolders.CreateModel(entity);
+            }
+
+            /// <summary>
+            /// Update a StakeHolder Entity with a StakeHolder Model with selected fields
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <param name="model"></param>
+            /// <param name="fields"></param>
+            /// <returns></returns>
+            public StakeHolder Patch(StakeHolder entity, StakeHolderModel model, string fields)
+            {
+                return FactoryModule.StakeHolders.Patch(entity, model, fields);
+            }
+
+            /// <summary>
+            /// Update StakeHolder, with Patch Options Optional
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <param name="model"></param>
+            /// <param name="fields"></param>
+            /// <returns></returns>
+            public StakeHolderModel Update(StakeHolder entity, StakeHolderModel model = null, string fields = "")
+            {
+                if (model != null)
+                {
+                    entity = Patch(entity, model, fields);
+                }
+                return FactoryModule.StakeHolders.CreateModel(DataModule.StakeHolders.Update(entity));
+            }
+
+            /// <summary>
+            /// Check Uniqueness of StakeHolder before update
+            /// </summary>
+            /// <param name="model"></param>
+            /// <returns></returns>
+            public bool UpdateExists(StakeHolderModel model)
+            {
+                return DataModule.StakeHolders.ItemExists(model, model.Id);
+            }
+
+    }
+
+-------------------------------------------------
+
+SERVICE MODULE
+
+        StakeHolderService StakeHolderService { get; }
+
+        private StakeHolderService _stakeholder;
+
+        /// <summary>
+        /// StakeHolder Service Module
+        /// </summary>
+        public StakeHolderService StakeHolderService { get { if (_stakeholder == null) { _stakeholder = new StakeHolderService(); } return _stakeholder; } }
+ 
+
+-------------------------------------------------
+
+API CONTROLLER
+
+
+    /// <summary>
+    /// StakeHolders CRUD
+    /// </summary>
+    [RoutePrefix("api/StakeHolders")]
+    public class StakeHoldersController : BaseApiController
+    {
+        /// <summary>
+        /// Search, Page, filter and Shaped StakeHolders
+        /// </summary>
+        /// <param name="sort"></param>
+        /// <param name="businessId"></param>
+/// <param name="sSN"></param>
+/// <param name="firstName"></param>
+/// <param name="lastName"></param>
+/// <param name="email"></param>
+/// <param name="mobile"></param>
+/// <param name="birthDate"></param>
+/// <param name="addressStreet"></param>
+/// <param name="addressCity"></param>
+/// <param name="addressPostCode"></param>
+/// <param name="addressCountryId"></param>
+/// <param name="seedCapital"></param>
+/// <param name="bankName"></param>
+/// <param name="accountNumber"></param>
+/// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="fields"></param>
+        /// <param name="draw"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(IEnumerable<StakeHolderModel>))]
+        [Route("Search", Name = "StakeHolderApi")]
+        [HttpGet]
+        public IHttpActionResult Get(string sort = "id", long businessId = 0,string sSN = "",string firstName = "",string lastName = "",string email = "",string mobile = "",DateTime? birthDate = null,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,decimal seedCapital = 0,string bankName = "",string accountNumber = "", long page = 1, long pageSize = 10, string fields= "", int draw = 1)
+        {  
+            try
+            {
+                var items = Logic.StakeHolderService.SearchView(businessId,sSN,firstName,lastName,email,mobile,birthDate,addressStreet,addressCity,addressPostCode,addressCountryId,seedCapital,bankName,accountNumber,page, pageSize, sort);
+                
+                if (page > items.TotalPages) page = items.TotalPages;
+                var jo = new JObjectHelper(); 
+                jo.Add("businessId", businessId);
+jo.Add("sSN", sSN);
+jo.Add("firstName", firstName);
+jo.Add("lastName", lastName);
+jo.Add("email", email);
+jo.Add("mobile", mobile);
+jo.Add("birthDate", birthDate);
+jo.Add("addressStreet", addressStreet);
+jo.Add("addressCity", addressCity);
+jo.Add("addressPostCode", addressPostCode);
+jo.Add("addressCountryId", addressCountryId);
+jo.Add("seedCapital", seedCapital);
+jo.Add("bankName", bankName);
+jo.Add("accountNumber", accountNumber);
+
+                jo.Add("fields", fields); 
+                jo.Add("sort", sort);
+                var urlHelper = new UrlHelper(Request);
+                var linkBuilder = new PageLinkBuilder(urlHelper, "StakeHolderApi", jo, page, pageSize, items.TotalItems, draw); 
+                AddHeader("X-Pagination", linkBuilder.PaginationHeader);
+                var dto = new List<StakeHolderModel>();
+                if (items.TotalItems <= 0) return Ok(dto); 
+                var dtos = items.Items.ShapeList(fields);
+                return Ok(dtos);
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        /// <summary>
+        /// Get StakeHolder by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("Detail")]
+        [ResponseType(typeof(StakeHolderModel))]
+        public IHttpActionResult Get(long id)
+        {
+            try
+            {
+                var item = Logic.StakeHolderService.GetModel(id);
+                if (item == null)
+                {
+                    return NotFound();
+                }
+                return Ok(item);
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+
+         /// <summary>
+        /// Add StakeHolder
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        [Route("Create")]
+        [HttpPost]
+        [ResponseType(typeof(StakeHolderModel))]
+        public IHttpActionResult Create(StakeHolderForm form)
+        {
+            try
+            {
+                var model = Logic.StakeHolderService.Create(form);
+                var check = Logic.StakeHolderService.CreateExists(model);
+                if (check)
+                {
+                    return BadRequest("StakeHolder already exists");
+                }
+                var dto = Logic.StakeHolderService.Insert(model);
+                return Ok(dto);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+
+                /// <summary>
+        /// Update StakeHolder
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        [Route("Update")]
+        [HttpPost]
+        [ResponseType(typeof(StakeHolderModel))]
+        public IHttpActionResult Update(long id, StakeHolderForm form)
+        {
+            try
+            {
+                var model = Logic.StakeHolderService.Create(form);
+                if (id != model.Id)
+                    return BadRequest("Route Parameter does mot match model ID"); 
+                var found = Logic.StakeHolderService.Get(id);
+                if (found == null)
+                    return NotFound(); 
+                var check = Logic.StakeHolderService.UpdateExists(model); 
+                if (Logic.StakeHolderService.UpdateExists(model))
+                    return BadRequest("StakeHolder configuration already exists");
+                var dto = Logic.StakeHolderService.Update(found, model,
+                    "BusinessId,SSN,FirstName,LastName,Email,Mobile,BirthDate,AddressStreet,AddressCity,AddressPostCode,AddressCountryId,SeedCapital,BankName,AccountNumber,RecordStatus");
+                return Ok(dto);
+            } 
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Delete StakeHolder
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("Delete")]
+        [HttpPost]
+        [ResponseType(typeof(StakeHolderModel))]
+        public IHttpActionResult Delete(long id)
+        {
+            try
+            {
+                var found = Logic.StakeHolderService.Get(id);
+                if (found == null)
+                    return NotFound();
+                Logic.StakeHolderService.Delete(found); 
+                return Content(HttpStatusCode.NoContent,found);
+            } 
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        } 
+    }
+
+
+-------------------------------------------------
+
+API Library Service
+public class StakeHolderAPI : BaseServiceAPI<StakeHolderModel, long>
+    { 
+        public StakeHolderAPI()
+        {
+            _api = "/api/StakeHolders";
+        }
+ 
+        public async Task<ApiResponse<IEnumerable<StakeHolderModel>>> Search(long businessId = 0,string sSN = "",string firstName = "",string lastName = "",string email = "",string mobile = "",DateTime? birthDate = null,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,decimal seedCapital = 0,string bankName = "",string accountNumber = "",
+            string sort = "id",int page = 1, int pageSize = 10, string fields = "", bool extended = false)
+        {
+            var jo = new JObjectHelper(sort, page, pageSize, fields, extended);
+            jo.Add("businessId", businessId);
+jo.Add("sSN", sSN);
+jo.Add("firstName", firstName);
+jo.Add("lastName", lastName);
+jo.Add("email", email);
+jo.Add("mobile", mobile);
+jo.Add("birthDate", birthDate);
+jo.Add("addressStreet", addressStreet);
+jo.Add("addressCity", addressCity);
+jo.Add("addressPostCode", addressPostCode);
+jo.Add("addressCountryId", addressCountryId);
+jo.Add("seedCapital", seedCapital);
+jo.Add("bankName", bankName);
+jo.Add("accountNumber", accountNumber);
+             
+            Route("Search");
+            return await Search<StakeHolderModel>(jo); 
+        }        
+    }
+
+-------------------------------------------------
+
+API Library MODULE
+private StakeHolderAPI _stakeholder;
+
+        /// <summary>
+        /// StakeHolder API Module
+        /// </summary>
+        public StakeHolderAPI StakeHolderAPI { get { if (_stakeholder == null) { _stakeholder = new StakeHolderAPI(); } return _stakeholder; } }
+
+
+-------------------------------------------------
+
+MVC CONTROLLER
+     
+    public class StakeHoldersController : BaseController
+    {
+        
+        //[CustomAuth(Permissions = "StakeHoldersSearch")]
+        public ActionResult Index(long businessId = 0,string sSN = "",string firstName = "",string lastName = "",string email = "",string mobile = "",DateTime? birthDate = null,string addressStreet = "",string addressCity = "",string addressPostCode = "",int addressCountryId = 0,decimal seedCapital = 0,string bankName = "",string accountNumber = "", string act="")
+        {
+            if (act.ToLower() == "export")
+            {
+                var data = Logic.StakeHolderService.SearchView(businessId,sSN,firstName,lastName,email,mobile,birthDate,addressStreet,addressCity,addressPostCode,addressCountryId,seedCapital,bankName,accountNumber,page: 0);
+                Download(data); 
+            }
+            return View();
+        }
+
+    }
+
+
+-------------------------------------------------
+
+SAVE VIEW
+
+            
+
+-------------------------------------------------
+
+INDEX VIEW
+@{
+    ViewBag.Title = "StakeHolders";
+    ViewBag.Header = "StakeHolders";
+    string sim = Bootes.Core.Common.Constants.API_URL;
+    
+}
+@section styles{
+
+
+}
+
+<div class="spp" data-perm="StakeHoldersSearch"></div>
+ 
+   
+ 
+
+  <div class="row" id="filterView"> 
+            <div class="col-md-12">
+                <div class="collapse" id="collapseExample">
+
+                    <form action="" class="form p-3 mb-0 bg-light" method="get">
+                        <div class="row">
+
+                            <div class="form-group col-sm-12 col-md-3">
+    <small>BusinessId</small>
+    <input type="text" name="businessId" id="businessId" value="" placeholder="BusinessId" class="form-control form-control-sm" v-model="formsearch.BusinessId" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>SSN</small>
+    <input type="text" name="sSN" id="sSN" value="" placeholder="SSN" class="form-control form-control-sm" v-model="formsearch.SSN" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>FirstName</small>
+    <input type="text" name="firstName" id="firstName" value="" placeholder="FirstName" class="form-control form-control-sm" v-model="formsearch.FirstName" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>LastName</small>
+    <input type="text" name="lastName" id="lastName" value="" placeholder="LastName" class="form-control form-control-sm" v-model="formsearch.LastName" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>Email</small>
+    <input type="text" name="email" id="email" value="" placeholder="Email" class="form-control form-control-sm" v-model="formsearch.Email" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>Mobile</small>
+    <input type="text" name="mobile" id="mobile" value="" placeholder="Mobile" class="form-control form-control-sm" v-model="formsearch.Mobile" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>BirthDate</small>
+    <input type="text" name="birthDate" id="birthDate" value="" placeholder="BirthDate" class="form-control form-control-sm" v-model="formsearch.BirthDate" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>AddressStreet</small>
+    <input type="text" name="addressStreet" id="addressStreet" value="" placeholder="AddressStreet" class="form-control form-control-sm" v-model="formsearch.AddressStreet" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>AddressCity</small>
+    <input type="text" name="addressCity" id="addressCity" value="" placeholder="AddressCity" class="form-control form-control-sm" v-model="formsearch.AddressCity" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>AddressPostCode</small>
+    <input type="text" name="addressPostCode" id="addressPostCode" value="" placeholder="AddressPostCode" class="form-control form-control-sm" v-model="formsearch.AddressPostCode" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>AddressCountryId</small>
+    <input type="text" name="addressCountryId" id="addressCountryId" value="" placeholder="AddressCountryId" class="form-control form-control-sm" v-model="formsearch.AddressCountryId" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>SeedCapital</small>
+    <input type="text" name="seedCapital" id="seedCapital" value="" placeholder="SeedCapital" class="form-control form-control-sm" v-model="formsearch.SeedCapital" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>BankName</small>
+    <input type="text" name="bankName" id="bankName" value="" placeholder="BankName" class="form-control form-control-sm" v-model="formsearch.BankName" >
+</div>
+<div class="form-group col-sm-12 col-md-3">
+    <small>AccountNumber</small>
+    <input type="text" name="accountNumber" id="accountNumber" value="" placeholder="AccountNumber" class="form-control form-control-sm" v-model="formsearch.AccountNumber" >
+</div>
+ 
+                            
+                            <div class="form-group col-sm-12 text-right mb-0">
+                                <button class="btn btn-sm btn-warning" type="reset" value="Cancel">
+                                    Cancel
+                                </button>
+                                <button class="btn btn-sm btn-primary" type="submit" name="act">
+                                    Search
+                                </button>
+                                <button class="btn btn-sm btn-dark" type="submit" name="act" value="export">
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-right">
+                    <a class="btn btn-light btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Filter/Export
+                        <i class="fa fa-search"></i>
+                    </a>
+                    <a href="javascript:;" onclick="FormUtil.FormCreate()" role="button" class="btn btn-light btn-sm">
+                        New
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+                <table id="grid" class="table" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a href="javascript:;" onclick="FormUtil.FormCreate()">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </th>
+                             <th>BusinessId</th> 
+ <th>SSN</th> 
+ <th>FirstName</th> 
+ <th>LastName</th> 
+ <th>Email</th> 
+ <th>Mobile</th> 
+ <th>BirthDate</th> 
+ <th>AddressStreet</th> 
+ <th>AddressCity</th> 
+ <th>AddressPostCode</th> 
+ <th>AddressCountryId</th> 
+ <th>SeedCapital</th> 
+ <th>BankName</th> 
+ <th>AccountNumber</th> 
+ <th>Status</th> 
+ <th>Created</th> 
+ <th>Updated</th> 
+
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+        <div id="appView">
+        <!-- Modal -->
+            <div class="modal fade" id="crudModal" tabindex="-1" role="dialog" aria-labelledby="crudModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="crudModallLabel">{{ frmTitle }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form method="post" @@submit.prevent="submit">
+
+                                        <input data-val="true" data-val-number="The field Id must be a number." data-val-required="The Id field is required." id="Id"
+                                            name="Id" type="hidden" value="0" v-model="form.Id" />
+                                        <div class="white-box">
+                                            <div class="row">
+                                            <div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="BusinessId">BusinessId</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The BusinessId field is required." id="BusinessId"
+        name="BusinessId" type="text" value="" v-model="form.BusinessId" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="SSN">SSN</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The SSN field is required." id="SSN"
+        name="SSN" type="text" value="" v-model="form.SSN" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="FirstName">FirstName</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The FirstName field is required." id="FirstName"
+        name="FirstName" type="text" value="" v-model="form.FirstName" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="LastName">LastName</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The LastName field is required." id="LastName"
+        name="LastName" type="text" value="" v-model="form.LastName" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="Email">Email</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The Email field is required." id="Email"
+        name="Email" type="text" value="" v-model="form.Email" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="Mobile">Mobile</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The Mobile field is required." id="Mobile"
+        name="Mobile" type="text" value="" v-model="form.Mobile" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="BirthDate">BirthDate</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The BirthDate field is required." id="BirthDate"
+        name="BirthDate" type="text" value="" v-model="form.BirthDate" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="AddressStreet">AddressStreet</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The AddressStreet field is required." id="AddressStreet"
+        name="AddressStreet" type="text" value="" v-model="form.AddressStreet" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="AddressCity">AddressCity</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The AddressCity field is required." id="AddressCity"
+        name="AddressCity" type="text" value="" v-model="form.AddressCity" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="AddressPostCode">AddressPostCode</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The AddressPostCode field is required." id="AddressPostCode"
+        name="AddressPostCode" type="text" value="" v-model="form.AddressPostCode" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="AddressCountryId">AddressCountryId</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The AddressCountryId field is required." id="AddressCountryId"
+        name="AddressCountryId" type="text" value="" v-model="form.AddressCountryId" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="SeedCapital">SeedCapital</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The SeedCapital field is required." id="SeedCapital"
+        name="SeedCapital" type="text" value="" v-model="form.SeedCapital" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="BankName">BankName</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The BankName field is required." id="BankName"
+        name="BankName" type="text" value="" v-model="form.BankName" />
+</div>
+<div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="AccountNumber">AccountNumber</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The AccountNumber field is required." id="AccountNumber"
+        name="AccountNumber" type="text" value="" v-model="form.AccountNumber" />
+</div>
+
+                                                  
+                                                <div class="form-group col-sm-6">
+
+                                                    <input checked="checked" data-val="true" data-val-required="The RecordStatus field is required." id="RecordStatus" name="RecordStatus"
+                                                        type="radio" value="0"  v-model="form.RecordStatus" />
+                                                    <label>Pending</label>
+                                                    <input id="RecordStatus" name="RecordStatus" type="radio" value="1" v-model="form.RecordStatus" />
+                                                    <label>Active</label>
+                                                    <input id="RecordStatus" name="RecordStatus" type="radio" value="2" v-model="form.RecordStatus" />
+                                                    <label>Disabled</label>
+                                                </div>
+                                                <div class="form-group col-sm-6 text-right">
+                                                    <button type="reset" class="btn btn-warning btn-sm">Cancel</button>
+                                                    <input type="submit" value="Submit" class="btn btn-primary btn-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailModalLabel">{{ frmTitle }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <dl class="row">
+ 
+                                
+                                <dt class="col-sm-3">BusinessId</dt>
+                                <dd class="col-sm-9">{{ form.BusinessId }}</dd>
+
+                                <dt class="col-sm-3">SSN</dt>
+                                <dd class="col-sm-9">{{ form.SSN }}</dd>
+
+                                <dt class="col-sm-3">FirstName</dt>
+                                <dd class="col-sm-9">{{ form.FirstName }}</dd>
+
+                                <dt class="col-sm-3">LastName</dt>
+                                <dd class="col-sm-9">{{ form.LastName }}</dd>
+
+                                <dt class="col-sm-3">Email</dt>
+                                <dd class="col-sm-9">{{ form.Email }}</dd>
+
+                                <dt class="col-sm-3">Mobile</dt>
+                                <dd class="col-sm-9">{{ form.Mobile }}</dd>
+
+                                <dt class="col-sm-3">BirthDate</dt>
+                                <dd class="col-sm-9">{{ form.BirthDate }}</dd>
+
+                                <dt class="col-sm-3">AddressStreet</dt>
+                                <dd class="col-sm-9">{{ form.AddressStreet }}</dd>
+
+                                <dt class="col-sm-3">AddressCity</dt>
+                                <dd class="col-sm-9">{{ form.AddressCity }}</dd>
+
+                                <dt class="col-sm-3">AddressPostCode</dt>
+                                <dd class="col-sm-9">{{ form.AddressPostCode }}</dd>
+
+                                <dt class="col-sm-3">AddressCountryId</dt>
+                                <dd class="col-sm-9">{{ form.AddressCountryId }}</dd>
+
+                                <dt class="col-sm-3">SeedCapital</dt>
+                                <dd class="col-sm-9">{{ form.SeedCapital }}</dd>
+
+                                <dt class="col-sm-3">BankName</dt>
+                                <dd class="col-sm-9">{{ form.BankName }}</dd>
+
+                                <dt class="col-sm-3">AccountNumber</dt>
+                                <dd class="col-sm-9">{{ form.AccountNumber }}</dd>
+ 
+
+
+                                
+                                <dt class="col-sm-3">Status</dt>
+                                <dd class="col-sm-9">{{ form.RecordStatusText }}</dd>
+                                
+                                <dt class="col-sm-3">Created</dt>
+                                <dd class="col-sm-9">{{ form.CreatedAtText }}</dd>
+                                
+                                <dt class="col-sm-3">Updated</dt>
+                                <dd class="col-sm-9">{{ form.UpdatedAtText }}</dd>
+                            </dl> 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger btn-sm" v-on:click="deleteItem">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+@section scripts
+{
+  <script type="text/javascript">
+
+        $(document).ready(function () {
+            
+            var _form = {
+                Id: 0,
+BusinessId: "",
+SSN: "",
+FirstName: "",
+LastName: "",
+Email: "",
+Mobile: "",
+BirthDate: "",
+AddressStreet: "",
+AddressCity: "",
+AddressPostCode: "",
+AddressCountryId: "",
+SeedCapital: "",
+BankName: "",
+AccountNumber: ""
+            };
+
+            var _formsearch = {
+                Id: 0,
+BusinessId: "",
+SSN: "",
+FirstName: "",
+LastName: "",
+Email: "",
+Mobile: "",
+BirthDate: "",
+AddressStreet: "",
+AddressCity: "",
+AddressPostCode: "",
+AddressCountryId: "",
+SeedCapital: "",
+BankName: "",
+AccountNumber: ""
+            };
+            var _columns = [
+                {
+                    "data": "Id",
+                    "render": function (data, type, row, meta) {
+                        return '<a href="javascript:;" onclick="FormUtil.FormUpdate(' + data + ')"><i class="fa fa-edit"></i></a> <a href="javascript:;" onclick="FormUtil.FormDetail(' + data + ')"><i class="fa fa-external-link-alt"></i></a>';
+                    }
+                },
+                
+{"data": "BusinessId" },
+{"data": "SSN" },
+{"data": "FirstName" },
+{"data": "LastName" },
+{"data": "Email" },
+{"data": "Mobile" },
+{"data": "BirthDate" },
+{"data": "AddressStreet" },
+{"data": "AddressCity" },
+{"data": "AddressPostCode" },
+{"data": "AddressCountryId" },
+{"data": "SeedCapital" },
+{"data": "BankName" },
+{"data": "AccountNumber" },
+{"data": "RecordStatusText" },
+{"data": "CreatedAtText" },
+{"data": "UpdatedAtText" }
+            ];
+
+            var _list = {
+                id: 0
+            };
+
+            FormUtil.Init({
+                entity: 'StakeHolders',
+                url: '@sim',
+                form: _form,
+                formsearch: _formsearch,
+                columns: _columns,
+                table: 'grid',
+                createModal: 'crudModal',
+                updateModal: 'crudModal',
+                detailModal: 'detailModal',
+                list: _list
+            });
+        });
+    </script>
+}
+
+
+-------------------------------------------------
+

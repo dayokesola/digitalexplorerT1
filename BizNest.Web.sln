@@ -10,15 +10,19 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BizNest.Core", "BizNest.Core\BizNest.Core.csproj", "{E52D47B3-1C3C-4273-883D-AB521273DA04}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4A9266CF-1EBB-41C2-9E90-526D4A026F75}"
-	ProjectSection(SolutionItems) = preProject
-		TextFile1.txt = TextFile1.txt
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0372258A-C17B-47F2-8D35-79A83BEEB7AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BizNest.Service.Tests", "BizNest.Service.Tests\BizNest.Service.Tests.csproj", "{8BAA43BC-4FA2-496E-BF0B-6305FA6C0402}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BizNest.Service.Tests", "BizNest.Service.Tests\BizNest.Service.Tests.csproj", "{8BAA43BC-4FA2-496E-BF0B-6305FA6C0402}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BizNest.Core.Tests", "BizNest.Core.Tests\BizNest.Core.Tests.csproj", "{8CB1053F-18FB-4579-9B36-51297F1EBF66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BizNest.Core.Tests", "BizNest.Core.Tests\BizNest.Core.Tests.csproj", "{8CB1053F-18FB-4579-9B36-51297F1EBF66}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scaffolds", "Scaffolds", "{92454827-3E5B-465A-B49A-D0C1178FB15F}"
+	ProjectSection(SolutionItems) = preProject
+		Business.txt = Business.txt
+		BusinessType.txt = BusinessType.txt
+		StakeHolder.txt = StakeHolder.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +57,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8BAA43BC-4FA2-496E-BF0B-6305FA6C0402} = {0372258A-C17B-47F2-8D35-79A83BEEB7AC}
 		{8CB1053F-18FB-4579-9B36-51297F1EBF66} = {0372258A-C17B-47F2-8D35-79A83BEEB7AC}
+		{92454827-3E5B-465A-B49A-D0C1178FB15F} = {4A9266CF-1EBB-41C2-9E90-526D4A026F75}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CA4B787-0B5D-43C7-A9C7-F6E1C8121E51}
