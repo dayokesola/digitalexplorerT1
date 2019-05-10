@@ -5,10 +5,14 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace BizNest.Core.Data.DB
-{ 
+{
 
     public class AppDbContext : DbContext
     {
+        public AppDbContext()
+        {
+        }
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         { }

@@ -12,4 +12,5 @@ namespace BizNest.Core.Common
             return Mapper.Map<T1>(obj);
         }
     }
+
 }
