@@ -1,4 +1,5 @@
-﻿using BizNest.Core.Logic.Module;
+﻿using BizNest.Core.Data.DB;
+using BizNest.Core.Logic.Module;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -6,8 +7,14 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 namespace BizNest.Service.Controllers
 {
     [ApiController]
-    public class BaseApiController : ControllerBase
+    public class BaseApiController : Controller
     {
+        public BaseApiController(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        private AppDbContext _context;
         private LogicModule _module;
 
         /// <summary>
@@ -19,7 +26,7 @@ namespace BizNest.Service.Controllers
             {
                 if (_module == null)
                 {
-                    _module = new LogicModule();
+                    _module = new LogicModule(_context);
                 }
                 return _module;
             }
@@ -31,6 +38,8 @@ namespace BizNest.Service.Controllers
         /// <param name="key">The key.</param>
         /// <param name="data">The data.</param>
         [ApiExplorerSettings(IgnoreApi = true)]
+        [HttpPost]
+        [Route("AddHeader")]
         protected void AddHeader(string key, object data)
         {
 
@@ -42,6 +51,8 @@ namespace BizNest.Service.Controllers
         /// <param name="modelState"></param>
         /// <returns></returns>
         [ApiExplorerSettings(IgnoreApi = true)]
+        [HttpPost]
+        [Route("ModelError")]
         public string ModelError(ModelStateDictionary modelState)
         {
             string error = "";

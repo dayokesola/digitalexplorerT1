@@ -1,4 +1,5 @@
-﻿using BizNest.Core.Data.Module;
+﻿using BizNest.Core.Data.DB;
+using BizNest.Core.Data.Module;
 using BizNest.Core.Domain.Entity;
 using BizNest.Core.Domain.Form;
 using BizNest.Core.Domain.Model;
@@ -23,7 +24,10 @@ namespace BizNest.Core.Logic
     where TForm : BaseForm<TKey>
     {
 
+        public BaseService(AppDbContext context) : base(context)
+        {
 
+        }
     }
 
     /// <summary>
@@ -31,6 +35,13 @@ namespace BizNest.Core.Logic
     /// </summary>
     public class BaseSingleService
     {
+
+        public BaseSingleService(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        private AppDbContext _context;
         private DataModule _data;
 
         /// <summary>
@@ -42,7 +53,7 @@ namespace BizNest.Core.Logic
             {
                 if (_data == null)
                 {
-                    _data = new DataModule();
+                    _data = new DataModule(_context);
                 }
                 return _data;
             }
@@ -77,7 +88,7 @@ namespace BizNest.Core.Logic
             {
                 if (_logic == null)
                 {
-                    _logic = new LogicModule();
+                    _logic = new LogicModule(_context);
                 }
                 return _logic;
             }

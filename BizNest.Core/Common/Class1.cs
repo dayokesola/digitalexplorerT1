@@ -268,7 +268,7 @@ namespace BizNest.Core.Common
                     var fieldValue = jo.GetValue(field).ToObject(typ);
                     ((IDictionary<string, object>)objectToReturn).Add(field, fieldValue);
                 }
-                catch (Exception ex)
+                catch 
                 {
                     //Log.Error(ex);
                 }
