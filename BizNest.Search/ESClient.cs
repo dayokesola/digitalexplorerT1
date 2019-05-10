@@ -4,7 +4,15 @@ using System.Text;
 
 namespace BizNest.Search
 {
-    class ESClient
+    public class SearchClient
     {
+        ElasticClient client;
+        public SearchClient()
+        {
+            var settings = new ConnectionSettings(new Uri("http://example.com:9200"))
+    .DefaultIndex("people");
+
+            var client = new ElasticClient(settings);
+        }
     }
 }
