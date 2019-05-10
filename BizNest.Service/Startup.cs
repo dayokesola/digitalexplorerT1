@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using BizNest.Core.Data.DB;
+using Microsoft.EntityFrameworkCore;
 
 namespace BizNest.Service
 {
@@ -24,6 +26,12 @@ namespace BizNest.Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            #if DEBUG
+                        services.AddDbContext<AppDbContext>((obj) => obj.UseSqlServer(Configuration.GetConnectionString("Default"),b=>b.MigrationsAssembly("BizNest.Service")));
+            #else
+                        services.AddDbContext<AppDbContext>((obj) => Environment.GetEnvironmentVariable("db"));
+            #endif
+           
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
