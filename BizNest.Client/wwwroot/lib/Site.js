@@ -117,6 +117,70 @@ Vue.component('datepicker', {
         //$(this.$el).off().select2('destroy')
     }
 });
+
+Vue.component("step-navigation-step", {
+    template: "#step-navigation-step-template",
+
+    props: ["step", "currentstep"],
+
+    computed: {
+        indicatorclass() {
+            return {
+                active: this.step.id == this.currentstep,
+                complete: this.currentstep > this.step.id
+            };
+        }
+    }
+});
+
+Vue.component("step-navigation", {
+    template: "#step-navigation-template",
+
+    props: ["steps", "currentstep"]
+});
+
+Vue.component("step", {
+    template: "#step-template",
+
+    props: ["step", "stepcount", "currentstep"],
+
+    computed: {
+        active() {
+            return this.step.id == this.currentstep;
+        },
+
+        firststep() {
+            return this.currentstep == 1;
+        },
+
+        laststep() {
+            return this.currentstep == this.stepcount;
+        },
+
+        stepWrapperClass() {
+            return {
+                active: this.active
+            };
+        }
+    },
+
+    methods: {
+        nextStep() {
+            if (this.canmove) {
+                this.$emit("step-change", this.currentstep + 1);
+            } else {
+                ShowLoading(this.errormsg, 'warning');
+            }
+        },
+
+        lastStep() {
+            this.$emit("step-change", this.currentstep - 1);
+        }
+    }
+});
+
+
+
  
 var FormUtil = (function () {
     var auth = getCookieAuth("usertoken");
