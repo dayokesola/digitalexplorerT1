@@ -53,16 +53,12 @@ var DataUtil = (function () {
     var baseapi = _baseapi;
     return {
 
-        SearchName: function (id) { 
-            var k = {
-                "Name": id
-            };
+        SearchName: function (id) {  
             return $.ajax({
-                type: "POST",
-                url: baseapi + "/api/BusinessNames/Search",
+                type: "GET",
+                url: baseapi + "/api/Search?query=" + id,
                 async: true,
-                contentType: 'application/json',
-                data: JSON.stringify(k)
+                contentType: 'application/json'
             });
         },
         

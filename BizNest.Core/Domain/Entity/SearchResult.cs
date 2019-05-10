@@ -13,5 +13,6 @@ namespace BizNest.Core.Domain.Entity
         public List<SearchItem> Results { get; set; }
 
         public string Summary { get; set; }
+        public float MaxHit { get; set; }
     }
 }

@@ -172,7 +172,7 @@ namespace BizNest.Service
 
 
             services.AddScoped<IProhibitedService,ProhibitedNameService>();
-            services.AddScoped<ISearchService,MockedSearchService>();
+            services.AddScoped<ISearchService,ElasticSearchService>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -193,6 +193,17 @@ namespace BizNest.Service
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IJwtFactory, JwtFactory>();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowMyOrigin",
+                builder1 => builder1
+                .WithOrigins("*")
+                .WithHeaders("*")
+                .WithMethods("*")
+                .WithExposedHeaders("X-Pagination")
+                .SetPreflightMaxAge(TimeSpan.FromSeconds(2520))
+                );
+            });
 
 
             // Apply as default to all controllers. API etc
@@ -237,11 +248,11 @@ namespace BizNest.Service
                );
 
             app.UseHttpsRedirection();
+            //app.UseCors(x => x
+            //   .AllowAnyOrigin()
+            //   .AllowAnyMethod()
+            //   .AllowAnyHeader());
             app.UseAuthentication();
-            app.UseCors(x => x
-               .AllowAnyOrigin()
-               .AllowAnyMethod()
-               .AllowAnyHeader());
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
