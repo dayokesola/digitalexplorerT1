@@ -6,7 +6,7 @@
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <LangVersion>latest</LangVersion>
-    <DocumentationFile>C:\Users\Vincent Nwonah\source\repos\digitalexplorerT1\BizNest.Service\BizNest.Service.xml</DocumentationFile>
+    <DocumentationFile>~\BizNest.Service\BizNest.Service.xml</DocumentationFile>
     <WarningsAsErrors>NU1605</WarningsAsErrors>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
