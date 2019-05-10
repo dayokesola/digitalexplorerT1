@@ -27,7 +27,7 @@ namespace BizNest.Service.Controllers
             {
                 return Ok(await service.SearchForWords(query, skip, max));
             }
-            catch (Exception ex)
+            catch 
             {
                 return BadRequest();
             }
