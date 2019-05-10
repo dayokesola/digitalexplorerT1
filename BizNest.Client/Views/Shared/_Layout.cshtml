@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BizNest.Client</title>
+    <title>@ViewData["Title"] - Online Business Registration</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -15,6 +15,9 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+
+
+    @RenderSection("styles", required: false)
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -26,7 +29,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">BizNest.Client</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">BizNest</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -44,14 +47,25 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2019 - BizNest.Client</p>
+            <p>&copy; 2019 - BizNest </p>
         </footer>
     </div>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script> 
+        <script src="~/lib/DataTables/datatables.min.js"></script>
+        <script src="~/lib/toastr/build/toastr.min.js"></script>
+        <script src="~/lib/select2/dist/js/select2.full.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+        <script src="~/lib/moment.js"></script>
+        <script src="~/lib/underscore-min.js"></script>
+        <script src="~/lib/numeral.min.js"></script>
+        <script src="~/lib/vue.js"></script>
+        <script src="~/lib/Site.js"></script>
+        <script src="~/lib/Site.app.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
@@ -69,6 +83,6 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
-    @RenderSection("Scripts", required: false)
+    @RenderSection("scripts", required: false)
 </body>
 </html>
