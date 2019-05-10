@@ -33,7 +33,7 @@ namespace BizNest.Service.Controllers
                 {
                     new BusinessNameSearchModel()
                     {
-                        Name = "NAme 1",
+                        Name = "Name 1",
                         Match = 60.28
                     },
                     new BusinessNameSearchModel()

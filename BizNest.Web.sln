@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scaffolds", "Scaffolds", "{
 	ProjectSection(SolutionItems) = preProject
 		Business.txt = Business.txt
 		BusinessType.txt = BusinessType.txt
+		ProhibitedWords.txt = ProhibitedWords.txt
 		StakeHolder.txt = StakeHolder.txt
 	EndProjectSection
 EndProject
