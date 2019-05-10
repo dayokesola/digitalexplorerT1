@@ -49,7 +49,6 @@ namespace BizNest.Client.Controllers
         public ActionResult Index(string name = "", int minStakeHolder = 0, int maxStakeHolder = 0, 
             decimal minCapital = 0, string info = "", string act = "")
         {
-            
             return View();
         }
 

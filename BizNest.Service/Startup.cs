@@ -11,13 +11,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-<<<<<<< HEAD
+
 using Swashbuckle.AspNetCore.Swagger;
-=======
 using BizNest.Core.Data.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
->>>>>>> d3c789a9471e22395ca0ef358eb1388cf00f656d
+
 
 namespace BizNest.Service
 {
@@ -33,7 +32,7 @@ namespace BizNest.Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-<<<<<<< HEAD
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Info
@@ -64,14 +63,13 @@ namespace BizNest.Service
                 options.SchemaFilter<SchemaFilter>();
                 //options.OperationFilter<SecurityRequirementsOperationFilter>();
             });
-=======
+
             #if DEBUG
                         services.AddDbContext<AppDbContext>((obj) => obj.UseSqlServer(Configuration.GetConnectionString("Default"),b=>b.MigrationsAssembly("BizNest.Service")));
             #else
                         services.AddDbContext<AppDbContext>((obj) => Environment.GetEnvironmentVariable("db"));
             #endif
            
->>>>>>> d3c789a9471e22395ca0ef358eb1388cf00f656d
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddCors(options =>
