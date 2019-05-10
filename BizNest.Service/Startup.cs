@@ -31,11 +31,8 @@ using BizNest.Service.Services;
 using BizNest.Core.Logic.Definations;
 using BizNest.Core.Logic.App;
 using BizNest.Core.Domain.Entity;
-<<<<<<< HEAD
 using BizNest.Core.Domain.Entity.App;
-=======
 using BizNest.Core.Common;
->>>>>>> 2fec10b80f6f123757920af5c8b8cc161199a2a3
 
 namespace BizNest.Service
 {
