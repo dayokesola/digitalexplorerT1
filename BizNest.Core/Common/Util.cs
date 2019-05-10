@@ -17,7 +17,12 @@ namespace BizNest.Core.Common
         {
             return DateTime.UtcNow;
         }
-
+        public static string Reverse(string s)
+        {
+            char[] charArray = s.ToCharArray();
+            Array.Reverse(charArray);
+            return new string(charArray);
+        }
         public static T DeserializeJSON<T>(string objectData)
         {
             return JsonConvert.DeserializeObject<T>(objectData);

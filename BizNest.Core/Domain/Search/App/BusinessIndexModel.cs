@@ -9,8 +9,9 @@ namespace BizNest.Core.Domain.Search.App
     public class BusinessIndexModel
     {
         public long Id { get; set; }
-        [Text(Name = "name", Fielddata = true)]
+
         public string Name { get; set; }
+        public string FullName { get; set; }
         public int AddressCountryId { get; set; }
     }
 }

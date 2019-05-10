@@ -27,6 +27,8 @@ namespace BizNest.Core.Logic.App
         private async Task IndexBusiness(Business model)
         {
             var esmodel = DataMapper.Map<BusinessIndexModel, Business>(model);
+            esmodel.FullName = esmodel.Name;
+            esmodel.Name += " " + Util.Reverse(esmodel.Name);
             await client.IndexDocumentAsync(esmodel);
         }
 
@@ -60,7 +62,7 @@ namespace BizNest.Core.Logic.App
                             resp.Results.Add(new SearchItem()
                             {
                                 Id = m._source.id,
-                                Word = m._source.name,
+                                Word = m._source.fullname,
                                 MatchPercentage = m._score
                             });
                         }
