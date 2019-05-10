@@ -14,4 +14,12 @@ namespace BizNest.Core.Domain.Factory.App
     {
 
     }
+
+    /// <summary>
+    /// Business Factory
+    /// </summary>
+    public class BusinessFactory : BaseFactory<Business, BusinessModel, BusinessForm, long>
+    {
+
+    }
 }
