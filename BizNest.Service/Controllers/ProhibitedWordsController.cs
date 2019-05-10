@@ -23,7 +23,15 @@ namespace BizNest.Service.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(string query = "",int skip = 0,int max = 30)
         {
-            return Ok(service.SearchForWords(query,skip,max));
+            try
+            {
+                return Ok(await service.SearchForWords(query, skip, max));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+           
         }
 
         
