@@ -1,5 +1,6 @@
 ﻿using BizNest.Core.Data.DB;
 using BizNest.Core.Domain.Entity.App;
+using BizNest.Core.Domain.Model;
 using BizNest.Core.Domain.Model.App;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Text;
 
 namespace BizNest.Core.Data.Repository.App
 {
+
     /// <summary>
     /// 
     /// </summary>
@@ -56,8 +58,93 @@ namespace BizNest.Core.Data.Repository.App
             return table;
         }
 
-    
-     
+        /// <summary>
+        /// Paged BusinessType Model Search
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="minStakeHolder"></param>
+        /// <param name="maxStakeHolder"></param>
+        /// <param name="minCapital"></param>
+        /// <param name="info"></param>
+        /// <param name="page"></param>
+        ///<param name="pageSize"></param>
+        ///<param name="sort"></param>
+        /// <returns></returns>
+        public Page<BusinessTypeModel> SearchView(string name = "", int minStakeHolder = 0, int maxStakeHolder = 0, decimal minCapital = 0, string info = "",
+            long page = 1, long pageSize = 10, string sort = "Id")
+        {
+            var sql = "select * from businesstypesmodel where Id > 0 ";
+            var c = 0;
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                sql += $" and Name = @{c} ";
+                AddParam("name", name);
+                c++;
+            }
+            if (minStakeHolder > 0)
+            {
+                sql += $" and MinStakeHolder = @{c} ";
+                AddParam("minStakeHolder", minStakeHolder);
+                c++;
+            }
+            if (maxStakeHolder > 0)
+            {
+                sql += $" and MaxStakeHolder = @{c} ";
+                AddParam("maxStakeHolder", maxStakeHolder);
+                c++;
+            }
+            if (minCapital > 0)
+            {
+                sql += $" and MinCapital = @{c} ";
+                AddParam("minCapital", minCapital);
+                c++;
+            }
+            if (!string.IsNullOrEmpty(info))
+            {
+                sql += $" and Info = @{c} ";
+                AddParam("info", info);
+                c++;
+            }
+
+
+            if (page <= 0)
+            {
+                var l = GetList(sql);
+                return new Page<BusinessTypeModel>()
+                {
+                    CurrentPage = 0,
+                    Items = l,
+                    ItemsPerPage = 0,
+                    TotalItems = 0,
+                    TotalPages = 0
+                };
+            }
+
+
+            sql += ApplySort(sort);
+            var k = SearchView(sql, page, pageSize);
+            return new Page<BusinessTypeModel>()
+            {
+                CurrentPage = k.CurrentPage,
+                Items = k.Items,
+                ItemsPerPage = k.ItemsPerPage,
+                TotalItems = k.TotalItems,
+                TotalPages = k.TotalPages
+            };
+        }
+
+        /// <summary>
+        /// Get BusinessType Entity
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public BusinessTypeModel GetModel(int Id)
+        {
+            var sql = "select * from businesstypemodel where Id = @0";
+            AddParam("Id", Id);
+            return GetRecord(sql);
+        }
 
         /// <summary>
         /// Check exists
@@ -96,5 +183,6 @@ namespace BizNest.Core.Data.Repository.App
             return check.Any();
         }
     }
+
 
 }

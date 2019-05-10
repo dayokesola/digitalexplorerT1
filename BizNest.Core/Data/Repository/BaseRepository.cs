@@ -1,7 +1,9 @@
-﻿using BizNest.Core.Domain.Entity;
+﻿using BizNest.Core.Data.DB;
+using BizNest.Core.Domain.Entity;
 using BizNest.Core.Domain.Enum;
 using BizNest.Core.Domain.Model;
 using Microsoft.EntityFrameworkCore;
+using NPoco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +29,7 @@ where TModel : BaseModel<TKey>
         /// 
         /// </summary>
         /// <param name="context"></param>
-        public BaseRepository(DbContext context)
+        public BaseRepository(AppDbContext context)
         {
             _context = context;
         }
@@ -143,11 +145,239 @@ where TModel : BaseModel<TKey>
             return obj;
         }
 
-         
-         
 
 
-        
+
+        protected List<object> prms;
+
+        public IDatabase Connection
+        {
+            get
+            {
+                return AppPoco.DbFactory.GetDatabase();
+            }
+        }
+
+        public string ApplySort(string sort)
+        {
+            if (string.IsNullOrEmpty(sort))
+            {
+                return "";
+            }
+            var lst = new List<string>();
+            var lstSort = sort.Split(',');
+            foreach (var sortOption in lstSort)
+            {
+                if (sortOption.StartsWith("-"))
+                {
+                    lst.Add(sortOption.Remove(0, 1) + " desc");
+                }
+                else
+                {
+                    lst.Add(sortOption);
+                }
+            }
+            return " Order by " + string.Join(",", lst);
+        }
+
+        public void AddParam(string key, object obj)
+        {
+            if (prms == null)
+            {
+                prms = new List<object>();
+
+            }
+
+            prms.Add(obj);
+        }
+
+
+        public NPoco.Page<TModel> SearchView(string sql, long page, long pagesize)
+        {
+            using (IDatabase db = Connection)
+            {
+                try
+                {
+                    if (prms == null)
+                    {
+                        return db.Page<TModel>(page, pagesize, sql);
+                    }
+                    var t = db.Page<TModel>(page, pagesize, sql, prms.ToArray());
+                    prms = null;
+                    return t;
+
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+
+        public NPoco.Page<TModel> SearchViewSQL(string sql, long page, long pagesize)
+        {
+            using (IDatabase db = Connection)
+            {
+                try
+                {
+                    if (prms == null)
+                    {
+                        return db.Page<TModel>(page, pagesize, sql);
+                    }
+                    var t = db.Page<TModel>(page, pagesize, sql, prms.ToArray());
+                    prms = null;
+                    return t;
+
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+
+
+        public T GetRecordAnon<T>(string sql)
+        {
+            using (IDatabase db = Connection)
+            {
+                try
+                {
+                    if (prms == null)
+                    {
+                        return db.Fetch<T>(sql).FirstOrDefault();
+                    }
+                    var t = db.Fetch<T>(sql, prms.ToArray()).FirstOrDefault();
+                    prms = null;
+                    return t;
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public List<T> GetListAnon<T>(string sql)
+        {
+            using (IDatabase db = Connection)
+            {
+                try
+                {
+                    if (prms == null)
+                    {
+                        return db.Fetch<T>(sql);
+                    }
+                    var t = db.Fetch<T>(sql, prms.ToArray());
+                    prms = null;
+                    return t;
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+
+
+
+        public NPoco.Page<T> SearchViewAnon<T>(string sql, long page, long pagesize)
+        {
+            using (IDatabase db = Connection)
+            {
+                try
+                {
+                    if (prms == null)
+                    {
+                        return db.Page<T>(page, pagesize, sql);
+                    }
+                    var t = db.Page<T>(page, pagesize, sql, prms.ToArray());
+                    prms = null;
+                    return t;
+
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+
+        public TModel GetRecord(string sql)
+        {
+            using (IDatabase db = Connection)
+            {
+                try
+                {
+                    if (prms == null)
+                    {
+                        return db.Fetch<TModel>(sql).FirstOrDefault();
+                    }
+                    var t = db.Fetch<TModel>(sql, prms.ToArray()).FirstOrDefault();
+                    prms = null;
+                    return t;
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public List<TModel> GetList(string sql)
+        {
+            using (IDatabase db = Connection)
+            {
+                try
+                {
+                    if (prms == null)
+                    {
+                        return db.Fetch<TModel>(sql);
+                    }
+                    var t = db.Fetch<TModel>(sql, prms.ToArray());
+                    prms = null;
+                    return t;
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+
+
+        public T GetScalar<T>(string sql)
+        {
+            using (IDatabase db = Connection)
+            {
+                try
+                {
+                    if (prms == null)
+                    {
+                        return db.ExecuteScalar<T>(sql);
+                    }
+                    var t = db.ExecuteScalar<T>(sql, prms.ToArray());
+                    prms = null;
+                    return t;
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
+
+
     }
 
 

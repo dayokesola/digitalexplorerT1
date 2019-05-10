@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<div id="appView">
+
+    <div class="row">
+        <div class="col-4 offset-4">
+            <h2 class="text-center mb-3">Quick Name Search</h2>
+
+            <div class="input-group mb-3 input-group-lg">
+                <input type="text" class="form-control" v-model="Qry">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="button" id="button-addon2" v-on:click="SearchNames">GO</button>
+                </div>
+            </div>
+            <div class="small text-center"><a href="#">complete my application</a> | <a href="#">track my application</a> | <a href="#">advanced search</a> </div>
+        </div>
+    </div>
+
+   @*<div class="row">
+        <div class="col-md-4">
+            <div class="card bg-light text-center">
+                <div class="card-body">
+                    <div class="">
+                        <samp>256</samp>
+                    </div>
+                    <h3 class="font-normal">Hydroflora Pots</h3>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-outline-primary"><i class="fas fa-phone"></i></button>
+                        <button type="button" class="btn btn-outline-primary"><i class="fas fa-credit-card"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        var pageApp = new Vue({
+            el: '#appView',
+            data: {
+                BusinessMatches: [],
+                Qry: '',
+            },
+            methods: {
+                SearchNames: function () {
+                    var req = DataUtil.SearchName(pageApp.Qry);
+                    req.done(function (data) { 
+                        ShowLoading("Matches found!", "warning");
+                        pageApp.BusinessMatches = data;
+                    });
+                    req.fail(function (error) { 
+                        ShowLoading(error.responseJSON.Message, "error");
+                    });
+                    return 1;
+                }
+            }
+        }); 
+    </script>
+}

@@ -1,4 +1,5 @@
 ﻿using BizNest.Core.Domain.Enum;
+using NPoco;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -47,7 +48,7 @@ namespace BizNest.Core.Domain.Model
         /// <summary>
         /// 
         /// </summary>
-        //[Ignore]
+        [Ignore]
         public string RecordStatusText
         {
             get
@@ -61,7 +62,7 @@ namespace BizNest.Core.Domain.Model
         /// <summary>
         /// 
         /// </summary>
-        //[Ignore]
+        [Ignore]
         public string CreatedAtText
         {
             get
@@ -74,7 +75,7 @@ namespace BizNest.Core.Domain.Model
         /// 
         /// </summary>
         /// 
-        //[Ignore]
+        [Ignore]
         public string UpdatedAtText
         {
             get
