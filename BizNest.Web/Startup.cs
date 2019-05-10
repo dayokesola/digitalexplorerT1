@@ -49,7 +49,7 @@ namespace BizNest.Web
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            
+            app.UseMvcWithDefaultRoute();
 
 
             app.UseMvc();

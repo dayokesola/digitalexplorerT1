@@ -1,9 +1,12 @@
-﻿using System;
+﻿using NPoco;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace BizNest.Core.Domain.Model.App
 {
+    [TableName("bts_businesstypemodel")]
+    [PrimaryKey("Id")]
     public class BusinessTypeModel : BaseModel<int>
     {
         /// <summary>
