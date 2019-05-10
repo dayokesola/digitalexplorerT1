@@ -4,5 +4,76 @@
         <name>BizNest.Service</name>
     </assembly>
     <members>
+        <member name="P:BizNest.Service.Controllers.BaseApiController.Logic">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:BizNest.Service.Controllers.BaseApiController.AddHeader(System.String,System.Object)">
+            <summary>
+            Adds the header.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="data">The data.</param>
+        </member>
+        <member name="M:BizNest.Service.Controllers.BaseApiController.ModelError(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary)">
+            <summary>
+            
+            </summary>
+            <param name="modelState"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BizNest.Service.Controllers.BusinessNamesController.Search(BizNest.Core.Domain.Form.App.BusinessNameSearchForm)">
+            <summary>
+            Add Business
+            </summary>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BizNest.Service.Controllers.BusinessTypesController.Get(System.String,System.String,System.Int32,System.Int32,System.Decimal,System.String,System.Int64,System.Int64,System.String,System.Int32)">
+            <summary>
+            Search, Page, filter and Shaped BusinessTypes
+            </summary>
+            <param name="sort"></param>
+            <param name="name"></param>
+            <param name="minStakeHolder"></param>
+            <param name="maxStakeHolder"></param>
+            <param name="minCapital"></param>
+            <param name="info"></param>
+            <param name="page"></param>
+            <param name="pageSize"></param>
+            <param name="fields"></param>
+            <param name="draw"></param>
+            <returns></returns>  
+        </member>
+        <member name="M:BizNest.Service.Controllers.BusinessTypesController.Get(System.Int32)">
+            <summary>
+            Get BusinessType by ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BizNest.Service.Controllers.BusinessTypesController.Create(BizNest.Core.Domain.Form.App.BusinessTypeForm)">
+            <summary>
+            Add BusinessType
+            </summary>
+            <param name="form"></param>
+            <returns></returns>  
+        </member>
+        <member name="M:BizNest.Service.Controllers.BusinessTypesController.Update(System.Int32,BizNest.Core.Domain.Form.App.BusinessTypeForm)">
+            <summary>
+            Update BusinessType
+            </summary>
+            <param name="id"></param>
+            <param name="form"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BizNest.Service.Controllers.BusinessTypesController.Delete(System.Int32)">
+            <summary>
+            Delete BusinessType
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

@@ -1,0 +1,887 @@
+ENTITY
+
+        /// <summary>
+        /// ProhibitedWord Class
+        /// </summary>
+        public class ProhibitedWord : BaseEntity<int>
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+public string Word { get; set; }
+
+        }
+
+-------------------------------------------------
+
+MODEL
+
+        /// <summary>
+        /// ProhibitedWord View Model
+        /// </summary>
+        [TableName("bts_prohibitedwordmodel")]
+        [PrimaryKey("Id")]
+        public class ProhibitedWordModel : BaseModel<int>
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+public string Word { get; set; }
+
+        }
+
+-------------------------------------------------
+
+FORM
+
+        /// <summary>
+        /// ProhibitedWord Form
+        /// </summary>
+        public class ProhibitedWordForm : BaseForm<int>
+        {
+            /// <summary>
+            /// 
+            /// </summary>
+public string Word { get; set; }
+
+        }
+
+-------------------------------------------------
+
+AUTOMAPPER CONFIG
+
+            cfg.CreateMap<ProhibitedWord, ProhibitedWordModel>().ReverseMap();
+            cfg.CreateMap<ProhibitedWord, ProhibitedWordForm>().ReverseMap();
+            cfg.CreateMap<ProhibitedWordModel, ProhibitedWordForm>().ReverseMap();
+
+-------------------------------------------------
+
+MODEL FACTORY
+
+        /// <summary>
+        /// ProhibitedWord Factory
+        /// </summary>
+        public class ProhibitedWordFactory : BaseFactory<ProhibitedWord, ProhibitedWordModel, ProhibitedWordForm, int>
+        {
+
+        }
+
+-------------------------------------------------
+
+
+FACTORY SERVICE
+
+        ProhibitedWordFactory ProhibitedWords { get; }
+
+        private ProhibitedWordFactory _prohibitedword;
+
+        /// <summary>
+        /// ProhibitedWord Factory Module
+        /// </summary>
+        public ProhibitedWordFactory ProhibitedWords { get { if (_prohibitedword == null) { _prohibitedword = new ProhibitedWordFactory(); } return _prohibitedword; } }
+
+-------------------------------------------------
+
+DB CONTEXT
+
+        public DbSet<ProhibitedWord> ProhibitedWords { get; set; }
+ 
+        For<ProhibitedWordModel>().TableName("bts_prohibitedwordmodel");
+
+var txt = @"create view bts_prohibitedwordmodel as select x.* from bts_prohibitedword x where x.RecordStatus != 3 and x.RecordStatus != 4";
+Sql(txt);
+
+
+
+var txt = @"drop view bts_prohibitedwordmodel";
+Sql(txt);
+
+-------------------------------------------------
+
+ENTITY REPOSITORY
+    /// <summary>
+    /// 
+    /// </summary>
+    public class ProhibitedWordRepository : BaseRepository<ProhibitedWord, ProhibitedWordModel, int>
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        public ProhibitedWordRepository(BootesDbContext context) : base(context)
+        {
+        }
+        /// <summary>
+        /// IQueryable ProhibitedWord Entity Search
+        /// </summary>
+        /// <param name="word"></param>
+/// <returns></returns>
+        public IQueryable<ProhibitedWord> Search(string word = "")
+        {
+            var table = Query();
+            if (!string.IsNullOrEmpty(word))
+            {
+                table = table.Where(x => x.Word == word);
+            }
+  
+            return table;
+        }
+
+        /// <summary>
+        /// Paged ProhibitedWord Model Search
+        /// </summary>
+        /// <param name="word"></param>
+/// <param name="page"></param>
+        ///<param name="pageSize"></param>
+        ///<param name="sort"></param>
+        /// <returns></returns>
+        public Page<ProhibitedWordModel> SearchView(string word = "",
+            long page = 1, long pageSize = 10, string sort = "Id")
+        {
+            var sql = "select * from " + Constants.DBPrefix + "prohibitedwordmodel where Id > 0 ";
+            var c = 0;
+
+            if (!string.IsNullOrEmpty(word))
+            {
+                sql += $" and Word = @{c} ";
+                AddParam("word", word);
+                c++;
+            }
+
+
+            if(page <= 0)
+            {
+                var l = GetList(sql);
+                return new Page<ProhibitedWordModel>()
+                {
+                    CurrentPage = 0,
+                    Items = l,
+                    ItemsPerPage = 0,
+                    TotalItems = 0,
+                    TotalPages = 0
+                };
+            }
+
+           
+            sql += ApplySort(sort); 
+            var k = SearchView(sql, page, pageSize);
+            return new Page<ProhibitedWordModel>()
+            {
+                CurrentPage = k.CurrentPage,
+                Items = k.Items,
+                ItemsPerPage = k.ItemsPerPage,
+                TotalItems = k.TotalItems,
+                TotalPages = k.TotalPages
+            };
+        }
+
+        /// <summary>
+        /// Get ProhibitedWord Entity
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public ProhibitedWordModel GetModel(int Id)
+        {
+            var sql = "select * from " + Constants.DBPrefix + "prohibitedwordmodel where Id = @0"; 
+            AddParam("Id", Id);
+            return GetRecord(sql);
+        }
+
+        /// <summary>
+        /// Check exists
+        /// </summary>
+        /// <param name="word"></param>
+/// 
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool ItemExists(string word = "", int Id = 0)
+        {
+            var check = Search(word);
+            if (Id > 0)
+            {
+                check = check.Where(x => x.Id != Id);
+            }
+            return check.Any();
+        }
+
+        /// <summary>
+        /// check exists
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool ItemExists(ProhibitedWordModel model, int Id = 0)
+        {
+            var check = Search(model.Word);
+            if (Id > 0)
+            {
+                check = check.Where(x => x.Id != Id);
+            }
+            return check.Any();
+        }
+    }
+
+-------------------------------------------------
+
+REPOSITORY SERVICE
+
+        ProhibitedWordRepository ProhibitedWords { get; }
+
+        private ProhibitedWordRepository _prohibitedwords;
+        public ProhibitedWordRepository ProhibitedWords { get { if (_prohibitedwords == null) { _prohibitedwords = new ProhibitedWordRepository(_context); } return _prohibitedwords; } }
+
+
+-------------------------------------------------
+
+SERVICE
+
+
+        /// <summary>
+        /// ProhibitedWord Service
+        /// </summary>
+        public partial class ProhibitedWordService : BaseService<ProhibitedWord, ProhibitedWordModel, ProhibitedWordForm, int>
+        {
+
+        }
+
+
+        /// <summary>
+        /// ProhibitedWord Service
+        /// </summary>
+        public partial class ProhibitedWordService : BaseService<ProhibitedWord, ProhibitedWordModel, ProhibitedWordForm, int>
+        {
+            /// <summary>
+            /// IQueryable ProhibitedWord Entity Search
+            /// </summary>
+            /// <param name="word"></param>
+/// <returns></returns>
+            public IQueryable<ProhibitedWord> Search(string word = "")
+            {
+                return DataModule.ProhibitedWords.Search(word);
+            }
+            
+
+            /// <summary>
+            /// IEnumerable ProhibitedWord Model Search
+            /// </summary>
+            /// <param name="word"></param>
+/// <returns></returns>
+            public IEnumerable<ProhibitedWordModel> SearchModel(string word = "")
+            {
+                return DataModule.ProhibitedWords.Search(word)
+                    .Select(FactoryModule.ProhibitedWords.CreateModel);
+            }
+
+            
+            /// <summary>
+            /// Paged ProhibitedWord Model Search
+            /// </summary>
+            /// <param name="word"></param>
+/// <param name="page"></param>
+            ///<param name="pageSize"></param>
+            ///<param name="sort"></param>
+            /// <returns></returns>
+            public Page<ProhibitedWordModel> SearchView(string word = "",
+                long page = 1,long pageSize = 10, string sort = "")
+            {
+                return DataModule.ProhibitedWords.SearchView(word, page, pageSize, sort);
+            }
+
+            /// <summary>
+            /// Create ProhibitedWord Model from ProhibitedWord Entity
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <returns></returns>
+            public ProhibitedWordModel Create(ProhibitedWord entity)
+            {
+                return FactoryModule.ProhibitedWords.CreateModel(entity);
+            }
+
+	        /// <summary>
+            /// Create ProhibitedWord Model from ProhibitedWord Form
+            /// </summary>
+            /// <param name="form"></param>
+            /// <returns></returns>
+            public ProhibitedWordModel Create(ProhibitedWordForm form)
+            {
+                return FactoryModule.ProhibitedWords.CreateModel(form);
+            }
+
+            /// <summary>
+            /// Create ProhibitedWord Entity from ProhibitedWord Model
+            /// </summary>
+            /// <param name="model"></param>
+            /// <returns></returns>
+            public ProhibitedWord Create(ProhibitedWordModel model)
+            {
+                return FactoryModule.ProhibitedWords.CreateEntity(model);
+            }
+
+            /// <summary>
+            /// Check Uniqueness of ProhibitedWord before creation
+            /// </summary>
+            /// <param name="model"></param>
+            /// <returns></returns>
+            public bool CreateExists(ProhibitedWordModel model)
+            {
+                return DataModule.ProhibitedWords.ItemExists(model);
+            }
+
+            /// <summary>
+            /// Delete ProhibitedWord
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <returns></returns>
+            public int Delete(ProhibitedWord entity)
+            {
+                return DataModule.ProhibitedWords.Delete(entity);
+            }
+
+            /// <summary>
+            /// Get ProhibitedWord Entity
+            /// </summary>
+            /// <param name="id"></param>
+            /// <returns></returns>
+            public ProhibitedWord Get(int id)
+            {
+                return DataModule.ProhibitedWords.Get(id);
+            }
+
+
+
+            /// <summary>
+            /// Get ProhibitedWord Model
+            /// </summary>
+            /// <param name="id"></param>
+            /// <returns></returns>
+            public ProhibitedWordModel GetModel(int id)
+            { 
+                return DataModule.ProhibitedWords.GetModel(id);
+            }
+
+            /// <summary>
+            /// Insert new ProhibitedWord to DB
+            /// </summary>
+            /// <param name="model"></param>
+            /// <param name="check"></param>
+            /// <returns></returns>
+            public ProhibitedWordModel Insert(ProhibitedWordModel model, bool check = true)
+            {
+                if (check)
+                {
+                    var routeSearch = DataModule.ProhibitedWords.ItemExists(model);
+                    if (routeSearch)
+                    {
+                        throw new Exception("ProhibitedWord Name already exists");
+                    }
+                }
+                var entity = FactoryModule.ProhibitedWords.CreateEntity(model);
+                entity.RecordStatus = Core.Domain.Enum.RecordStatus.Active;
+                DataModule.ProhibitedWords.Insert(entity);
+                return FactoryModule.ProhibitedWords.CreateModel(entity);
+            }
+
+            /// <summary>
+            /// Update a ProhibitedWord Entity with a ProhibitedWord Model with selected fields
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <param name="model"></param>
+            /// <param name="fields"></param>
+            /// <returns></returns>
+            public ProhibitedWord Patch(ProhibitedWord entity, ProhibitedWordModel model, string fields)
+            {
+                return FactoryModule.ProhibitedWords.Patch(entity, model, fields);
+            }
+
+            /// <summary>
+            /// Update ProhibitedWord, with Patch Options Optional
+            /// </summary>
+            /// <param name="entity"></param>
+            /// <param name="model"></param>
+            /// <param name="fields"></param>
+            /// <returns></returns>
+            public ProhibitedWordModel Update(ProhibitedWord entity, ProhibitedWordModel model = null, string fields = "")
+            {
+                if (model != null)
+                {
+                    entity = Patch(entity, model, fields);
+                }
+                return FactoryModule.ProhibitedWords.CreateModel(DataModule.ProhibitedWords.Update(entity));
+            }
+
+            /// <summary>
+            /// Check Uniqueness of ProhibitedWord before update
+            /// </summary>
+            /// <param name="model"></param>
+            /// <returns></returns>
+            public bool UpdateExists(ProhibitedWordModel model)
+            {
+                return DataModule.ProhibitedWords.ItemExists(model, model.Id);
+            }
+
+    }
+
+-------------------------------------------------
+
+SERVICE MODULE
+
+        ProhibitedWordService ProhibitedWordService { get; }
+
+        private ProhibitedWordService _prohibitedword;
+
+        /// <summary>
+        /// ProhibitedWord Service Module
+        /// </summary>
+        public ProhibitedWordService ProhibitedWordService { get { if (_prohibitedword == null) { _prohibitedword = new ProhibitedWordService(); } return _prohibitedword; } }
+ 
+
+-------------------------------------------------
+
+API CONTROLLER
+
+
+    /// <summary>
+    /// ProhibitedWords CRUD
+    /// </summary>
+    [RoutePrefix("api/ProhibitedWords")]
+    public class ProhibitedWordsController : BaseApiController
+    {
+        /// <summary>
+        /// Search, Page, filter and Shaped ProhibitedWords
+        /// </summary>
+        /// <param name="sort"></param>
+        /// <param name="word"></param>
+/// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="fields"></param>
+        /// <param name="draw"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(IEnumerable<ProhibitedWordModel>))]
+        [Route("Search", Name = "ProhibitedWordApi")]
+        [HttpGet]
+        public IHttpActionResult Get(string sort = "id", string word = "", long page = 1, long pageSize = 10, string fields= "", int draw = 1)
+        {  
+            try
+            {
+                var items = Logic.ProhibitedWordService.SearchView(word,page, pageSize, sort);
+                
+                if (page > items.TotalPages) page = items.TotalPages;
+                var jo = new JObjectHelper(); 
+                jo.Add("word", word);
+
+                jo.Add("fields", fields); 
+                jo.Add("sort", sort);
+                var urlHelper = new UrlHelper(Request);
+                var linkBuilder = new PageLinkBuilder(urlHelper, "ProhibitedWordApi", jo, page, pageSize, items.TotalItems, draw); 
+                AddHeader("X-Pagination", linkBuilder.PaginationHeader);
+                var dto = new List<ProhibitedWordModel>();
+                if (items.TotalItems <= 0) return Ok(dto); 
+                var dtos = items.Items.ShapeList(fields);
+                return Ok(dtos);
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        /// <summary>
+        /// Get ProhibitedWord by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("Detail")]
+        [ResponseType(typeof(ProhibitedWordModel))]
+        public IHttpActionResult Get(int id)
+        {
+            try
+            {
+                var item = Logic.ProhibitedWordService.GetModel(id);
+                if (item == null)
+                {
+                    return NotFound();
+                }
+                return Ok(item);
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+
+         /// <summary>
+        /// Add ProhibitedWord
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        [Route("Create")]
+        [HttpPost]
+        [ResponseType(typeof(ProhibitedWordModel))]
+        public IHttpActionResult Create(ProhibitedWordForm form)
+        {
+            try
+            {
+                var model = Logic.ProhibitedWordService.Create(form);
+                var check = Logic.ProhibitedWordService.CreateExists(model);
+                if (check)
+                {
+                    return BadRequest("ProhibitedWord already exists");
+                }
+                var dto = Logic.ProhibitedWordService.Insert(model);
+                return Ok(dto);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+
+                /// <summary>
+        /// Update ProhibitedWord
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        [Route("Update")]
+        [HttpPost]
+        [ResponseType(typeof(ProhibitedWordModel))]
+        public IHttpActionResult Update(int id, ProhibitedWordForm form)
+        {
+            try
+            {
+                var model = Logic.ProhibitedWordService.Create(form);
+                if (id != model.Id)
+                    return BadRequest("Route Parameter does mot match model ID"); 
+                var found = Logic.ProhibitedWordService.Get(id);
+                if (found == null)
+                    return NotFound(); 
+                var check = Logic.ProhibitedWordService.UpdateExists(model); 
+                if (Logic.ProhibitedWordService.UpdateExists(model))
+                    return BadRequest("ProhibitedWord configuration already exists");
+                var dto = Logic.ProhibitedWordService.Update(found, model,
+                    "Word,RecordStatus");
+                return Ok(dto);
+            } 
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Delete ProhibitedWord
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("Delete")]
+        [HttpPost]
+        [ResponseType(typeof(ProhibitedWordModel))]
+        public IHttpActionResult Delete(int id)
+        {
+            try
+            {
+                var found = Logic.ProhibitedWordService.Get(id);
+                if (found == null)
+                    return NotFound();
+                Logic.ProhibitedWordService.Delete(found); 
+                return Content(HttpStatusCode.NoContent,found);
+            } 
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        } 
+    }
+
+
+-------------------------------------------------
+
+API Library Service
+public class ProhibitedWordAPI : BaseServiceAPI<ProhibitedWordModel, int>
+    { 
+        public ProhibitedWordAPI()
+        {
+            _api = "/api/ProhibitedWords";
+        }
+ 
+        public async Task<ApiResponse<IEnumerable<ProhibitedWordModel>>> Search(string word = "",
+            string sort = "id",int page = 1, int pageSize = 10, string fields = "", bool extended = false)
+        {
+            var jo = new JObjectHelper(sort, page, pageSize, fields, extended);
+            jo.Add("word", word);
+             
+            Route("Search");
+            return await Search<ProhibitedWordModel>(jo); 
+        }        
+    }
+
+-------------------------------------------------
+
+API Library MODULE
+private ProhibitedWordAPI _prohibitedword;
+
+        /// <summary>
+        /// ProhibitedWord API Module
+        /// </summary>
+        public ProhibitedWordAPI ProhibitedWordAPI { get { if (_prohibitedword == null) { _prohibitedword = new ProhibitedWordAPI(); } return _prohibitedword; } }
+
+
+-------------------------------------------------
+
+MVC CONTROLLER
+     
+    public class ProhibitedWordsController : BaseController
+    {
+        
+        //[CustomAuth(Permissions = "ProhibitedWordsSearch")]
+        public ActionResult Index(string word = "", string act="")
+        {
+            if (act.ToLower() == "export")
+            {
+                var data = Logic.ProhibitedWordService.SearchView(word,page: 0);
+                Download(data); 
+            }
+            return View();
+        }
+
+    }
+
+
+-------------------------------------------------
+
+SAVE VIEW
+
+            
+
+-------------------------------------------------
+
+INDEX VIEW
+@{
+    ViewBag.Title = "ProhibitedWords";
+    ViewBag.Header = "ProhibitedWords";
+    string sim = Bootes.Core.Common.Constants.API_URL;
+    
+}
+@section styles{
+
+
+}
+
+<div class="spp" data-perm="ProhibitedWordsSearch"></div>
+ 
+   
+ 
+
+  <div class="row" id="filterView"> 
+            <div class="col-md-12">
+                <div class="collapse" id="collapseExample">
+
+                    <form action="" class="form p-3 mb-0 bg-light" method="get">
+                        <div class="row">
+
+                            <div class="form-group col-sm-12 col-md-3">
+    <small>Word</small>
+    <input type="text" name="word" id="word" value="" placeholder="Word" class="form-control form-control-sm" v-model="formsearch.Word" >
+</div>
+ 
+                            
+                            <div class="form-group col-sm-12 text-right mb-0">
+                                <button class="btn btn-sm btn-warning" type="reset" value="Cancel">
+                                    Cancel
+                                </button>
+                                <button class="btn btn-sm btn-primary" type="submit" name="act">
+                                    Search
+                                </button>
+                                <button class="btn btn-sm btn-dark" type="submit" name="act" value="export">
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-right">
+                    <a class="btn btn-light btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Filter/Export
+                        <i class="fa fa-search"></i>
+                    </a>
+                    <a href="javascript:;" onclick="FormUtil.FormCreate()" role="button" class="btn btn-light btn-sm">
+                        New
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+                <table id="grid" class="table" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a href="javascript:;" onclick="FormUtil.FormCreate()">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </th>
+                             <th>Word</th> 
+ <th>Status</th> 
+ <th>Created</th> 
+ <th>Updated</th> 
+
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+        <div id="appView">
+        <!-- Modal -->
+            <div class="modal fade" id="crudModal" tabindex="-1" role="dialog" aria-labelledby="crudModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="crudModallLabel">{{ frmTitle }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form method="post" @@submit.prevent="submit">
+
+                                        <input data-val="true" data-val-number="The field Id must be a number." data-val-required="The Id field is required." id="Id"
+                                            name="Id" type="hidden" value="0" v-model="form.Id" />
+                                        <div class="white-box">
+                                            <div class="row">
+                                            <div class="form-group col-sm-12 col-md-4">
+    <label class="req control-label" for="Word">Word</label>
+    <input class="form-control text-box single-line" data-val="true" data-val-required="The Word field is required." id="Word"
+        name="Word" type="text" value="" v-model="form.Word" />
+</div>
+
+                                                  
+                                                <div class="form-group col-sm-6">
+
+                                                    <input checked="checked" data-val="true" data-val-required="The RecordStatus field is required." id="RecordStatus" name="RecordStatus"
+                                                        type="radio" value="0"  v-model="form.RecordStatus" />
+                                                    <label>Pending</label>
+                                                    <input id="RecordStatus" name="RecordStatus" type="radio" value="1" v-model="form.RecordStatus" />
+                                                    <label>Active</label>
+                                                    <input id="RecordStatus" name="RecordStatus" type="radio" value="2" v-model="form.RecordStatus" />
+                                                    <label>Disabled</label>
+                                                </div>
+                                                <div class="form-group col-sm-6 text-right">
+                                                    <button type="reset" class="btn btn-warning btn-sm">Cancel</button>
+                                                    <input type="submit" value="Submit" class="btn btn-primary btn-sm" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailModalLabel">{{ frmTitle }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <dl class="row">
+ 
+                                
+                                <dt class="col-sm-3">Word</dt>
+                                <dd class="col-sm-9">{{ form.Word }}</dd>
+ 
+
+
+                                
+                                <dt class="col-sm-3">Status</dt>
+                                <dd class="col-sm-9">{{ form.RecordStatusText }}</dd>
+                                
+                                <dt class="col-sm-3">Created</dt>
+                                <dd class="col-sm-9">{{ form.CreatedAtText }}</dd>
+                                
+                                <dt class="col-sm-3">Updated</dt>
+                                <dd class="col-sm-9">{{ form.UpdatedAtText }}</dd>
+                            </dl> 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger btn-sm" v-on:click="deleteItem">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+@section scripts
+{
+  <script type="text/javascript">
+
+        $(document).ready(function () {
+            
+            var _form = {
+                Id: 0,
+Word: ""
+            };
+
+            var _formsearch = {
+                Id: 0,
+Word: ""
+            };
+            var _columns = [
+                {
+                    "data": "Id",
+                    "render": function (data, type, row, meta) {
+                        return '<a href="javascript:;" onclick="FormUtil.FormUpdate(' + data + ')"><i class="fa fa-edit"></i></a> <a href="javascript:;" onclick="FormUtil.FormDetail(' + data + ')"><i class="fa fa-external-link-alt"></i></a>';
+                    }
+                },
+                
+{"data": "Word" },
+{"data": "RecordStatusText" },
+{"data": "CreatedAtText" },
+{"data": "UpdatedAtText" }
+            ];
+
+            var _list = {
+                id: 0
+            };
+
+            FormUtil.Init({
+                entity: 'ProhibitedWords',
+                url: '@sim',
+                form: _form,
+                formsearch: _formsearch,
+                columns: _columns,
+                table: 'grid',
+                createModal: 'crudModal',
+                updateModal: 'crudModal',
+                detailModal: 'detailModal',
+                list: _list
+            });
+        });
+    </script>
+}
+
+
+-------------------------------------------------
+
