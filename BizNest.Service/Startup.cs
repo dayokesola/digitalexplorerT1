@@ -27,10 +27,11 @@ namespace BizNest.Service
         public void ConfigureServices(IServiceCollection services)
         {
             #if DEBUG
-                        services.AddDbContext<AppDbContext>((obj) => obj.UseSqlServer(Configuration.GetConnectionString("Default")));
+                        services.AddDbContext<AppDbContext>((obj) => obj.UseSqlServer(Configuration.GetConnectionString("Default"),b=>b.MigrationsAssembly("BizNest.Service")));
             #else
                         services.AddDbContext<AppDbContext>((obj) => Environment.GetEnvironmentVariable("db"));
             #endif
+           
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
