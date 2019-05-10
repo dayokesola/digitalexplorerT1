@@ -20,7 +20,6 @@ using BizNest.Core.Common;
 using BizNest.Core.Logic.Definations;
 using BizNest.Core.Logic.App;
 using BizNest.Core.Domain.Entity;
-
 namespace BizNest.Service
 {
     public class Startup
@@ -99,6 +98,9 @@ namespace BizNest.Service
             {
                 options.Filters.Add(new CorsAuthorizationFilterFactory("AllowMyOrigin"));
             });
+
+
+            AutoMapperConfig.RegisterMappings();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
