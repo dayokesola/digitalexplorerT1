@@ -27,12 +27,12 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12" v-for="item in BusinessMatches">
+            <div class="col-md-12" v-for="item in BusinessMatches.results">
 
                 <div class="">
-                    <samp v-html="item.match"></samp>
+                    <samp v-html="item.matchPercentage"></samp>
                 </div>
-                <h3 class="font-normal" v-html="item.name"></h3>
+                <h3 class="font-normal" v-html="item.word"></h3>
 
 
             </div>
@@ -143,12 +143,12 @@
                     req.done(function (data) {
                         pageApp.BusinessMatches = data;
                         //check if i can switch to step 2
-                        pageApp.canmove = false;
-                        for (var i = 0; i < data.length; i++) {
-                            if (data[i].match < 50) {
+                        pageApp.canmove = true;
+                        //for (var i = 0; i < data.length; i++) {
+                        //    if (data[i].match < 50) {
 
-                            }
-                        }
+                        //    }
+                        //}
                     });
                     req.fail(function (error) {
                         ShowLoading(error.responseJSON.Message, "error");

@@ -172,7 +172,7 @@ namespace BizNest.Service
 
 
             services.AddScoped<IProhibitedService,ProhibitedNameService>();
-            services.AddScoped<ISearchService,MockedSearchService>();
+            services.AddScoped<ISearchService,ElasticSearchService>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -237,11 +237,11 @@ namespace BizNest.Service
                );
 
             app.UseHttpsRedirection();
-            app.UseAuthentication();
             app.UseCors(x => x
                .AllowAnyOrigin()
                .AllowAnyMethod()
                .AllowAnyHeader());
+            app.UseAuthentication();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
