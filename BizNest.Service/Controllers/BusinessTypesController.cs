@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using BizNest.Core.Common;
+using BizNest.Core.Data.DB;
 using BizNest.Core.Domain.Form.App;
 using BizNest.Core.Domain.Model.App;
 using BizNest.Core.UI;
@@ -18,6 +19,10 @@ namespace BizNest.Service.Controllers
     [ApiController]
     public class BusinessTypesController : BaseApiController
     {
+        public BusinessTypesController(AppDbContext context) : base(context)
+        {
+
+        }
 
         /// <summary>
         /// Search, Page, filter and Shaped BusinessTypes
@@ -33,51 +38,50 @@ namespace BizNest.Service.Controllers
         /// <param name="fields"></param>
         /// <param name="draw"></param>
         /// <returns></returns> 
-        [Route("Search", Name = "BusinessTypeApi")]
-        [HttpGet]
-        public IActionResult Get(string sort = "id", string name = "", int minStakeHolder = 0, int maxStakeHolder = 0, decimal minCapital = 0, string info = "", long page = 1, long pageSize = 10, string fields = "", int draw = 1)
-        {
-            try
-            {
-                var items = Logic.BusinessTypeService.SearchView(name, minStakeHolder, maxStakeHolder, minCapital, info, page, pageSize, sort);
+        //[Route("Search", Name = "BusinessTypeApi")]
+        //[HttpGet]
+        //public IActionResult Get(string sort = "id", string name = "", int minStakeHolder = 0, int maxStakeHolder = 0, decimal minCapital = 0, string info = "", long page = 1, long pageSize = 10, string fields = "", int draw = 1)
+        //{
+        //    try
+        //    {
+        //        var items = Logic.BusinessTypeService.SearchView(name, minStakeHolder, maxStakeHolder, minCapital, info, page, pageSize, sort);
 
-                if (page > items.TotalPages) page = items.TotalPages;
-                var jo = new JObjectHelper();
-                jo.Add("name", name);
-                jo.Add("minStakeHolder", minStakeHolder);
-                jo.Add("maxStakeHolder", maxStakeHolder);
-                jo.Add("minCapital", minCapital);
-                jo.Add("info", info);
+        //        if (page > items.TotalPages) page = items.TotalPages;
+        //        var jo = new JObjectHelper();
+        //        jo.Add("name", name);
+        //        jo.Add("minStakeHolder", minStakeHolder);
+        //        jo.Add("maxStakeHolder", maxStakeHolder);
+        //        jo.Add("minCapital", minCapital);
+        //        jo.Add("info", info);
 
-                jo.Add("fields", fields);
-                jo.Add("sort", sort);
-                //var urlHelper = new UrlHelper(Request);
-                //var linkBuilder = new PageLinkBuilder(urlHelper, "BusinessTypeApi", jo, page, pageSize, items.TotalItems, draw);
-                //AddHeader("X-Pagination", linkBuilder.PaginationHeader);
-                var dto = new List<BusinessTypeModel>();
-                if (items.TotalItems <= 0) return Ok(dto);
-                var dtos = items.Items.ShapeList(fields);
-                return Ok(dtos);
-            }
-            catch (Exception ex)
-            {
-                //Log.Error(ex);
-                return BadRequest(ex.Message);
-            }
-        }
+        //        jo.Add("fields", fields);
+        //        jo.Add("sort", sort);
+        //        //var urlHelper = new UrlHelper(Request);
+        //        //var linkBuilder = new PageLinkBuilder(urlHelper, "BusinessTypeApi", jo, page, pageSize, items.TotalItems, draw);
+        //        //AddHeader("X-Pagination", linkBuilder.PaginationHeader);
+        //        var dto = new List<BusinessTypeModel>();
+        //        if (items.TotalItems <= 0) return Ok(dto);
+        //        var dtos = items.Items.ShapeList(fields);
+        //        return Ok(dtos);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //Log.Error(ex);
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
         /// <summary>
         /// Get BusinessType by ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("Detail")]
-        public IActionResult Get(int id)
+        [HttpGet("Detail/{id}")] 
+        public ActionResult Get(int id)
         {
             try
             {
-                var item = Logic.BusinessTypeService.GetModel(id);
+                var item = Logic.BusinessTypeService.Get(id);
                 if (item == null)
                 {
                     return NotFound();

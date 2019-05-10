@@ -29,7 +29,7 @@ where TModel : BaseModel<TKey>
         /// 
         /// </summary>
         /// <param name="context"></param>
-        public BaseRepository(DbContext context)
+        public BaseRepository(AppDbContext context)
         {
             _context = context;
         }

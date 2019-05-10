@@ -1,4 +1,5 @@
-﻿using BizNest.Core.Domain.Entity.App;
+﻿using BizNest.Core.Data.DB;
+using BizNest.Core.Domain.Entity.App;
 using BizNest.Core.Domain.Form.App;
 using BizNest.Core.Domain.Model;
 using BizNest.Core.Domain.Model.App;
@@ -25,6 +26,11 @@ namespace BizNest.Core.Logic.App
     /// </summary>
     public partial class BusinessTypeService : BaseService<BusinessType, BusinessTypeModel, BusinessTypeForm, int>
     {
+        public BusinessTypeService(AppDbContext context): base(context)
+        {
+
+        }
+
         /// <summary>
         /// IQueryable BusinessType Entity Search
         /// </summary>
