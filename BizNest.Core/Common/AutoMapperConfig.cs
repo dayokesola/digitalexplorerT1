@@ -20,7 +20,7 @@ namespace BizNest.Core.Common
                 cfg.CreateMap<BusinessType, BusinessTypeModel>().ReverseMap();
                 cfg.CreateMap<BusinessType, BusinessTypeForm>().ReverseMap();
                 cfg.CreateMap<BusinessTypeModel, BusinessTypeForm>().ReverseMap();
-                 
+                cfg.CreateMap<ProhibitedName,ProhibitedWordModel>().ReverseMap();
             });
         }
     }

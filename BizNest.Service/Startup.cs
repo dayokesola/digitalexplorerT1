@@ -16,6 +16,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using BizNest.Core.Data.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
+using BizNest.Core.Common;
 
 
 namespace BizNest.Service
@@ -35,6 +36,7 @@ namespace BizNest.Service
 
             services.AddSwaggerGen(options =>
             {
+                AutoMapperConfig.RegisterMappings();
                 options.SwaggerDoc("v1", new Info
                 {
                     Title = "BizNest API",
