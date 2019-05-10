@@ -132,7 +132,6 @@ namespace BizNest.Service
 
             services.AddSwaggerGen(options =>
             {
-                AutoMapperConfig.RegisterMappings();
                 options.SwaggerDoc("v1", new Info
                 {
                     Title = "BizNest API",
