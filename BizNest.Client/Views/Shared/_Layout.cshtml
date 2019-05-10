@@ -20,6 +20,15 @@
     @RenderSection("styles", required: false)
 </head>
 <body>
+    @{
+       
+        string _baseurl = "http://localhost:62186";
+        string _baseapi = "http://localhost:60217";
+    }
+    <script type="text/javascript">
+        var _baseurl = '@_baseurl';
+        var _baseapi = '@_baseapi';
+    </script>
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -53,7 +62,7 @@
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script> 
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/lib/DataTables/datatables.min.js"></script>
         <script src="~/lib/toastr/build/toastr.min.js"></script>
         <script src="~/lib/select2/dist/js/select2.full.min.js"></script>

@@ -1,8 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Business Types";
     ViewBag.Title = "Business Types";
-    ViewBag.Header = "Business Types";
-    string sim = "http://localhost:60217";
+    ViewBag.Header = "Business Types"; 
 
 }
 @section styles{
@@ -269,7 +268,7 @@ Info: ""
 
             FormUtil.Init({
                 entity: 'BusinessTypes',
-                url: '@sim',
+                url: _baseapi,
                 form: _form,
                 formsearch: _formsearch,
                 columns: _columns,
