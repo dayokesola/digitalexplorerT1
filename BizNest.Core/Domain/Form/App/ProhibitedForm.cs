@@ -1,8 +1,8 @@
 
 namespace BizNest.Core.Domain.Form.App
 {
-    public class ProhibitedForm
+    public class ProhibitedForm : BaseForm<long>
     {
-        public string Name { get; set; } 
+        public string Word { get; set; } 
     }
 }

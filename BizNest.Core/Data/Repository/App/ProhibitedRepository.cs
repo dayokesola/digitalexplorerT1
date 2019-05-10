@@ -27,10 +27,10 @@ namespace BizNest.Core.Data.Repository.App
         }
 
 
-        public async Task<List<ProhibitedName>> SearchForWord(string word,int max = 20)
+        public IQueryable<ProhibitedName> SearchForWord(string word)
         {
             var fmtedWrd = word.ToLower();
-            return await Task.Run(()=>Query().Where(x=>x.Word.ToLower().Contains(fmtedWrd)).Take(max).ToList());
+            return Query().Where(x=>x.Word.ToLower().Contains(fmtedWrd));;
         }
     }
 }

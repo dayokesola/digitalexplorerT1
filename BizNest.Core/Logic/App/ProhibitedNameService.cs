@@ -9,6 +9,10 @@ using System.Collections.Generic;
 using System;
 using BizNest.Core.Common;
 using System.Linq;
+using BizNest.Core.Domain.Form;
+using BizNest.Core.Domain.Form.App;
+using System.Linq;
+
 
 namespace BizNest.Core.Logic.App
 {
@@ -22,14 +26,20 @@ namespace BizNest.Core.Logic.App
             this.searchService = searchService;
         }
 
-        public async Task<List<ProhibitedName>> SearchForWords(string query,int max)
+        public async Task<BaseDataModel<ProhibitedForm>> SearchForWords(string query,int skip,int max)
         {
+            query = query.ToLower();
             max = Math.Min(20,max);
-            return await repo.SearchForWord(query,max);
+            return new BaseDataModel<ProhibitedForm>
+            {
+                 Items = repo.SearchForWord(query).Skip(skip).Take(max).Select(x=> new ProhibitedForm{ Id = x.Id, Word = x.Word }).ToList(),
+                 Total = repo.SearchForWord(query).Count()
+            };
         }
 
          public async Task InsertWord (ProhibitedWordModel model)
          {
+              if(await repo.WordExists(model.Word)) throw new ArgumentException("This word already exists");
               var item = DataMapper.Map<ProhibitedName,ProhibitedWordModel>(model);
               await Task.Run(()=> repo.Insert(new ProhibitedName{ Word = model.Word }));
               await searchService.InsertProhibitedNameAsync(model.Word);

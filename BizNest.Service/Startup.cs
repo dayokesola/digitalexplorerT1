@@ -17,7 +17,9 @@ using BizNest.Core.Data.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using BizNest.Core.Common;
-
+using BizNest.Core.Logic.Definations;
+using BizNest.Core.Logic.App;
+using BizNest.Core.Domain.Entity;
 
 namespace BizNest.Service
 {
@@ -71,7 +73,13 @@ namespace BizNest.Service
             #else
                         services.AddDbContext<AppDbContext>((obj) => Environment.GetEnvironmentVariable("db"));
             #endif
-           
+
+
+
+            services.AddScoped<IProhibitedService,ProhibitedNameService>();
+            services.AddScoped<ISearchService,MockedSearchService>();
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddCors(options =>
@@ -111,5 +119,48 @@ namespace BizNest.Service
             });
             app.UseMvc();
         }
+
+
+
     }
+
+    public class MockedSearchService : ISearchService
+    {
+        public async Task InsertBusinessNamesAsync(params string[] names)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public async Task InsertProhibitedNameAsync(params string[] names)
+        {
+           // throw new NotImplementedException();
+        }
+
+        public async Task RemoveBusinessNameAsync(string name)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public async Task RemoveProhibitedNameAsync(string name)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public async Task<SearchResult> SearchAsync(string query)
+        {
+            return new SearchResult
+            {
+                SearchTime = TimeSpan.FromSeconds(1),
+                Summary = "The search was inconslusive",
+                Results = new List<SearchItem>
+                 {
+                     new SearchItem{ IsProhibited = false, Advice = "xname is prohibitted", MatchPercentage = 10, Word = "cve"  },
+                     new SearchItem{ IsProhibited = true, Advice = "xname is prohibitted", MatchPercentage = 40, Word = "cvs32e"  },
+                     new SearchItem{ IsProhibited = false, Advice = "xname is prohibitted", MatchPercentage = 10, Word = "word"  }
+                 }
+            };
+           
+        }
+    }
+
 }

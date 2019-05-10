@@ -5,13 +5,14 @@ using BizNest.Core.Domain.Entity.App;
 using BizNest.Core.Domain.Model;
 using BizNest.Core.Domain.Model.App;
 using System.Collections.Generic;
-
+using BizNest.Core.Domain.Form;
+using BizNest.Core.Domain.Form.App;
 
 namespace BizNest.Core.Logic.Definations
 {
     public interface IProhibitedService
     {
-         Task<List<ProhibitedName>> SearchForWords(string query,int max);
+         Task<BaseDataModel<ProhibitedForm>> SearchForWords(string query,int skip,int max);
 
          Task InsertWord (ProhibitedWordModel model);
 
