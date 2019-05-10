@@ -37,39 +37,39 @@ namespace BizNest.Service.Controllers
         /// <param name="pageSize"></param>
         /// <param name="fields"></param>
         /// <param name="draw"></param>
-        /// <returns></returns> 
-        //[Route("Search", Name = "BusinessTypeApi")]
-        //[HttpGet]
-        //public IActionResult Get(string sort = "id", string name = "", int minStakeHolder = 0, int maxStakeHolder = 0, decimal minCapital = 0, string info = "", long page = 1, long pageSize = 10, string fields = "", int draw = 1)
-        //{
-        //    try
-        //    {
-        //        var items = Logic.BusinessTypeService.SearchView(name, minStakeHolder, maxStakeHolder, minCapital, info, page, pageSize, sort);
+        /// <returns></returns>  
 
-        //        if (page > items.TotalPages) page = items.TotalPages;
-        //        var jo = new JObjectHelper();
-        //        jo.Add("name", name);
-        //        jo.Add("minStakeHolder", minStakeHolder);
-        //        jo.Add("maxStakeHolder", maxStakeHolder);
-        //        jo.Add("minCapital", minCapital);
-        //        jo.Add("info", info);
+        [HttpGet("Search")] 
+        public IActionResult Get(string sort = "id", string name = "", int minStakeHolder = 0, int maxStakeHolder = 0, decimal minCapital = 0, string info = "", long page = 1, long pageSize = 10, string fields = "", int draw = 1)
+        {
+            try
+            {
+                var items = Logic.BusinessTypeService.SearchView(name, minStakeHolder, maxStakeHolder, minCapital, info, page, pageSize, sort);
 
-        //        jo.Add("fields", fields);
-        //        jo.Add("sort", sort);
-        //        //var urlHelper = new UrlHelper(Request);
-        //        //var linkBuilder = new PageLinkBuilder(urlHelper, "BusinessTypeApi", jo, page, pageSize, items.TotalItems, draw);
-        //        //AddHeader("X-Pagination", linkBuilder.PaginationHeader);
-        //        var dto = new List<BusinessTypeModel>();
-        //        if (items.TotalItems <= 0) return Ok(dto);
-        //        var dtos = items.Items.ShapeList(fields);
-        //        return Ok(dtos);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //Log.Error(ex);
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
+                if (page > items.TotalPages) page = items.TotalPages;
+                var jo = new JObjectHelper();
+                jo.Add("name", name);
+                jo.Add("minStakeHolder", minStakeHolder);
+                jo.Add("maxStakeHolder", maxStakeHolder);
+                jo.Add("minCapital", minCapital);
+                jo.Add("info", info);
+
+                jo.Add("fields", fields);
+                jo.Add("sort", sort);
+                //var urlHelper = new UrlHelper(Request);
+                //var linkBuilder = new PageLinkBuilder(urlHelper, "BusinessTypeApi", jo, page, pageSize, items.TotalItems, draw);
+                //AddHeader("X-Pagination", linkBuilder.PaginationHeader);
+                var dto = new List<BusinessTypeModel>();
+                if (items.TotalItems <= 0) return Ok(dto);
+                var dtos = items.Items.ShapeList(fields);
+                return Ok(dtos);
+            }
+            catch (Exception ex)
+            {
+                //Log.Error(ex);
+                return BadRequest(ex.Message);
+            }
+        }
 
         /// <summary>
         /// Get BusinessType by ID
@@ -99,9 +99,8 @@ namespace BizNest.Service.Controllers
         /// Add BusinessType
         /// </summary>
         /// <param name="form"></param>
-        /// <returns></returns>
-        [Route("Create")]
-        [HttpPost] 
+        /// <returns></returns>  
+        [HttpPost("Create")]
         public IActionResult Create(BusinessTypeForm form)
         {
             try
@@ -128,8 +127,7 @@ namespace BizNest.Service.Controllers
         /// <param name="id"></param>
         /// <param name="form"></param>
         /// <returns></returns>
-        [Route("Update")]
-        [HttpPost]
+        [HttpPost("Update/{id}")]
         public IActionResult Update(int id, BusinessTypeForm form)
         {
             try
@@ -159,8 +157,7 @@ namespace BizNest.Service.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("Delete")]
-        [HttpPost]
+        [HttpPost("Delete/{id}")]
         public IActionResult Delete(int id)
         {
             try
