@@ -118,10 +118,10 @@ namespace BizNest.Service.Controllers
                 {
                     return BadRequest(new ErrorResponse
                     {
-                        ErrorDescription = "Your Email or Password is Incorrect"
+                        ErrorDescription = "Unauthorized!"
                     });
                 }
-                var jwt = await Tokens.GenerateJwt(identity, _jwtFactory, model.Email, _jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
+                var jwt = await Tokens.GenerateJwt(identity, _jwtFactory, model.AppName, _jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
 
                 return Ok(new LoginResponse
                 {

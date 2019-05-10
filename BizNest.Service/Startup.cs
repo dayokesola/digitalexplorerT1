@@ -25,6 +25,10 @@ using Microsoft.AspNetCore.Routing;
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using BizNest.Core.Domain.Entity.App;
+using Microsoft.AspNetCore.Identity;
+using BizNest.Service.Interfaces;
+using BizNest.Service.Services;
 
 namespace BizNest.Service
 {
@@ -123,9 +127,6 @@ namespace BizNest.Service
 
             services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
-
-
-
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Info
@@ -165,20 +166,23 @@ namespace BizNest.Service
                         services.AddDbContext<AppDbContext>((obj) => Environment.GetEnvironmentVariable("db"));
 
 #endif
+            // add identity
+            var builder = services.AddIdentityCore<ApplicationUser>(o =>
+            {
+                // configure identity options
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 6;
+            });
+            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
+            builder.AddEntityFrameworkStores<AuthenticationDbContext>().AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSingleton<IJwtFactory, JwtFactory>();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowMyOrigin",
-                builder => builder
-                .WithOrigins("*")
-                .WithHeaders("*")
-                .WithMethods("*")
-                .WithExposedHeaders("X-Pagination")
-                .SetPreflightMaxAge(TimeSpan.FromSeconds(2520))
-                );
-            });
+
 
             // Apply as default to all controllers. API etc
             services.Configure<MvcOptions>(options =>
