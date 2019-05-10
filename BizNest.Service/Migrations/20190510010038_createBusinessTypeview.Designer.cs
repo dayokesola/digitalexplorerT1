@@ -4,14 +4,16 @@ using BizNest.Core.Data.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BizNest.Service.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190510010038_createBusinessTypeview")]
+    partial class createBusinessTypeview
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,9 +72,7 @@ namespace BizNest.Service.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("Info")
-                        .HasColumnType("varchar(256)")
-                        .HasMaxLength(256);
+                    b.Property<string>("Info");
 
                     b.Property<int>("MaxStakeHolder");
 
@@ -80,9 +80,7 @@ namespace BizNest.Service.Migrations
 
                     b.Property<int>("MinStakeHolder");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("varchar(64)")
-                        .HasMaxLength(64);
+                    b.Property<string>("Name");
 
                     b.Property<int>("RecordStatus");
 

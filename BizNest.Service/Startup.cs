@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using BizNest.Core.Data.DB;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 
 namespace BizNest.Service
 {
@@ -33,6 +34,24 @@ namespace BizNest.Service
             #endif
            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowMyOrigin",
+                builder => builder
+                .WithOrigins("*")
+                .WithHeaders("*")
+                .WithMethods("*")
+                .WithExposedHeaders("X-Pagination")
+                .SetPreflightMaxAge(TimeSpan.FromSeconds(2520))
+                );
+            });
+
+            // Apply as default to all controllers. API etc
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowMyOrigin"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
