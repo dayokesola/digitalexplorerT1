@@ -11,6 +11,6 @@ namespace BizNest.Service.Controllers
     [ApiController]
     public class BusinessTypesController : ControllerBase
     {
-    } 
-
+        
+    }
 }
