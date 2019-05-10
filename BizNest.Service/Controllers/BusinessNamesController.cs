@@ -34,12 +34,12 @@ namespace BizNest.Service.Controllers
                     new BusinessNameSearchModel()
                     {
                         Name = "Name 1",
-                        Match = 60.28
+                        Match = 60.28f
                     },
                     new BusinessNameSearchModel()
                     {
                         Name = "Name 2",
-                        Match = 45.45
+                        Match = 45.45f
                     },
                 }; 
                 return Ok(dto);
