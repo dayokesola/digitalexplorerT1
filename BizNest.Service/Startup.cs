@@ -20,6 +20,7 @@ using BizNest.Core.Common;
 using BizNest.Core.Logic.Definations;
 using BizNest.Core.Logic.App;
 using BizNest.Core.Domain.Entity;
+using BizNest.Core.Domain.Entity.App;
 
 namespace BizNest.Service
 {
@@ -126,22 +127,24 @@ namespace BizNest.Service
 
     public class MockedSearchService : ISearchService
     {
-        public async Task InsertBusinessNamesAsync(params string[] names)
+        public async Task InsertBusinessNamesAsync(params Business[] businesses)
         {
             //throw new NotImplementedException();
         }
 
-        public async Task InsertProhibitedNameAsync(params string[] names)
+        public async Task InsertProhibitedNameAsync(params ProhibitedName[] names)
         {
            // throw new NotImplementedException();
         }
 
-        public async Task RemoveBusinessNameAsync(string name)
+       
+
+        public async Task RemoveBusinessNameAsync(Business name)
         {
             //throw new NotImplementedException();
         }
 
-        public async Task RemoveProhibitedNameAsync(string name)
+        public async Task RemoveProhibitedNameAsync(ProhibitedName name)
         {
             //throw new NotImplementedException();
         }

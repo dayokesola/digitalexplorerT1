@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using BizNest.Core.Domain.Entity;
+using BizNest.Core.Domain.Entity.App;
 
 namespace BizNest.Core.Logic.Definations
 {
@@ -12,14 +13,14 @@ namespace BizNest.Core.Logic.Definations
         //Core search
          Task<SearchResult> SearchAsync(string query);
 
-         Task InsertBusinessNamesAsync(params string[] names);
+         Task InsertBusinessNamesAsync(params Business[] businesses);
 
-         Task InsertProhibitedNameAsync(params string[] names);
+         Task InsertProhibitedNameAsync(params ProhibitedName[] names);
 
 
-         Task RemoveBusinessNameAsync(string name);
+         Task RemoveBusinessNameAsync(Business name);
 
-        Task RemoveProhibitedNameAsync(string name);
+        Task RemoveProhibitedNameAsync(ProhibitedName name);
          
     }
 }

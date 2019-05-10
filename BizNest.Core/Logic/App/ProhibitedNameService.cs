@@ -41,24 +41,24 @@ namespace BizNest.Core.Logic.App
          {
               if(await repo.WordExists(model.Word)) throw new ArgumentException("This word already exists");
               var item = DataMapper.Map<ProhibitedName,ProhibitedWordModel>(model);
-              await Task.Run(()=> repo.Insert(new ProhibitedName{ Word = model.Word }));
-              await searchService.InsertProhibitedNameAsync(model.Word);
+              var xr = await Task.Run(()=> repo.Insert(new ProhibitedName{ Word = model.Word }));
+              await searchService.InsertProhibitedNameAsync(xr);
          }
 
          public async Task UpdateWord (ProhibitedWordModel model) 
          {
              var item = repo.Query().Where(x=>x.Id == model.Id).FirstOrDefault();
-             await searchService.RemoveProhibitedNameAsync(item.Word);
+             await searchService.RemoveProhibitedNameAsync(item);
              item.Word = model.Word;
              await Task.Run(()=> repo.Update(item));
-              await searchService.InsertProhibitedNameAsync(model.Word);
+              await searchService.InsertProhibitedNameAsync(new ProhibitedName{ Id = item.Id, Word = item.Word });
          }
 
          public async Task DeleteWord(ProhibitedWordModel model)
          {
              var item = DataMapper.Map<ProhibitedName,ProhibitedWordModel>(model);
              await Task.Run(()=> repo.Delete(item));
-             await searchService.RemoveProhibitedNameAsync(model.Word);
+             await searchService.RemoveProhibitedNameAsync(item);
          }
     }
 }
