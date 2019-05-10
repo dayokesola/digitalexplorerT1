@@ -246,7 +246,7 @@ namespace BizNest.Service
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MobileForms API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Biznest API");
                 c.RoutePrefix = string.Empty;
 
 
