@@ -53,7 +53,8 @@ namespace BizNest.Core.Logic.App
 
                     if (!model.timed_out)
                     {
-                        resp.Summary = "Maximum Score: " + model.hits.max_score; 
+                        resp.Summary = "Maximum Score: " + model.hits.max_score;
+                        resp.MaxHit = model.hits.max_score;
                         foreach (var m in model.hits.hits)
                         {
                             resp.Results.Add(new SearchItem()
