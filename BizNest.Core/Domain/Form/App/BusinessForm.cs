@@ -66,6 +66,7 @@ namespace BizNest.Core.Domain.Form.App
         /// </summary>
         public string Contact2Mobile { get; set; }
 
+        public List<StakeHolderForm> StakeHolders { get; set; }
     }
 
 }

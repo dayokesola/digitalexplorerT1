@@ -16,10 +16,12 @@ namespace BizNest.Service.Controllers
     public class BusinessController : Controller
     {
         private readonly IBusinessService service;
+        private readonly IStakeHolderService stakeHolderService;
 
-        public BusinessController(IBusinessService service)
+        public BusinessController(IBusinessService service,IStakeHolderService stakeHolderService)
         {
             this.service = service;
+            this.stakeHolderService = stakeHolderService;
         }
 
 
@@ -30,11 +32,12 @@ namespace BizNest.Service.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(long id)
+        public async Task<IActionResult> Get(long id, bool includeAll = false)
         {
             var item = await service.GetById(id);
             if (item is null) return NotFound();
-            else return Ok(item);
+            if (includeAll) item.StakeHolders = await stakeHolderService.GetStakeHoldersByBusinessId(item.Id);
+            return Ok(item);
         }
 
         [HttpGet("code/{code}")]
