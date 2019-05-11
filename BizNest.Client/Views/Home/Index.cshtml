@@ -4,103 +4,297 @@
 
 
 
-<div id="app">
+    <div id="app">
 
 
-    <step-navigation :steps="steps" :currentstep="currentstep">
-    </step-navigation>
+        <step-navigation :steps="steps" :currentstep="currentstep">
+        </step-navigation>
 
-    <div v-show="currentstep == 1">
- 
-        <div class="row">
-            <div class="col-4 offset-4">
-                <h2 class="text-center mb-3">Quick Name Search</h2>
-                @*<div class="small text-center"><a href="#">complete my application</a> | <a href="#">track my application</a> | <a href="#">advanced search</a> </div>*@
+        <div v-show="currentstep == 1">
 
-                <div class="input-group mb-3 input-group-lg">
-                    <input type="text" class="form-control" v-model="Qry">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button" id="button-addon2" v-on:click="SearchNames">GO</button>
+            <div class="row">
+                <div class="col-4 offset-4">
+                    <h3 class="text-center mb-3">Quick Name Search</h3>
+                    @*<div class="small text-center"><a href="#">complete my application</a> | <a href="#">track my application</a> | <a href="#">advanced search</a> </div>*@
+
+                    <div class="input-group mb-3 input-group-lg">
+                        <input type="text" class="form-control" v-model="Qry">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button" id="button-addon2" v-on:click="SearchNames">GO</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 offset-4" v-for="item in BusinessMatches.results">
+                    <div class=" text-uppercase small" v-html="item.word"></div>
+                    <div class="progress" style="height: 5px; margin-bottom:10px;">
+                        <div class="progress-bar" role="progressbar"
+                             :style="'width: ' + ((item.matchPercentage/BusinessMatches.maxHit) * 100) + '%'" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div v-show="currentstep == 2">
+            <div class="row">
+                <div class="col-4 offset-4">
+                    <h3 class="text-center mb-3">Business Type and Location</h3>
+                    <div class="form-group">
+                        <label for="select">Business Type:</label>
+                        <select class="form-control input-sm" name="BusinessTypeId" v-model="form.BusinessTypeId">
+                            <option>Small Partnership</option>
+                            <option>Private limited liability company</option>
+                            <option>Public liability company </option>
+                            <option>Individual enterprise</option>
+                            <option>Agricultural Company</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Street">Street:</label>
+                        <input type="text" class="form-control input-sm" id="Street" aria-describedby="StreetHelp" placeholder="Street" v-model="form.AddressStreet">
+                        <small id="StreetHelp" class="form-text text-muted">Tell us your street</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="City">City</label>
+                        <input type="text" class="form-control input-sm" id="City" aria-describedby="CityHelp" placeholder="City" v-model="form.AddressCity">
+                        <small id="CityHelp" class="form-text text-muted">Tell us your city</small>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="PostCode">Post Code</label>
+                        <input type="text" class="form-control input-sm" id="PostCode" aria-describedby="PostCodeHelp" placeholder="PostCode" v-model="form.AddressPostCode">
+                        <small id="PostCodeHelp" class="form-text text-muted">Tell us your post code</small>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="select">Country</label>
+                        <select class="form-control input-sm" name="AddressCountry" v-model="form.AddressCountry">
+                            <option>Select Country</option>
+                            <option>Nigeria</option>
+                            <option>Lithunia</option>
+                        </select>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div v-show="currentstep == 3">
+            <div class="row">
+                <div class="col-8 offset-2">
+
+
+
+                    <div class="row">
+                        <div class="col-12">
+                            <h3 class="text-center mb-3">Stake Holders Information</h3>
+
+                        </div>
+
+                        <div class="col-4">
+
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">First Name</label>
+                                <input type="text" class="form-control" id="FirstName" aria-describedby="LastNameHelp" placeholder="First Name" v-model="formSub.LastName">
+                                <small id="FirstNameHelp" class="form-text text-muted">Tell us your first name</small>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Last Name</label>
+                                <input type="text" class="form-control" id="LastName" aria-describedby="LastNameHelp" placeholder="Last Name" v-model="formSub.LastName">
+                                <small id="LastNameHelp" class="form-text text-muted">Tell us your last name</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email</label>
+                                <input type="text" class="form-control" id="Email" aria-describedby="EmailHelp" placeholder="Email" v-model="formSub.Email">
+                                <small id="EmailHelp" class="form-text text-muted">Tell us your email</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Mobile</label>
+                                <input type="text" class="form-control" id="Mobile" aria-describedby="MobileHelp" placeholder="Mobile" v-model="formSub.Mobile">
+                                <small id="MobileHelp" class="form-text text-muted">Tell us your mobile</small>
+                            </div>
+
+                        </div>
+
+                        <div class="col-4">
+
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Street</label>
+                                <input type="text" class="form-control" id="Street" aria-describedby="StreetHelp" placeholder="Street" v-model="formSub.AddressStreet">
+                                <small id="StreetHelp" class="form-text text-muted">Tell us your street</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">City</label>
+                                <input type="text" class="form-control" id="City" aria-describedby="CityHelp" placeholder="City" v-model="formSub.AddressCity">
+                                <small id="CityHelp" class="form-text text-muted">Tell us your city</small>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Post Code</label>
+                                <input type="text" class="form-control" id="PostCode" aria-describedby="PostCodeHelp" placeholder="PostCode" v-model="formSub.AddressPostCode">
+                                <small id="PostCodeHelp" class="form-text text-muted">Tell us your post code</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="select">Select Country</label>
+                                <select class="form-control" name="select" v-model="formSub.AddressCountry">
+                                    <option value="0">Select Country</option>
+                                    <option value="1">Nigeria</option>
+                                    <option value="2">Lithunia</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Account Number</label>
+                                <input type="text" class="form-control" id="AccountNumber" aria-describedby="AccountNumberHelp"
+                                       placeholder="Account Number" v-model="formSub.AccountNumber">
+                                <small id="AccountNumberHelp" class="form-text text-muted">Tell us your account number</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Bank</label>
+                                <input type="text" class="form-control" id="Bank" aria-describedby="BankHelp"
+                                       placeholder="Bank" v-model="formSub.Bank">
+                                <small id="BankHelp" class="form-text text-muted">Tell us your bank</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Seed Amount</label>
+                                <input type="text" class="form-control" id="SeedAmount" aria-describedby="SeedAmountHelp"
+                                       placeholder="Seed Amount" v-model="formSub.SeedAmount">
+                                <small id="SeedAmountHelp" class="form-text text-muted">Tell us your seed amount</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">&nbsp;</label>
+                                <button type="button" class="btn btn-primary btn-block" v-on:click="AddStakeHolder">Add StakeHolder</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div v-show="currentstep == 4">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="text-center mb-3">Summary</h3>
+                   
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="">Business Name</label>
+                                <input type="text" class="form-control" v-model="form.BusinessName" readonly="readonly">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Business Type</label>
+                                <input type="text" class="form-control" v-model="form.BusinessTypeId" readonly="readonly">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Matching Businesses</label>
+                                <table class="table table-sm" style="font-size:0.8em">
+                                    <tr v-for="item in BusinessMatches.results">
+                                        <td>
+                                            {{item.word}}
+                                        </td>
+                                        <td>
+                                            {{item.matchPercentage}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Business Address</label>
+
+                                <div class="card bg-light"> 
+                                    <div class="card-body">
+                                        
+                                        <p class="card-text">
+                                            <pre>
+{{ form.AddressStreet}}
+{{ form.AddressCity}}
+{{ form.AddressPostCode}}
+{{ form.AddressCountry}}
+</pre>
+
+                                        </p>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <div class="col-8">
+
+                            <div class="row">
+                                <div class="col-6">
+
+                                </div>
+
+                                <div class="col-6">
+
+                                </div>
+                            </div>
+
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-4 offset-4" v-for="item in BusinessMatches.results">
+        <step v-for="step in steps" :canmove="canmove" :currentstep="currentstep" :key="step.id" :step="step" :stepcount="steps.length" @@step-change="stepChanged">
+        </step>
 
-                @*<div class="text-center">
-                    <samp v-html="item.matchPercentage"></samp>
-                </div>*@
-                <div class=" text-uppercase small" v-html="item.word"></div>
+        <script type="x-template" id="step-navigation-template">
+            <ol class="step-indicator">
+                <li v-for="step in steps" is="step-navigation-step" :key="step.id" :step="step" :currentstep="currentstep">
+                </li>
+            </ol>
+        </script>
 
-                <div class="progress" style="height: 5px; margin-bottom:10px;">
-                    <div class="progress-bar" role="progressbar" 
-                         :style="'width: ' + ((item.matchPercentage/BusinessMatches.maxHit) * 100) + '%'" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div v-show="currentstep == 2">
-        <h3>Step 2</h3>
-        <div class="form-group">
-            <label for="select">Example select</label>
-            <select class="form-control" name="select">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </div>
-    </div>
-
-    <div v-show="currentstep == 3">
-        <h3>Step 3</h3>
-        <div class="form-group">
-            <label for="textarea">Example textarea</label>
-            <textarea class="form-control" name="textarea" rows="4"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="file">File input</label>
-            <input type="file" class="form-control-file" name="file" aria-describedby="fileHelp">
-            <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
-        </div>
-    </div>
-
-    <step v-for="step in steps" :currentstep="currentstep" :key="step.id" :step="step" :stepcount="steps.length" @@step-change="stepChanged">
-    </step>
-
-    <script type="x-template" id="step-navigation-template">
-        <ol class="step-indicator">
-            <li v-for="step in steps" is="step-navigation-step" :key="step.id" :step="step" :currentstep="currentstep">
+        <script type="x-template" id="step-navigation-step-template">
+            <li :class="indicatorclass">
+                <div class="step"><i :class="step.icon_class"></i></div>
+                <div class="caption hidden-xs hidden-sm">Step <span v-text="step.id"></span>: <span v-text="step.title"></span></div>
             </li>
-        </ol>
-    </script>
+        </script>
 
-    <script type="x-template" id="step-navigation-step-template">
-        <li :class="indicatorclass">
-            <div class="step"><i :class="step.icon_class"></i></div>
-            <div class="caption hidden-xs hidden-sm">Step <span v-text="step.id"></span>: <span v-text="step.title"></span></div>
-        </li>
-    </script>
-
-    <script type="x-template" id="step-template">
-        <div class="step-wrapper text-center" :class="stepWrapperClass">
-            <button type="button" class="btn btn-primary" @@click="lastStep" :disabled="firststep">
-                Back
-            </button>
-            <button type="button" class="btn btn-primary" @@click="nextStep" :disabled="laststep">
-                Next
-            </button>
-            <button type="submit" class="btn btn-primary" v-if="laststep">
-                Submit
-            </button>
-        </div>
-    </script>
-</div>
+        <script type="x-template" id="step-template">
+            <div class="step-wrapper text-center" :class="stepWrapperClass">
+                <button type="button" class="btn btn-primary" @@click="lastStep" :disabled="firststep">
+                    Back
+                </button>
+                <button type="button" class="btn btn-primary" @@click="nextStep" :disabled="laststep">
+                    Next
+                </button>
+                <button type="submit" class="btn btn-primary" v-if="laststep">
+                    Submit
+                </button>
+            </div>
+        </script>
+    </div>
 
 
 
@@ -111,6 +305,14 @@
         var pageApp = new Vue({
             el: '#app',
             data: {
+                form: {
+                    BusinessName: "",
+                    AddressStreet: "",
+                    StakeHolders: []
+                },
+                formSub: {
+
+                },
                 BusinessMatches: [
                 ],
                 Qry: '',
@@ -145,13 +347,9 @@
                     var req = DataUtil.SearchName(pageApp.Qry);
                     req.done(function (data) {
                         pageApp.BusinessMatches = data;
-                        //check if i can switch to step 2
                         pageApp.canmove = true;
-                        //for (var i = 0; i < data.length; i++) {
-                        //    if (data[i].match < 50) {
-
-                        //    }
-                        //}
+                        pageApp.errormsg = "Next!";
+                        pageApp.form.BusinessName = pageApp.Qry;
                     });
                     req.fail(function (error) {
                         ShowLoading(error.responseJSON.Message, "error");
@@ -160,6 +358,9 @@
                 },
                 stepChanged: function (step) {
                     this.currentstep = step;
+                },
+                AddStakeHolder: function () {
+                    alert("oshey");
                 }
             }
 

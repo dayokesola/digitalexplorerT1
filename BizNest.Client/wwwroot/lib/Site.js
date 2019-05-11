@@ -142,7 +142,7 @@ Vue.component("step-navigation", {
 Vue.component("step", {
     template: "#step-template",
 
-    props: ["step", "stepcount", "currentstep"],
+    props: ["step", "stepcount", "currentstep", "canmove"],
 
     computed: {
         active() {
@@ -178,9 +178,6 @@ Vue.component("step", {
         }
     }
 });
-
-
-
  
 var FormUtil = (function () {
     var auth = getCookieAuth("usertoken");
