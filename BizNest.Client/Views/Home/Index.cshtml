@@ -42,7 +42,7 @@
                     <h3 class="text-center mb-3">Business Type and Location</h3>
                     <div class="form-group">
                         <label for="select">Business Type:</label>
-                        <select class="form-control input-sm" name="BusinessTypeId" v-model="form.BusinessTypeId">
+                        <select class="form-control input-sm" name="BusinessTypeId" v-model="form.BusinessType">
                             <option>Small Partnership</option>
                             <option>Private limited liability company</option>
                             <option>Public liability company </option>
@@ -72,7 +72,6 @@
                     <div class="form-group">
                         <label for="select">Country</label>
                         <select class="form-control input-sm" name="AddressCountry" v-model="form.AddressCountry">
-                            <option>Select Country</option>
                             <option>Nigeria</option>
                             <option>Lithunia</option>
                         </select>
@@ -147,9 +146,8 @@
                             <div class="form-group">
                                 <label for="select">Select Country</label>
                                 <select class="form-control" name="select" v-model="formSub.AddressCountry">
-                                    <option value="0">Select Country</option>
-                                    <option value="1">Nigeria</option>
-                                    <option value="2">Lithunia</option>
+                                    <option>Nigeria</option>
+                                    <option>Lithunia</option>
                                 </select>
                             </div>
                         </div>
@@ -203,7 +201,7 @@
 
                             <div class="form-group">
                                 <label for="">Business Type</label>
-                                <input type="text" class="form-control" v-model="form.BusinessTypeId" readonly="readonly">
+                                <input type="text" class="form-control" v-model="form.BusinessType" readonly="readonly">
                             </div>
 
                             <div class="form-group">
@@ -317,19 +315,26 @@
                                             <input type="text" class="form-control" v-model="item.FirstName + ' ' + item.LastName" readonly="readonly">
                                         </div>
 
-                                        <div class="card bg-light">
-                                            <div class="card-body">
 
-                                                <pre>
+
+                                        <div class="form-group">
+                                            <label for="">StakeHolder Address</label>
+                                            <div class="card bg-light">
+                                                <div class="card-body">
+
+                                                    <pre>
 {{ item.AddressStreet}}
 {{ item.AddressCity}}
 {{ item.AddressPostCode}}
 {{ item.AddressCountry}}
 </pre>
 
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+
+                                            
+                                        </div>
 
 
                                     <div class="col-6">
@@ -342,19 +347,24 @@
                                             <input type="text" class="form-control" v-model="item.Mobile" readonly="readonly">
                                         </div>
 
-                                        <div class="card bg-light">
-                                            <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="">Bank Details</label>
 
-                                                <pre>
+                                            <div class="card bg-light">
+                                                <div class="card-body">
+
+                                                    <pre>
 {{ item.Bank}}
 {{ item.AccountNumber}}
-{{ item.SeedMoney}} (EUR)
+{{ item.SeedAmount}} (EUR)
 </pre>
 
+                                                </div>
                                             </div>
                                         </div>
+
                                     </div>
-                                </div>
+                                    </div>
                             </div>
 
 
@@ -372,9 +382,11 @@
                         </label>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary" v-if="laststep" v:on-click="SubmitData">
+                        <button type="button" class="btn btn-primary btn-block" v-on:click="SubmitData">
                             Submit
                         </button>
+
+
                     </div>
                 </div>
             </div>
@@ -515,7 +527,11 @@
 
                 },
                 SubmitData: function () {
+
+                    console.log(JSON.stringify(pageApp.form));
                     alert("CAlling APIS for completion");
+
+                    
                 }
             }
 
