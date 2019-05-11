@@ -24,16 +24,46 @@ namespace BizNest.Core.Logic.App
             client = new ElasticClient(settings);
         }
 
-        private async Task IndexBusiness(Business model)
+        public async Task IndexBusiness(Business model)
         {
             var esmodel = DataMapper.Map<BusinessIndexModel, Business>(model);
-            esmodel.FullName = esmodel.Name;
+            esmodel.Fullname = esmodel.Name;
             esmodel.Name += " " + Util.Reverse(esmodel.Name);
             await client.IndexDocumentAsync(esmodel);
         }
 
+        public  void IndexBusinessSync(Business model)
+        {
+            var esmodel = DataMapper.Map<BusinessIndexModel, Business>(model);
+            esmodel.Fullname = esmodel.Name;
+            esmodel.Name += " " + Util.Reverse(esmodel.Name);
+            esmodel.Name = Util.CleanText(esmodel.Name);
+            client.IndexDocument(esmodel);
+        }
+
+        private string CleanBusinessName(string txt)
+        {
+            var k = new StringBuilder(txt.ToLower().Trim());
+            k.Replace("limited", "");
+            k.Replace("ltd", "");
+            k.Replace("llc", "");
+            k.Replace("plc", "");
+            k.Replace("inc", "");
+            k.Replace("incorporated", "");
+            k.Replace("company", "");
+            k.Replace("partners", "");
+            k.Replace("group", "");
+            k.Replace("ventures", "");
+            k.Replace("venture", "");
+            k.Replace("groups", "");
+            return k.ToString();
+        }
+
         public async Task<SearchResult> SearchBusinessPro(string name, int countryId = 0, int page = 1, int pageSize = 10)
         {
+
+            name = CleanBusinessName(name);
+
             var resp = new SearchResult();
             try
             {
@@ -82,7 +112,7 @@ namespace BizNest.Core.Logic.App
             }
         }
 
-        public Task InsertProhibitedNameAsync(params ProhibitedName[] names)
+        public Task InsertProhibitedNameAsync(params ProhibitedName[] words)
         {
             throw new System.NotImplementedException();
         }
