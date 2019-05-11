@@ -502,7 +502,9 @@
                 },
                 DomainSearch: function () {
                     var req = DataUtil.DomainSearch(pageApp.Qry);
+                    console.log("here");
                     req.done(function (data) {
+                        console.log(data);
                         if (data.available == "true") {
                             pageApp.domainText = 'The domain ' + data.domain + ' is available for registration';
                         }
