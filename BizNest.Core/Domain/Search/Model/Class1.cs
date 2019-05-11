@@ -48,6 +48,7 @@ namespace BizNest.Core.Domain.Search.Model
         public int id { get; set; }
         public string name { get; set; }
         public string fullname { get; set; }
+        public string code { get; set; }
         public int addressCountryId { get; set; }
     }
 

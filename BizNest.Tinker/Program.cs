@@ -2,6 +2,7 @@
 using BizNest.Core.Data.DB;
 using BizNest.Core.Domain.Entity.App;
 using BizNest.Core.Domain.Model.App;
+using BizNest.Core.Logic.App;
 using BizNest.Search;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,16 +18,15 @@ namespace BizNest.Tinker
         static void Main(string[] args)
         {
             _optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            _optionsBuilder.UseSqlServer("Server=tcp:127.0.0.1,1433;Initial Catalog=BizNestDataDb;Persist Security Info=False;" +
-                "User ID=SA;Password=Dev@12345;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True;Connection Timeout=30;");
+            _optionsBuilder.UseSqlServer("Server=.;Initial Catalog=BizNestDb;User ID=appusr;Password=appusr;MultipleActiveResultSets=False;");
             _context = new AppDbContext(_optionsBuilder.Options);
           
 
             AutoMapperConfig.RegisterMappings();
 
-            var filepath = @"C:\Users\Vincent Nwonah\tmp\dataset.txt";
+            var filepath = @"C:\tmp\dataset.csv";
 
-            //LoadDataInSQLServer(filepath);
+            LoadDataInSQLServer(filepath);
             //IndexDataInElasticClient().Wait();
 
             var srv = new SearchClient();
@@ -34,7 +34,7 @@ namespace BizNest.Tinker
             //var j2 = srv.IndexBusiness(biz2);
 
 
-            var data = srv.SearchBusinessPro("sweet inter");
+            //var data = srv.SearchBusinessPro("sweet inter");
 
             Console.WriteLine("Hello World!");
         }
@@ -42,26 +42,32 @@ namespace BizNest.Tinker
         private static void LoadDataInSQLServer(string filepath)
         {
             var businesses = File.ReadAllLines(filepath);
-
+            var srv = new ElasticSearchService();
+            var cnt = businesses.Length;
             foreach (var line in businesses)
             {
-                _context.Businesses.Add(new Business { Name = line.Trim() });
+                if (line.Length > 150) continue;
+                var k = new Business { Name = line.Trim(), Code = Util.TimeStampCode("BIZ") };
+                _context.Businesses.Add(k);
                 _context.SaveChanges();
+                cnt--;
+                Console.WriteLine("Remains: " + cnt);
+                srv.IndexBusinessSync(k); 
             }
 
         }
 
-        private async static Task IndexDataInElasticClient()
-        {
-            var srv = new SearchClient();
-            var businesses = await _context.Businesses.ToListAsync();
+        //private async static Task IndexDataInElasticClient()
+        //{
+        //    var srv = new SearchClient();
+        //    var businesses = await _context.Businesses.ToListAsync();
 
 
-            foreach (var business in businesses)
-            {
-                var res = srv.IndexBusiness(new BusinessModel { Name = business.Name.ToLower(), Id = business.Id });
-            }
-        }
+        //    foreach (var business in businesses)
+        //    {
+        //        var res = srv.IndexBusiness(new BusinessModel { Name = business.Name.ToLower(), Id = business.Id });
+        //    }
+        //}
 
         
     }

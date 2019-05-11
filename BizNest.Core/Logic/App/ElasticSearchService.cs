@@ -24,12 +24,21 @@ namespace BizNest.Core.Logic.App
             client = new ElasticClient(settings);
         }
 
-        private async Task IndexBusiness(Business model)
+        public async Task IndexBusiness(Business model)
         {
             var esmodel = DataMapper.Map<BusinessIndexModel, Business>(model);
-            esmodel.FullName = esmodel.Name;
+            esmodel.Fullname = esmodel.Name;
             esmodel.Name += " " + Util.Reverse(esmodel.Name);
             await client.IndexDocumentAsync(esmodel);
+        }
+
+        public  void IndexBusinessSync(Business model)
+        {
+            var esmodel = DataMapper.Map<BusinessIndexModel, Business>(model);
+            esmodel.Fullname = esmodel.Name;
+            esmodel.Name += " " + Util.Reverse(esmodel.Name);
+            esmodel.Name = Util.CleanText(esmodel.Name);
+            client.IndexDocument(esmodel);
         }
 
         public async Task<SearchResult> SearchBusinessPro(string name, int countryId = 0, int page = 1, int pageSize = 10)
