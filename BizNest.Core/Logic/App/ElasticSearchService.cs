@@ -41,8 +41,29 @@ namespace BizNest.Core.Logic.App
             client.IndexDocument(esmodel);
         }
 
+        private string CleanBusinessName(string txt)
+        {
+            var k = new StringBuilder(txt.ToLower().Trim());
+            k.Replace("limited", "");
+            k.Replace("ltd", "");
+            k.Replace("llc", "");
+            k.Replace("plc", "");
+            k.Replace("inc", "");
+            k.Replace("incorporated", "");
+            k.Replace("company", "");
+            k.Replace("partners", "");
+            k.Replace("group", "");
+            k.Replace("ventures", "");
+            k.Replace("venture", "");
+            k.Replace("groups", "");
+            return k.ToString();
+        }
+
         public async Task<SearchResult> SearchBusinessPro(string name, int countryId = 0, int page = 1, int pageSize = 10)
         {
+
+            name = CleanBusinessName(name);
+
             var resp = new SearchResult();
             try
             {
@@ -91,7 +112,7 @@ namespace BizNest.Core.Logic.App
             }
         }
 
-        public Task InsertProhibitedNameAsync(params ProhibitedName[] names)
+        public Task InsertProhibitedNameAsync(params ProhibitedName[] words)
         {
             throw new System.NotImplementedException();
         }

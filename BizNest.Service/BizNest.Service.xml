@@ -23,13 +23,6 @@
             <param name="modelState"></param>
             <returns></returns>
         </member>
-        <member name="M:BizNest.Service.Controllers.BusinessNamesController.Search(BizNest.Core.Domain.Form.App.BusinessNameSearchForm)">
-            <summary>
-            Add Business
-            </summary>
-            <param name="form"></param>
-            <returns></returns>
-        </member>
         <member name="M:BizNest.Service.Controllers.BusinessTypesController.Get(System.String,System.String,System.Int32,System.Int32,System.Decimal,System.String,System.Int64,System.Int64,System.String,System.Int32)">
             <summary>
             Search, Page, filter and Shaped BusinessTypes

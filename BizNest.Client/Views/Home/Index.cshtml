@@ -32,10 +32,10 @@
                 @*<div class="text-center">
                     <samp v-html="item.matchPercentage"></samp>
                 </div>*@
-                <p class="font-normal" v-html="item.word"></p>
+                <div class=" text-uppercase small" v-html="item.word"></div>
 
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped" role="progressbar" 
+                <div class="progress" style="height: 5px; margin-bottom:10px;">
+                    <div class="progress-bar" role="progressbar" 
                          :style="'width: ' + ((item.matchPercentage/BusinessMatches.maxHit) * 100) + '%'" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
