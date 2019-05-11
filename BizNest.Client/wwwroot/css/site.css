@@ -91,25 +91,25 @@ body {
         }
 
         .step-indicator li.active .step {
-            border-color: #4183D7;
-            color: #4183D7;
+            border-color: #ffc300;
+            color: #ffc300;
         }
 
         .step-indicator li.active .caption {
-            color: #4183D7;
+            color: black;
         }
 
         .step-indicator li.complete:after {
-            background-color: #87D37C;
+            background-color: black;
         }
 
         .step-indicator li.complete .step {
-            border-color: #87D37C;
-            color: #87D37C;
+            border-color: black;
+            color: black;
         }
 
         .step-indicator li.complete .caption {
-            color: #87D37C;
+            color: black;
         }
 
     .step-indicator .step {
@@ -133,4 +133,16 @@ body {
     .step-indicator .caption {
         color: #ccc;
         padding: 11px 16px;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #ffc300;
+        border-color: #ffc300;
+    }
+
+    .btn-primary:disabled {
+        color: #fff;
+        background-color: #ffc400ad;
+        border-color: #ffc400ad;
     }
