@@ -90,6 +90,19 @@ namespace BizNest.Service.Controllers
             }
         }
 
+        public async Task<IActionResult> PostAsync([FromBody] BusinessCreateModel model)
+        {
+            try
+            {
+                
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest();
+            }
+        }
+
 
     }
 }
