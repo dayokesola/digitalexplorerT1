@@ -171,6 +171,7 @@ namespace BizNest.Service
             services.AddScoped<ISearchService,ElasticSearchService>();
             services.AddScoped<IEmailService,MockedEmailService>();
             services.AddScoped<IBusinessService, BusinessService>();
+            services.AddScoped<IHttpService, HttpService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
