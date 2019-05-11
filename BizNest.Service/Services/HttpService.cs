@@ -21,7 +21,8 @@ namespace BizNest.Service.Services
             {
                 _client = new HttpClient();
                 _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", string.Empty);
+                _client.DefaultRequestHeaders.Add("X-RapidAPI-Host", "domainstatus.p.rapidapi.com");
+                _client.DefaultRequestHeaders.Add("X-RapidAPI-Key", "5acbd0464bmsh17680cb27715eabp13091bjsnf01f91412d73");
             }
 
           
