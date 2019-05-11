@@ -31,6 +31,7 @@ namespace BizNest.Core.Common
 
                 cfg.CreateMap<BusinessModel, BusinessIndexModel>().ReverseMap();
                 cfg.CreateMap<Business, BusinessIndexModel>().ReverseMap();
+                cfg.CreateMap<BusinessModel, BusinessCreateModel>();
             });
         }
     }

@@ -9,7 +9,7 @@ namespace BizNest.Core.Domain.Model.App
     {
         public string BusinessName { get; set; }
         public string AddressStreet { get; set; }
-        public List<StakeholderModel> StakeHolders { get; set; }
+        public List<StakeHolderModel> StakeHolders { get; set; }
         public string BusinessType { get; set; }
         public string AddressCity { get; set; }
         public string AddressPostCode { get; set; }
