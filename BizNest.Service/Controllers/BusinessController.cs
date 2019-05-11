@@ -95,6 +95,7 @@ namespace BizNest.Service.Controllers
             }
         }
 
+        [HttpPost("createbusiness")]
         public async Task<IActionResult> PostAsync([FromBody] BusinessCreateModel model)
         {
             try
@@ -112,7 +113,9 @@ namespace BizNest.Service.Controllers
                     Contact2Email = model.Contact2Email,
                     Contact2Name = model.Contact2Name,
                     Contact2Mobile = model.Contact2Name,
-                    Status = RegistrationStatus.Submitted
+                    Status = RegistrationStatus.Submitted,
+                    BusinessTypeId = 1
+                    
                 };
 
                 await service.InsertBusinessAsync(bm);
