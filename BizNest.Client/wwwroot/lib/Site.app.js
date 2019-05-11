@@ -64,7 +64,18 @@ var DataUtil = (function () {
         
         Today: function () {
             return moment().format('MMMM Do YYYY');
+        },
+
+        DomainSearch: function (domain) {
+            return $.ajax({
+                type: "GET",
+                url: baseapi + "/api/Domain/domainsearch?domain=" + domain,
+                async: true,
+                contentType: 'application/json'
+            });
         }
+
+
     };
 }());
  
