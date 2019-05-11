@@ -169,8 +169,10 @@ namespace BizNest.Service
 
             services.AddScoped<IProhibitedService,ProhibitedNameService>();
             services.AddScoped<ISearchService,ElasticSearchService>();
-            services.AddScoped<IEmailService,MockedEmailService>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IBusinessService, BusinessService>();
+            services.AddScoped<IStakeHolderService, StakeHolderService>();
+            services.AddScoped<IHttpService, HttpService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
