@@ -26,7 +26,7 @@ namespace BizNest.Service.Services
             {
                 MailMessage mailMsg = new MailMessage();
                 mailMsg.To.Add(new MailAddress(to));
-                mailMsg.From = new MailAddress(smtpEmail, "BizNest Service");
+                mailMsg.From = new MailAddress(smtpEmail, "Yello Project");
 
                 // Subject
                 mailMsg.Subject = subject;
