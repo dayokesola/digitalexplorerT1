@@ -9,6 +9,8 @@
         /// 
         /// </summary>
         public string Name { get; set; }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -58,6 +60,15 @@
         /// </summary>
         public string Contact2Mobile { get; set; }
 
+        public RegistrationStatus Status { get; set; }
+
+    }
+
+
+
+    public enum RegistrationStatus
+    {
+        Start,AwaitingPayment,Submitted,Review,Approved,Rejected
     }
 
 }

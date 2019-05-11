@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
+using BizNest.Core.Domain.Entity.App;
 
 namespace BizNest.Core.Domain.Model.App
 { 
@@ -9,7 +11,10 @@ namespace BizNest.Core.Domain.Model.App
         /// <summary>
         /// 
         /// </summary>
+        [Required]
         public string Name { get; set; }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -21,10 +26,12 @@ namespace BizNest.Core.Domain.Model.App
         /// <summary>
         /// 
         /// </summary>
+        [Required]
         public string AddressStreet { get; set; }
         /// <summary>
         /// 
         /// </summary>
+        [Required]
         public string AddressCity { get; set; }
         /// <summary>
         /// 
@@ -58,6 +65,8 @@ namespace BizNest.Core.Domain.Model.App
         /// 
         /// </summary>
         public string Contact2Mobile { get; set; }
+
+        public RegistrationStatus Status { get; set; }
 
     }
 

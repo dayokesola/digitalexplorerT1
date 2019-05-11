@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BizNest.Core.Domain.Entity.App;
 
 namespace BizNest.Core.Domain.Form.App
 {
@@ -14,6 +15,8 @@ namespace BizNest.Core.Domain.Form.App
         /// 
         /// </summary>
         public string Name { get; set; }
+
+        public RegistrationStatus Status { get; set; }
         /// <summary>
         /// 
         /// </summary>

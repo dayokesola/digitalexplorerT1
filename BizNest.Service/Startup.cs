@@ -169,7 +169,8 @@ namespace BizNest.Service
 
             services.AddScoped<IProhibitedService,ProhibitedNameService>();
             services.AddScoped<ISearchService,ElasticSearchService>();
-
+            services.AddScoped<IEmailService,MockedEmailService>();
+            services.AddScoped<IBusinessService, BusinessService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -306,6 +307,15 @@ namespace BizNest.Service
                  }
             };
            
+        }
+    }
+
+
+    public class MockedEmailService : IEmailService
+    {
+        public async Task<bool> SendEmailAsync(string to, string from, string subject, string body)
+        {
+            return true;
         }
     }
 
