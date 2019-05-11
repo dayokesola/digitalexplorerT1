@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BizNest.Core.Logic.Definations;
 using BizNest.Service.Interfaces;
 using BizNest.Service.Models.RequestModels;
 using BizNest.Service.Models.ResponseModels;
@@ -15,13 +16,18 @@ namespace BizNest.Service.Controllers
     public class DomainController : ControllerBase
     {
         private IHttpService _httpService;
-        public DomainController(IHttpService httpService)
+        private IEmailService _emailService;
+        public DomainController(
+            IHttpService httpService,
+            IEmailService emailService)
         {
             _httpService = httpService;
+            _emailService = emailService;
         }
         [HttpPost("domainsearch")]
         public async Task<IActionResult> DomainSearch(string domain)
         {
+            //var res = await _emailService.SendEmailAsync("vnwonah@gmail.com", "info@biznesthub.com", "Business Name Search", "Your Search Is Successful");
             try
             {
                 if (string.IsNullOrWhiteSpace(domain))

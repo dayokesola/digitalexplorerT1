@@ -26,7 +26,7 @@ namespace BizNest.Service.Services
             {
                 MailMessage mailMsg = new MailMessage();
                 mailMsg.To.Add(new MailAddress(to));
-                mailMsg.From = new MailAddress(from, "BizNest Service");
+                mailMsg.From = new MailAddress(smtpEmail, "BizNest Service");
 
                 // Subject
                 mailMsg.Subject = subject;
@@ -41,7 +41,7 @@ namespace BizNest.Service.Services
                 await smtpClient.SendMailAsync(mailMsg);
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }
