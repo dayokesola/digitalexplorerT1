@@ -24,7 +24,7 @@ namespace BizNest.Service.Controllers
             _httpService = httpService;
             _emailService = emailService;
         }
-        [HttpPost("domainsearch")]
+        [HttpGet("domainsearch")]
         public async Task<IActionResult> DomainSearch(string domain)
         {
             //var res = await _emailService.SendEmailAsync("vnwonah@gmail.com", "info@biznesthub.com", "Business Name Search", "Your Search Is Successful");
