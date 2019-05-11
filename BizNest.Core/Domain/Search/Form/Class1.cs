@@ -8,7 +8,7 @@ namespace BizNest.Core.Domain.Search.Form
     {
         public Query query { get; set; }
 
-        public void SetName(string name)
+        public void SetName(string name, int fuzz)
         {
             query = new Query()
             {
@@ -16,7 +16,7 @@ namespace BizNest.Core.Domain.Search.Form
                 {
                     name = new Name()
                     {
-                        fuzziness = 2,
+                        fuzziness = fuzz,
                         query = name,
                         prefix_length = 1
                     }

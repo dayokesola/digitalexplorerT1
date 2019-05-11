@@ -50,16 +50,13 @@ namespace BizNest.Core.Logic.App
             k.Replace("plc", "");
             k.Replace("inc", "");
             k.Replace("incorporated", "");
-            k.Replace("company", "");
-            k.Replace("partners", "");
-            k.Replace("group", "");
-            k.Replace("ventures", "");
-            k.Replace("venture", "");
+            k.Replace("company", ""); 
+            k.Replace("group", ""); 
             k.Replace("groups", "");
             return k.ToString();
         }
 
-        public async Task<SearchResult> SearchBusinessPro(string name, int countryId = 0, int page = 1, int pageSize = 10)
+        public async Task<SearchResult> SearchBusinessPro(string name, int countryId = 0, int fuzz = 0, int page = 1, int pageSize = 10)
         {
 
             name = CleanBusinessName(name);
@@ -71,7 +68,7 @@ namespace BizNest.Core.Logic.App
                 client.BaseAddress = new Uri("http://localhost:9200");
                 HttpResponseMessage responseMessage = null; 
                 var form = new SearchForm();
-                form.SetName(name);
+                form.SetName(name, fuzz);
 
                 var model = new SearchModel();
                 HttpContent contentPost = new StringContent(Util.SerializeJSON(form), Encoding.UTF8, "application/json");
@@ -130,7 +127,14 @@ namespace BizNest.Core.Logic.App
 
         public async Task<SearchResult> SearchAsync(string query)
         {
-            return await SearchBusinessPro(query);
+            var p1 = await SearchBusinessPro(query, 0, 0);
+            var p2 = await SearchBusinessPro(query, 0, 1);
+
+            p1.MaxHitExtra = p2.MaxHit;
+            p1.ResultsExtra = p2.Results;
+
+            return p1;
+
         }
     }
 }
