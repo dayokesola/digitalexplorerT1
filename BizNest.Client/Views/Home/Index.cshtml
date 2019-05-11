@@ -101,7 +101,7 @@
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">First Name</label>
-                                <input type="text" class="form-control" id="FirstName" aria-describedby="LastNameHelp" placeholder="First Name" v-model="formSub.LastName">
+                                <input type="text" class="form-control" id="FirstName" aria-describedby="LastNameHelp" placeholder="First Name" v-model="formSub.FirstName">
                                 <small id="FirstNameHelp" class="form-text text-muted">Tell us your first name</small>
                             </div>
 
@@ -174,7 +174,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Seed Amount</label>
+                                <label for="exampleInputEmail1">Seed Amount (EUR)</label>
                                 <input type="text" class="form-control" id="SeedAmount" aria-describedby="SeedAmountHelp"
                                        placeholder="Seed Amount" v-model="formSub.SeedAmount">
                                 <small id="SeedAmountHelp" class="form-text text-muted">Tell us your seed amount</small>
@@ -194,9 +194,9 @@
 
         <div v-show="currentstep == 4">
             <div class="row">
-                <div class="col-12">
+                <div class="col-10 offset-1">
                     <h3 class="text-center mb-3">Summary</h3>
-                   
+
                     <div class="row">
                         <div class="col-4">
                             <div class="form-group">
@@ -226,18 +226,16 @@
                             <div class="form-group">
                                 <label for="">Business Address</label>
 
-                                <div class="card bg-light"> 
+                                <div class="card bg-light">
                                     <div class="card-body">
-                                        
-                                        <p class="card-text">
-                                            <pre>
+
+                                        <pre>
 {{ form.AddressStreet}}
 {{ form.AddressCity}}
 {{ form.AddressPostCode}}
 {{ form.AddressCountry}}
 </pre>
 
-                                        </p>
                                     </div>
                                 </div>
 
@@ -247,13 +245,118 @@
                         </div>
                         <div class="col-8">
 
-                            <div class="row">
-                                <div class="col-6">
 
+                            <div class="row bg-light">
+                                <div class="col-6">
+                                    <h4>Primary Contact</h4>
+
+
+                                    <div class="form-group row">
+                                        <label for="exampleInputEmail1" class="col-sm-3 col-form-label">Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control input-sm" id="Fullname1" aria-describedby="LastNameHelp"
+                                                   placeholder="Name" v-model="form.Contact1Name">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="exampleInputEmail1" class="col-sm-3 col-form-label">Email</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control input-sm" id="Email1" aria-describedby="EmailHelp"
+                                                   placeholder="Email" v-model="form.Contact1Email">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="exampleInputEmail1" class="col-sm-3 col-form-label">Mobile</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control input-sm" id="Mobile1" aria-describedby="MobileHelp"
+                                                   placeholder="Mobile" v-model="form.Contact1Mobile">
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="col-6">
+                                    <h4>Secondary Contact</h4>
 
+
+                                    <div class="form-group row">
+                                        <label for="exampleInputEmail1" class="col-sm-3 col-form-label">Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control input-sm" id="Fullname2" aria-describedby="LastNameHelp"
+                                                   placeholder="Name" v-model="form.Contact2Name">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="exampleInputEmail1" class="col-sm-3 col-form-label">Email</label>
+
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control input-sm" id="Email2" aria-describedby="EmailHelp"
+                                                   placeholder="Email" v-model="form.Contact2Email">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="exampleInputEmail1" class="col-sm-3 col-form-label">Mobile</label>
+
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control input-sm" id="Mobile2" aria-describedby="MobileHelp"
+                                                   placeholder="Mobile" v-model="form.Contact2Mobile">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div v-for="item in form.StakeHolders">
+
+                                <div class="row border-top mt-5">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="">Name</label>
+                                            <input type="text" class="form-control" v-model="item.FirstName + ' ' + item.LastName" readonly="readonly">
+                                        </div>
+
+                                        <div class="card bg-light">
+                                            <div class="card-body">
+
+                                                <pre>
+{{ item.AddressStreet}}
+{{ item.AddressCity}}
+{{ item.AddressPostCode}}
+{{ item.AddressCountry}}
+</pre>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="">Email</label>
+                                            <input type="text" class="form-control" v-model="item.Email" readonly="readonly">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Mobile</label>
+                                            <input type="text" class="form-control" v-model="item.Mobile" readonly="readonly">
+                                        </div>
+
+                                        <div class="card bg-light">
+                                            <div class="card-body">
+
+                                                <pre>
+{{ item.Bank}}
+{{ item.AccountNumber}}
+{{ item.SeedMoney}} (EUR)
+</pre>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -261,40 +364,59 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div class="col-4 offset-4">
+                    <hr />
+                    <div class="form-group">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            By Checking this box you agree with our <a href="#">Terms &amp; Conditions</a>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" v-if="laststep" v:on-click="SubmitData">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
             </div>
         </div>
 
-        <step v-for="step in steps" :canmove="canmove" :currentstep="currentstep" :key="step.id" :step="step" :stepcount="steps.length" @@step-change="stepChanged">
-        </step>
+            <step v-for="step in steps" :canmove="canmove" :currentstep="currentstep" :key="step.id" :step="step" :stepcount="steps.length" @@step-change="stepChanged">
+            </step>
 
-        <script type="x-template" id="step-navigation-template">
-            <ol class="step-indicator">
-                <li v-for="step in steps" is="step-navigation-step" :key="step.id" :step="step" :currentstep="currentstep">
+            <script type="x-template" id="step-navigation-template">
+                <ol class="step-indicator">
+                    <li v-for="step in steps" is="step-navigation-step" :key="step.id" :step="step" :currentstep="currentstep">
+                    </li>
+                </ol>
+            </script>
+
+            <script type="x-template" id="step-navigation-step-template">
+                <li :class="indicatorclass">
+                    <div class="step"><i :class="step.icon_class"></i></div>
+                    <div class="caption hidden-xs hidden-sm">Step <span v-text="step.id"></span>: <span v-text="step.title"></span></div>
                 </li>
-            </ol>
-        </script>
+            </script>
 
-        <script type="x-template" id="step-navigation-step-template">
-            <li :class="indicatorclass">
-                <div class="step"><i :class="step.icon_class"></i></div>
-                <div class="caption hidden-xs hidden-sm">Step <span v-text="step.id"></span>: <span v-text="step.title"></span></div>
-            </li>
-        </script>
-
-        <script type="x-template" id="step-template">
-            <div class="step-wrapper text-center" :class="stepWrapperClass">
-                <button type="button" class="btn btn-primary" @@click="lastStep" :disabled="firststep">
-                    Back
-                </button>
-                <button type="button" class="btn btn-primary" @@click="nextStep" :disabled="laststep">
-                    Next
-                </button>
-                <button type="submit" class="btn btn-primary" v-if="laststep">
+            <script type="x-template" id="step-template">
+                <div class="step-wrapper text-center" :class="stepWrapperClass">
+                    <button type="button" class="btn btn-primary" @@click="lastStep" :disabled="firststep">
+                        Back
+                    </button>
+                    <button type="button" class="btn btn-primary" @@click="nextStep" :disabled="laststep">
+                        Next
+                    </button>
+                    @*<button type="button" class="btn btn-primary" v-if="laststep" v:on-click="SubmitData">
                     Submit
-                </button>
-            </div>
-        </script>
-    </div>
+                </button>*@
+                </div>
+            </script>
+        </div>
 
 
 
@@ -359,8 +481,27 @@
                 stepChanged: function (step) {
                     this.currentstep = step;
                 },
-                AddStakeHolder: function () {
-                    alert("oshey");
+                AddStakeHolder: function () { 
+                    ShowLoading("StakeHolder Added!", "success");
+                    pageApp.form.StakeHolders.push(pageApp.formSub);
+
+                    pageApp.formSub = {
+                        "FirstName": "",
+                        "LastName": "",
+                        "Email": "",
+                        "Mobile": "",
+                        "SeedAmount": 0,
+                        "Bank": "",
+                        "AccountNumber": "",
+                        "AddressStreet": "",
+                        "AddressCity": "",
+                        "AddressCountry": "",
+                        "AddressPostCode": "",
+                    }
+
+                },
+                SubmitData: function () {
+                    alert("CAlling APIS for completion");
                 }
             }
 
