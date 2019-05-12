@@ -61,6 +61,18 @@ var DataUtil = (function () {
                 contentType: 'application/json'
             });
         },
+
+
+
+        CreateBusiness: function (payload) {
+            return $.ajax({
+                type: "POST",
+                url: baseapi + "/api/Business/createbusiness",
+                async: true,
+                contentType: 'application/json',
+                data: JSON.stringify(payload)
+            });
+        },
         
         Today: function () {
             return moment().format('MMMM Do YYYY');

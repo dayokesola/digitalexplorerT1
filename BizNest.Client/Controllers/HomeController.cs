@@ -52,5 +52,10 @@ namespace BizNest.Client.Controllers
             return View();
         }
 
+        public ActionResult Done()
+        {
+            return View();
+        }
+
     }
 }

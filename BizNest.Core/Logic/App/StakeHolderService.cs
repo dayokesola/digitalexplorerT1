@@ -56,7 +56,7 @@ namespace BizNest.Core.Logic.App
 
         public async Task<StakeHolderForm> InsertAsync(StakeHolderModel model)
         {
-            if (model.Id < 1) throw new ArgumentException("Please provide a valid business type");
+            if (model.BusinessId < 1) throw new ArgumentException("Please provide a valid business type");
             var obj = DataMapper.Map<StakeHolder, StakeHolderModel>(model);
             var item = await Task.Run(() => repo.Insert(obj));
            

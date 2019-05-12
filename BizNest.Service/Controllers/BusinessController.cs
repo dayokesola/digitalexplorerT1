@@ -118,8 +118,8 @@ namespace BizNest.Service.Controllers
                     
                 };
 
-                await service.InsertBusinessAsync(bm);
-
+                var k = await service.InsertBusinessAsync(bm);
+                bm.Id = k.Id;
                 foreach (var item in model.StakeHolders)
                 {
                     var stk = new StakeHolderModel
@@ -143,7 +143,7 @@ namespace BizNest.Service.Controllers
 
                     
                 }
-                await _emailService.SendEmailAsync(model.Contact1Email, null, "Business Search", "Hello " + model.Contact1Name + ", " +
+                _emailService.SendEmailAsync(model.Contact1Email, null, "Business Search", "Hello " + model.Contact1Name + ", " +
                     "your application has been recieved by Yellow Project " +
                     "and our person will get accross to you. Thank you!");
                 return new OkResult();
